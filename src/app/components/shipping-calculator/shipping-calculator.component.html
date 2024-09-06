@@ -1,0 +1,69 @@
+<ngx-smart-modal [refocus]="false" identifier="{{modelId}}">
+  <ng-container>
+
+
+
+    <!-- shiping popup starts-->
+    <div class="shipping-popup">
+      <div class="row">
+        <div class="col-md-6 left-box">
+          <h2 class="shipping-title">Shipping Cost</h2>
+          <table *ngIf="isDomestic && shippinginfo != null" class="table table-responsive">
+            <tr *rxFor="let shipping of shippinginfo">
+              <th>{{shipping.serviceName}}</th>
+              <td>{{shipping.ratedShipmentDetails[0].totalNetFedExCharge | currency:
+                shipping.ratedShipmentDetails[0].currency}}</td>
+            </tr>
+
+          </table>
+
+          <table *ngIf="!isDomestic && shippinginfo != null" class="table table-responsive">
+            <tr *ngIf="shippinginfo.priority.output && shippinginfo.priority.output != null">
+              <th>{{shippinginfo.priority.output.rateReplyDetails[0].serviceName}}</th>
+              <td>{{shippinginfo.priority.output.rateReplyDetails[0].ratedShipmentDetails[0].totalNetFedExCharge |
+                currency: shippinginfo.priority.output.rateReplyDetails[0].ratedShipmentDetails[0].currency}}</td>
+            </tr>
+            <tr *ngIf="shippinginfo.economy.output && shippinginfo.economy.output != null">
+              <th>{{shippinginfo.economy.output.rateReplyDetails[0].serviceName}}</th>
+              <td>{{shippinginfo.economy.output.rateReplyDetails[0].ratedShipmentDetails[0].totalNetFedExCharge |
+                currency: shippinginfo.economy.output.rateReplyDetails[0].ratedShipmentDetails[0].currency}}</td>
+            </tr>
+
+          </table>
+        </div>
+        <div class="col-md-6 right-box">
+          <h4>Shipping Locations</h4>
+          <p class="shipping-loc-info">
+            To calculate shipping charges, please enter details for your location. If you are shipping to a country
+            other than the USA, please select from the dropdown:
+          </p>
+          <ng-container *ngIf="formCreated">
+
+            <form [formGroup]="shippirxForm" (submit)="submitForm(shippirxForm)" class="shipping-cost">
+              <!--<ng-select placeholder="Select Country" formControlName="countryCode">
+                <ng-option *rxFor="let item of countriesList" [value]="item?.Code">{{item?.Name}}</ng-option>
+
+              </ng-select>-->
+
+              <input formControlName="postalCode" type="text" placeholder='Zip Code'>
+              <span style="position:relative">
+                <button [disabled]="shippirxForm.invalid || loading" [class.spinner]="loading" type="submit">Calculate
+                  Shipping</button>
+              </span>
+            </form>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10">
+          <p class="shipping-bottom-text ">This calculator displays shipping charges for 1 of item SOSTRDN1080. To
+            calculate the total shipping charge for multiple items, please add all products to your shopping cart.</p>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+    <!--Shipping Popup End-->
+
+  </ng-container>
+</ngx-smart-modal>

@@ -1,0 +1,48 @@
+
+<div *ngIf="formCreated" class="lft-filters-box">
+  <form [formGroup]="filtersForm" (submit)="submitForm(filtersForm)" novalidate>
+    <h4>Price Range</h4>
+
+    <div *ngIf="true || isBrowser" class="filters-box filter-price-box">
+       <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+    </div>
+    <h4 [hidden]="!filtersArray.categories.length > 0">Category</h4>
+    <div [hidden]="!filtersArray.categories.length > 0" class="filters-box">
+        <div class="list-box">
+          <div class="filter-list-item  md-checkbox" *rxFor="let item of filtersArray.categories;let i = index" [class.hidden]="i>4 && viewMore != -2">
+            <input type="checkbox"   type="checkbox" id="cat{{item?.id}}"  [value]="item?.id" (change)="onCategoryCheckboxChange($event)" />
+            <label for="cat{{item?.id}}" title="{{item?.name}}" >{{item?.name | cuttext: 15}}</label>
+          </div>
+            <a class="view-more" *ngIf="filtersArray.categories.length > 5" (click)="showMore(-2)">View More...</a>
+        </div>
+    </div>
+    <h4 [hidden]="!filtersArray.brands.length > 0">Brand</h4>
+    <div [hidden]="!filtersArray.brands.length > 0" class="filters-box">
+      <div class="list-box">
+        <div  class="filter-list-item md-checkbox"   *rxFor="let item of filtersArray.brands;let i = index" [class.hidden]="i>4 && viewMore != -1">
+          <input type="checkbox" id="brand{{item?.id}}"    [value]="item?.id" (change)="onBrandsCheckboxChange($event)" />
+          <label for="brand{{item?.id}}" title="{{item?.name}}" >{{item?.name  | cuttext: 15}}</label>
+        </div>
+          <a class="view-more" *ngIf="filtersArray.brands.length > 5" (click)="showMore(-1)">View More...</a>
+      </div>
+    </div>
+
+    <h4 [hidden]="filtersArray.attributes.length === 0 ">Attributes</h4>
+    <div  [hidden]="filtersArray.attributes.length === 0 " class="filters-box attrib-filters">
+      <div class="list-box" *ngIf="filtersArray.attributes">
+        <div *rxFor="let item of filtersArray?.attributes |  keys; let i = index;" >
+          <h3 class="sub-filter-heading" title="{{filtersArray?.attributes[item].attribute_title}}">{{filtersArray?.attributes[item].attribute_title | cuttext: 15}}</h3>
+          <div  class="filter-list-item  md-checkbox"  *rxFor="let att of filtersArray?.attributes[item].attribute_values; let j = index;" [class.hidden]="j>4 && viewMore != i">
+          <input type="checkbox" id="att{{i}}sub{{j}}"    [value]="att" (change)="onAttributeCheckboxChange($event,item)" />
+          <label title="{{att}}" for="att{{i}}sub{{j}}"  >{{att  | cuttext: 15}}</label>
+          </div>
+          <a  class="view-more" *ngIf="filtersArray?.attributes[item].attribute_values.length > 5" (click)="showMore(i)">View More...</a>
+        </div>
+
+      </div>
+    </div>
+
+    <button type="submit" class="filter">Filter</button>
+    </form>
+  </div>
+

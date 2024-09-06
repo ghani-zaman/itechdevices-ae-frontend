@@ -1,0 +1,112 @@
+@if(checkout) {
+<div class="checkout-header pt-3">
+    <div class="home-container">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <div class="logo">
+                    <a [routerLink]="['/']"><img width="200" height="54" src="/assets/svg/itech-logo-white.svg" title="iTtech Devices Logo" alt="iTtech Devices Logo" /></a>
+                </div>
+            </div>
+            @if(!isLoggedIn) {
+            <div class="col-auto d-flex align-items-center ms-auto">
+                <h4 class="me-3 mb-0">For Faster Checkout : </h4><a [routerLink]="['user','login']" class="btn w-auto m-0">Sign
+          In</a>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+} @else {
+<header class="header ">
+    <div class="top-bar">
+
+        <div class="home-container">
+            <div class="cart-icons">
+                <p class="msg me-auto">We Accept POs from Fortune 1000 Companies, Government Agencies, Universities, Schools and Colleges
+                </p>
+                <!-- <p class="mb-0 d-none d-md-block">
+
+
+          <span><a [routerLink]="['/user']" aria-label="Customer Service Link" role="link">Customer Service</a></span>
+        </p> -->
+                <!-- <div class="login ">
+          @if(!isLoggedIn){
+          <a [routerLink]="['/user/login']" aria-label="Account Link" role="link">
+            <p>Account</p>
+          </a>
+          }@else{
+          <div>
+            <div ngbDropdown class="">
+              <button type="button" class="simple-button" id="userlogindropdown" ngbDropdownToggle
+                aria-label="userlogindropdown" role="button">
+                <p>User</p>
+              </button>
+              <ul ngbDropdownMenu aria-labelledby="userlogindropdown" id="userlogin">
+                <li ngbDropdownItem>
+                  <a [routerLink]="'/user/account-information'">Account Info</a>
+                </li>
+                <li ngbDropdownItem>
+                  <a [routerLink]="'/user/orders'">Order History</a>
+                </li>
+                <li ngbDropdownItem>
+                  <a [routerLink]="'/user/wishlist'">Wish List</a>
+                </li>
+                <li ngbDropdownItem>
+                  <a [routerLink]="'/user/return-requests'">Return Request</a>
+                </li>
+                <li ngbDropdownItem>
+                  <a [routerLink]="'/user/address'">Address</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          }
+        </div> -->
+                <div class="topright d-none d-md-block">
+                    <span><a [routerLink]="['/user']" aria-label="Contact Us Link" role="link">Account</a></span>
+                    <span> | </span>
+                    <span><a [routerLink]="['/contact-us']" aria-label="Contact Us Link" role="link">Customer Service</a></span>
+                    <!-- <div ngbDropdown class="icon-box">
+                        <button #greeting type="button" class="simple-button d-flex align-items-center" id="customerservicesdropdown" ngbDropdownToggle aria-label="customerservicesdropdown" role="button">
+              <p>Customer Service</p>
+            </button> @defer (on interaction(greeting)) {
+                        <ul ngbDropdownMenu aria-labelledby="customerservicesdropdown" id="customerservices">
+                            <li ngbDropdownItem>
+                                <a [routerLink]="'/terms'">Terms and Conditions</a>
+                            </li>
+                            <li ngbDropdownItem>
+                                <a [routerLink]="'/privacy-policy'">Privacy Policy</a>
+                            </li>
+                            <li ngbDropdownItem>
+                                <a [routerLink]="'/return_policy'">Return Policy</a>
+                            </li>
+                            <li ngbDropdownItem><a [routerLink]="'/warranty'">Warranty</a></li>
+                            <li ngbDropdownItem>
+                                <a [routerLink]="'/user/sign-up'">My Account/Create Account</a>
+                            </li>
+                        </ul>
+                        } @placeholder {
+                        <ul></ul>
+                        }
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="logo-row home-container">
+
+            <div class="logo">
+                <div>
+                    <a [routerLink]="['/']"><img src="/assets/svg/itech-logo.svg" title="iTtech Devices Logo" alt="iTtech Devices Logo" width="200" height="54" /></a>
+                </div>
+            </div>
+            <app-top-smart-search class="search input-group search-container"></app-top-smart-search>
+            <app-top-cart [menu]="menu" [treex]="tree" class="action-container" style="min-height:16px;"></app-top-cart>
+        </div>
+
+        <app-top-main-menu [menu]="menu" [tree]="tree" [menux]="menu"></app-top-main-menu>
+    </div>
+
+</header>
+}

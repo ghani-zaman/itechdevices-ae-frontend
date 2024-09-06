@@ -1,0 +1,6 @@
+:host p,:host h2 {margin: 0;}
+:host p {line-height: 1.5em;}
+:host .ctn {background: url("/assets/images/ctn-bg.webp") no-repeat center;background-size: cover;padding: 80px 0px;}
+:host .ctn-inside .deals-section .deal-right-section p {margin-bottom: 20px;}
+
+

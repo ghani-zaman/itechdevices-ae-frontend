@@ -1,0 +1,145 @@
+
+<div class="home-container category-container">
+  <div class="filters-tab">
+    <h2 class="tab-heading">Filter</h2>
+    <app-filters  *ngIf="!filterLoading" [filtersArray]="filters" [currentFilters]="queryFilters" (finalData)="filtersChanged($event)"></app-filters>
+  </div>
+  <div class="main-tab">
+    <!--<h2 class="tab-heading">{{ category?.title }}</h2>
+    <app-top-categories> </app-top-categories>-->
+
+    <h2 class="tab-heading">{{ keyword }}</h2>
+    <app-block-loader [hidden]="!productLoading"></app-block-loader>
+    <app-product-list (changeOrderEvent)="changeOrder($event)" (pageChangeEvent)="changePage($event)" [products]="products" [total]="totalProducts" [cpage]="currentPage" [limit]="defaultPageSize"> </app-product-list>
+
+    <!--<h2 class="tab-heading">Featured Brands</h2>
+    <app-top-brands></app-top-brands>
+  </div>
+</div>
+<div class="container padd-0">
+    <nav aria-label="breadcrumb">
+        <!-- Breadcrum lsit -->
+        <ol class="breadcrumb poppins-14 font-12 color-5e">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Search</a></li>
+        </ol>
+    </nav>
+    <!-- Breadcrum lsit End -->
+    <h1 class="csi category-heading"><span>{{ keyword }}</span></h1>
+
+    <div class="row">
+        <!-- Filters -->
+        <ng-container>
+            <app-filters [hidden]="!showfilters" class="col-lg-3 col-sm-12 filter-container" *ngIf="!filterLoading && showfilters" [filtersArray]="filters" [currentFilters]="queryFilters" (finalData)="filtersChanged($event)"></app-filters>
+        </ng-container>
+        <!-- filters done -->
+
+        <div [class.col-lg-9]="showfilters" class="col-sm-12 satnam" style="padding-bottom: 40px">
+            <div class="row cat-sort-box">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="font-10 dark-title margin-0 padding-rl-15">
+                        <span class="float-left sort-view">
+              <span class="grid-click" [ngClass]="{'active': !listView}" (click)="showGrid()"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M448 96V224H288V96H448zm0 192V416H288V288H448zM224 224H64V96H224V224zM64 288H224V416H64V288zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"/></svg></span> &nbsp;<span
+                class="list-click" [ngClass]="{'active': listView}" (click)="showList()"
+              ><svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+            </span>
+
+                        <span class="sort-check">
+                          <input *ngIf="onSale" checked type="checkbox" value='true'  (change)="changeOnSale($event)" />
+                          <input *ngIf="!onSale" type="checkbox"  value='false'   (change)="changeOnSale($event)" />
+              <label>Show only product on sale</label>
+            </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-12">
+                    <select (change)="changePageSize($event)" class="font-10 light-grey custom-select cat-sort-select float-right">
+            <option [selected]="defaultPageSize == 12" [value]="12">Show <b>16</b></option>
+            <option [selected]="defaultPageSize == 24"  [value]="24">Show 24</option>
+            <option [selected]="defaultPageSize == 36"  [value]="36">Show 36</option>
+            <option [selected]="defaultPageSize == 48"  [value]="48">Show 48</option>
+          </select>
+
+                    <select (change)="changeOrder($event)" class="font-10 light-grey custom-select cat-sort-select float-right">
+            <option [selected]="sortOrder === 'p.id DESC'" [value]="'p.id DESC'">Sort by <b>latest +</b></option>
+            <option [selected]="sortOrder === 'p.id ASC'" [value]="'p.id ASC'">Sort by <b>oldest +</b></option>
+            <option  [selected]="sortOrder === 'p.name ASC'"  [value]="'p.name ASC'">Name A-Z</option>
+            <option  [selected]="sortOrder === 'p.name DESC'"  [value]="'p.name DESC'">Name Z-A</option>
+            <option  [selected]="sortOrder === 'wp.refurbished_grade_a_price ASC'"  [value]="'wp.refurbished_grade_a_price ASC'">Price Low-High</option>
+            <option  [selected]="sortOrder === 'wp.refurbished_grade_a_price DESC'"  [value]="'wp.refurbished_grade_a_price DESC'">Price High-Low</option>
+          </select>
+                </div>
+            </div>
+
+            <div class="product-listing-content">
+                <app-block-loader [hidden]="!productLoading"></app-block-loader>
+                <div class="product-listing-container row" [hidden]="productLoading" [@slidein]='!productLoading'>
+                <ng-container *ngIf="products?.length > 0">
+                    <!-- 1 product box detail start-->
+                    <div *rxFor="
+              let item of products
+                | paginate
+                  : {
+                      itemsPerPage: defaultPageSize,
+                      currentPage: currentPage,
+                      totalItems: totalProducts
+                    };
+              let i = index
+            " app-product-card [product]="item" class="row margin-0 drive-detail-box" [ngClass]="{'grid-view': !listView, 'list-view': listView}"></div>
+
+                    <!--bhaji replace grid-vew with list-view-->
+                    <!-- 1 product box  end-->
+                  </ng-container>
+                </div>
+                <!--pagination-->
+                <div class="row" [hidden]="productLoading || products?.length == 0">
+                  <ng-container *ngIf="products?.length > 0">
+                    <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+                        <div class="col-lg-12 text-center">
+                            <ul class="pagination">
+                                <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+
+                                    <button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                                    </button>
+                                </li>
+                                <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                                    <button *ngIf="!p.isFirstPage()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                                    </button>
+                                </li>
+                                <ng-container *rxFor="let page of p.pages">
+
+                                    <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+                                        <button class="a-link">{{
+                                            page.label
+                                          }}</button>
+
+                                    </li>
+                                    <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+                                        <button class="a-link">{{ page.label }}</button>
+               </li>
+                      </ng-container>
+                      <li [class.disabled]="p.isLastPage()">
+                        <a *ngIf="!p.isLastPage()" (click)="p.next()"
+                          ><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></a>
+                        <a *ngIf="p.isLastPage()"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></a>
+                      </li>
+                    </ul>
+                        </div>
+                    </pagination-template>
+                  </ng-container>
+                </div>
+
+                <div class="row" *ngIf="!productLoading && products?.length === 0">
+                    <div class="col-sm-12">
+                        <h2>No Products Available</h2>
+                    </div>
+
+                </div>
+                <!--pagination-->
+            </div>
+        </div>
+        <!-- Hard drive section end -->
+    </div>
+</div>

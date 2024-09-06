@@ -1,0 +1,21 @@
+<!--middle banner start-->
+<div  data-aos-easing="ease-in-out" data-aos="zoom-in" data-aos-once="true"  class="container middle-banner">
+  <div   class="row">
+      <div *rxFor="let item of banners" [ngStyle]="{'background-image': 'url(' + path + item.image + ')'}" class="col-sm-4 middle-banner-right bg1 ">
+          <div class="row">
+              <div class="col-sm-12">
+                  <h2>{{item.title}}</h2>
+                  <p><a href="{{item.btnUrl}}">{{item.btnText}} <img src="/assets/svg/right-full-arrow.svg" loading="lazy" alt="Right Arrow" width="" height=""></a></p>
+              </div>
+              <div class="col-sm-12 box novisibility">
+                  <img loading="lazy" alt="{{item.title}}" src="{{path}}{{item.image}}" />
+              </div>
+          </div>
+
+      </div>
+
+
+  </div>
+</div>
+
+<!--middle banner end-->

@@ -1,0 +1,33 @@
+.featured-wrap{
+  padding-top: 20px !important;
+}
+.featured-products {
+  margin: 20px 0 0;
+  padding-inline: 25px !important;
+  /* background-color: #f3f3f3; */
+}
+
+.p-card-parent {
+  position: relative;
+  max-width: 318px;
+  text-decoration: none;
+}
+.swiper-button-nexty, .swiper-button-prevy{
+  background: url('/assets/icons/arrow-right.svg') no-repeat;
+  width: 11px;
+  height: 17px;
+  position: absolute;
+  top: 60%;
+  opacity: 0.7;
+}
+.swiper-button-nexty {
+  transform: translateY(-50%);
+  right: 0px;
+}
+
+.swiper-button-prevy {
+  transform: translateY(-50%) rotate(180deg);
+  left: 0px;
+}
+.swiper-button-prevy[aria-disabled="true"]{opacity: 0.3;cursor: not-allowed;}
+.swiper-button-nexty[aria-disabled="true"]{opacity: 0.3;cursor: not-allowed;}

@@ -1,0 +1,19 @@
+.pricealert-popup p{
+  font-size: 18px;
+}
+
+.submit-btn{
+  background-color: #f4ab0c;
+  border-radius: 0px;
+  color: black;
+  font-weight: bold;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease-in-out all;
+}
+
+.submit-btn:hover{
+  background-color: var(--primary);
+  color: white;
+}

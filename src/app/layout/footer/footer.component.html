@@ -1,0 +1,151 @@
+<app-jsonld [data]="webjson"></app-jsonld>
+<app-jsonld [data]="orgjson1"></app-jsonld>
+@if(checkout) {
+<div class="checkout-footer text-center py-3">
+    <div class="mini-footer-links">
+        <a [routerLink]="'/warranty'">Warranty Info</a> |
+        <a [routerLink]="'/tax-exempt'">Tax Exempt</a> |
+        <a [routerLink]="'/shipping'">Shipping Policy</a> |
+        <a [routerLink]="'/return_policy'">Return Policy</a> |
+        <a [routerLink]="'/payment-methods'">Payment Method</a> |
+        <a [routerLink]="'/privacy-policy'">Privacy Policy</a> |
+        <a [routerLink]="'/terms'">Terms and Condition</a>
+    </div>
+    <div class="mini-footer-address">
+        <span>Address: Office 1904, Metropolis Tower - Opp Bay Square Dubai UAE 186138</span> |
+        <span><a href="tel:+971554255786">+971554255786</a></span> | <span><a
+                href="mailto:support@itechdevices.ae">orders&#64;itechdevices.ae</a></span>
+    </div>
+</div>
+} @else{
+
+<footer class="footer">
+    <div class="home-container">
+
+        <!-- <div class="form-row row">
+                <div class="col-md-5">
+                    <p class="sbshead">Get the latest updates</p>
+                    <p>Get all the latest information on events, sales and offers.</p>
+                </div>
+                <div class="form col-md-6 offset-md-1">
+                    <form [formGroup]="form" (submit)="submitForm(form)" id="subscribe-form"
+                        style="flex-direction:column">
+
+                        <div style="display:flex">
+                            <input type="text" id="sub-email" formControlName="email" placeholder="Enter Email" />
+
+
+                            <div class="relative-box">
+                                <button [class.spinner]="loading" [disabled]="form.invalid || loading" type="submit"
+                                    class="btn">Subscribe</button>
+                            </div>
+                        </div>
+                        <div class="errordiv" *ngIf="
+            form.controls.email.invalid &&
+            form.controls.email.errors &&
+            (form.controls.email.dirty || form.controls.email.touched)
+          ">
+
+                            <small class="text-danger" *ngIf="form.controls.email.hasError('required')">Enter the email
+                                address.</small>
+                            <small class="text-danger" *ngIf="form.controls.email.hasError('email')">Enter a valid email
+                                address.</small>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div> -->
+        <div class="second-row row">
+            <div class="categories col-6 col-sm-6 col-md-3 pe-5">
+                <img loading="lazy" src="/assets/svg/itech-logo-white.svg" alt="Itech Devices" title="footer-logo" class="mb-2" width="200" height="53">
+                <div class="help-line">
+                    <p>+971554255786</p>
+                    <p>orders&#64;itechdevices.ae</p>
+                    <p>Office 1904, Metropolis Tower - Opp Bay Square Dubai UAE 186138</p>
+                    <p style="font-size: 16px;">10:00 - 17:00 (UAE Standard Time)</p>
+
+                    <div class="social-icons mb-4">
+                        <!-- <a href="https://www.facebook.com/itechdevicesus" target="_blank"><img loading="lazy"
+                                src="/assets/svg/facebook.svg" alt="Facebook" width="30px" height="30px" /></a>
+
+                        <a href="https://twitter.com/direct_hard" target="_blank"><img loading="lazy"
+                                src="/assets/svg/twitter.svg" alt="Twitter" width="30px" height="30px" /></a> -->
+
+                        <a href="https://www.linkedin.com/company/itech-devices/" target="_blank"><img loading="lazy" src="/assets/svg/linkdin.svg" alt="Linked In" width="30px" height="30px" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="categories col-6 col-sm-4 col-md-3">
+                <h3>Featured Categories</h3>
+                <ul>
+                    <li><a [routerLink]="['/categories/storage-devices/hard-drives/server-hard-drives.html']">Server
+                            Hard Drives</a></li>
+                    <li><a [routerLink]="['/categories/memory/server-memory.html']">Server Memory</a></li>
+                    <li><a [routerLink]="['/categories/power-equipment/power-supplies.html']">Power Supplies</a>
+                    </li>
+                    <li><a [routerLink]="['/categories/motherboards/server-motherboards.html']">Server
+                            Motherboards</a></li>
+                    <li><a [routerLink]="['/categories/motherboards/server-motherboards.html']">Processors</a></li>
+                    <li><a [routerLink]="['/categories/network-and-accessories/network-switches.html']">Network
+                            Switches</a></li>
+                </ul>
+            </div>
+            <!-- <div class="categories col-6 col-sm-4 col-md-3">
+                <h3>Policies & Guides</h3>
+                <ul>
+                    <li><a [routerLink]="'/privacy-policy'">Privacy Policy</a></li>
+                    <li><a [routerLink]="'/return_policy'">Return Policy</a></li>
+                    <li><a [routerLink]="'/warranty'">Warranty Info</a></li>
+
+                    <li><a [routerLink]="'/tax-exempt'">Tax Exempt</a></li>
+                    <li><a [routerLink]="'/payment-methods'">Payment Methods</a></li>
+                    <li><a [routerLink]="'/terms'">Terms & Conditions</a></li>
+
+                </ul>
+            </div> -->
+            <div class="categories col-6 col-sm-4 col-md-3">
+                <h3>Customer Services</h3>
+                <ul>
+                    <li><a [routerLink]="'/privacy-policy'">Privacy Policy</a></li>
+                    <li><a [routerLink]="'/shipping'">Shipping</a></li>
+                    <li><a [routerLink]="'/return_policy'">Return Policy</a></li>
+                    <li><a [routerLink]="'/refund_policy'">Refund Policy</a></li>
+                    <li><a [routerLink]="'/warranty'">Warranty</a></li>
+                    <li><a [routerLink]="'/terms'">Terms & Conditions</a></li>
+                    <!-- <li><a [routerLink]="'/user/sign-up'">My Account/Create Account</a></li> -->
+                </ul>
+            </div>
+            <div class="categories col-6 col-sm-4 col-md-3">
+                <h3>Corporate Information</h3>
+                <ul>
+                    <li><a [routerLink]="'/about-us'">About Us</a></li>
+                    <!-- <li><a [routerLink]="'/blog'">Blog</a></li> -->
+                    <!-- <li><a [routerLink]="'/faq'">FAQ</a></li> -->
+                    <li><a [routerLink]="'/category-sitemap'">Sitemap</a></li>
+                    <li><a [routerLink]="'/contact-us'">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- <div class="fourth-row">
+
+                <img loading="lazy" alt="online payments" title="payment methods" src="/assets/images/payment_icons.webp" width="237" height="34">
+                    <img loading="lazy" alt="ISO" title="ISO Certified" src="/assets/images/cci-white.svg" width="178" height="101">
+            </div> -->
+
+
+
+
+    </div>
+    <div class="footer-bottom">
+        <p class="m-0 text-center">&copy; {{fdate | date:'YYYY'}} iTechDevices. All Rights Reserved. | All trademarks are property of their respective owners.</p>
+        <!-- <div class="flag-list">
+            <p>Our Local Sites:</p>
+            <a class="ms-2" target="_blank" href="https://itechdevices.co.uk/"><img loading="lazy" src="/assets/images/flag1.png" alt="UK" width="31px" height="31px" /></a>
+            <a class="ms-2" href="https://itechdevices.ae/"><img loading="lazy" src="/assets/images/flag2.png" alt="US" width="31px" height="31px" /></a>
+        </div> -->
+    </div>
+</footer>
+
+
+}

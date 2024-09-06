@@ -1,0 +1,10 @@
+
+@if(category?.footer_description && category?.footer_description!=null){
+  <div class="home-container">
+    <div class="category-footer" [innerHTML]="category?.footer_description | htmlSanitizer">
+
+    </div>
+  </div>
+}
+
+

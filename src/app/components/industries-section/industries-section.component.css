@@ -1,0 +1,72 @@
+:host .industries {
+    padding: 20px 0;
+}
+
+:host .industries a {
+    text-decoration: none;
+    color: #333333;
+}
+
+:host .industries .indusbox {
+    text-align: center;
+    background-color: #EEEEEE;
+    padding: 20px;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+}
+
+:host .industries .indusbox h6 {
+    font-size: 20px;
+    color: #333333;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+:host .industries .indusbox img {
+    transition: all 0.3s ease-in-out;
+}
+
+:host .industries .indusbox:hover {
+    background-color: #3190D2;
+}
+
+:host .industries .indusbox:hover img {
+    filter: grayscale(1) brightness(0) invert(1);
+}
+
+:host .industries .indusbox:hover h6 {
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+     :host .industries .indusbox {
+        padding: 10px;
+    }
+     :host .industries .indusbox img {
+        width: 40px;
+        height: auto;
+    }
+     :host .industries .indusbox h6 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+     :host .industries .indusbox {
+        padding: 10px 6px;
+        min-width: 80px;
+    }
+     :host .industries .indusbox img {
+        width: 30px;
+    }
+     :host .industries .indusbox h6 {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,124 @@
+<div class="home-container">
+  <div class="rfq-form-section">
+    <h1>Looking for a Bulk Quantity?</h1>
+    <p>Request a Quote below and one of our sales representative will get in touch with you very soon</p>
+    @if(formCreated){
+    <form [formGroup]="quoteForm" (submit)="submitQuoteForm(quoteForm)" class="row">
+      <div class="col-md-8 mb-3">
+        <div class="input-group">
+          <span class="input-group-text" id="mpn-field">MPN</span>
+          <input id="mpn" type="text" readonly class="form-control" placeholder="Manufacturer Part Number"
+            aria-label="MPN" aria-describedby="mpn-field" value="{{product?.sku}}" />
+        </div>
+        <p class="error m-0 d-none">Please enter MPN</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="input-group">
+          <span class="input-group-text" id="qty-field">Qty:</span>
+          <input id="qty" type="text" class="form-control" formControlName="quantity" placeholder="Quantity"
+            aria-label="MPN" aria-describedby="qty-field" />
+          <div class="error-block" *ngIf="
+                                                quoteForm.controls.quantity.invalid &&
+                                                (quoteForm.controls.quantity.dirty ||
+                                                  quoteForm.controls.quantity.touched)
+                                              ">
+            <p class="error" *ngIf="
+                                                  quoteForm.controls.quantity.hasError('required')
+                                                ">
+              Please enter qty
+            </p>
+            <p class="error" *ngIf="
+                                                  quoteForm.controls.quantity.hasError('pattern')
+                                                ">
+              Please enter valid qty
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <!-- <div class="col-md-12 mb-3" hidden>
+        <label for="name" class="visually-hidden">Full Name</label>
+        <input id="name" formControlName="name" type="text" class="form-control" placeholder="Full Name" />
+        <div class="error-block" *ngIf="
+                                        quoteForm.controls.name.invalid &&
+                                        (quoteForm.controls.name.dirty ||
+                                          quoteForm.controls.name.touched)
+                                      ">
+          <p class="error" *ngIf="quoteForm.controls.name.hasError('required')">
+            Please enter Full name
+          </p>
+        </div>
+      </div> -->
+      <div class="col-md-12 mb-3">
+        <label for="lastName" class="visually-hidden">Full Name</label>
+        <input id="FullName" formControlName="lastName" type="text" class="form-control" placeholder="Full Name" />
+        <div class="error-block" *ngIf="
+                                        quoteForm.controls.lastName.invalid &&
+                                        (quoteForm.controls.lastName.dirty ||
+                                          quoteForm.controls.lastName.touched)
+                                      ">
+          <p class="error" *ngIf="
+                                          quoteForm.controls.lastName.hasError('required')
+                                        ">
+            Please enter Full Name
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="business-email" class="visually-hidden">Email</label>
+        <input id="business-email" formControlName="email" type="email" class="form-control" placeholder="Work Email" />
+        <div class="error-block" *ngIf="
+                                        quoteForm.controls.email.invalid &&
+                                        (quoteForm.controls.email.dirty ||
+                                          quoteForm.controls.email.touched)
+                                      ">
+          <p class="error" *ngIf="
+                                          quoteForm.controls.email.hasError('required')
+                                        ">
+            Please enter email
+          </p>
+          <p class="error" *ngIf="quoteForm.controls.email.hasError('email')">
+            Please enter a valid email
+          </p>
+          <p class="error" *ngIf="quoteForm.controls.email.hasError('pattern')">
+            Please enter a valid email
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="phone-number" class="visually-hidden">Phone Number</label>
+        <input id="phone-number" class="form-control" formControlName="phone" type="text" placeholder="Phone Number" />
+        <div class="error-block" *ngIf="
+                                        quoteForm.controls.phone.invalid &&
+                                        (quoteForm.controls.phone.dirty ||
+                                          quoteForm.controls.phone.touched)
+                                      ">
+          <p class="error" *ngIf="
+                                          quoteForm.controls.phone.hasError('required')
+                                        ">
+            Please enter phone number
+          </p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <button type="submit" class="btn" [disabled]=" quoteloading">
+          @if(quoteloading) {
+          Please Wait ...
+          } @else{
+          Send Quote
+          }
+
+        </button>
+      </div>
+      <div class="col-md-12">
+        <p class="note">Quotes processed weekdays 8:00 am - 6:00 pm (GMT+1), with 5-10 minute response time. Holiday
+          submissions addressed next working day.</p>
+      </div>
+      <div class="form-group captcha">
+        <re-captcha size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{ siteKey }}"
+          (resolved)="submitNow(quoteForm)"></re-captcha>
+      </div>
+    </form>
+    }
+  </div>
+</div>

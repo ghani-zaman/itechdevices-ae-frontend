@@ -1,0 +1,29 @@
+<div style="width:100%;position: relative;">
+<div class="input-group search-group" style="flex-wrap:nowrap;
+display: flex;">
+    <input style="
+    min-width: 85%;
+"  #productSearchInput i (focus)="focusIn($event)" (keyup.enter)="onEnter($event);" class="s-text search form form-control my-0 py-1 " type="text" placeholder="Search keyword, LN or model number" aria-label="Search keyword, LN or model number " [(ngModel)]="searchTerm" />
+    <div
+ class="input-group-append">
+        <button (click)="gotoSearchPage()" aria-label="search" type="submit" class="input-group-text" id="basic-addon2"><img width="20" height="20" src="assets/svg/search.svg" alt=""></button>
+    </div>
+</div>
+
+<div [hidden]="!isSearching" class="icon-container">
+    <i class="loader"></i>
+</div>
+<div [hidden]="results?.length == 0 || searchTerm.length < 3" class="icon-container" (click)="hideSearch()">
+    <span class="cross"><img src="/assets/svg/cross.svg" loading="lazy" alt="close Search" width="12" height="16"></span>
+</div>
+<div class="search-result" [hidden]="results?.length == 0 || searchTerm.length < 3">
+    <div *rxFor="let item of results" class="search-item">
+        <a (click)="openProductPage(item)">{{item.name || item?.pname}}</a>
+
+    </div>
+
+</div>
+<!-- <div class="input-group-append">
+        <button (click)="gotoSearchPage()" class="input-group-text search-icon" id="basic-text1"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></button>
+      </div> -->
+    </div>

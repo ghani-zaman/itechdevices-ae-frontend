@@ -1,0 +1,46 @@
+<main class="privacy-container home-container">
+  <div class="page-title-wrapper">
+    <h1>Category Sitemap</h1>
+  </div>
+
+  <div class="columns">
+    <div class="column main">
+      <div class="catalog-sitemap">
+        <ul class="level vcard-columns">
+          @for(level1 of tree; track level1.id) {
+          <li class="level1 vcard">
+            <a [routerLink]="['/categories/' + level1?.urlsource?.url]">{{level1.name}} &nbsp; <img src="/assets/svg/arrow-right.svg" loading="lazy" alt="Level one Cat" width="13px" height="17px"></a>
+            @if(level1?.childrens.length > 0) {
+
+            <ul class="level1">
+              @for(level2 of level1?.childrens; track level2.id) {
+              <li class="level2">
+                <a
+                [routerLink]="['/categories/' + level2?.urlsource?.url]"
+                  class="link mc-parent"
+                  >{{level2.name}} &nbsp; <img src="/assets/svg/arrow-right.svg" loading="lazy" alt="Level two Cat" width="7" height="10"></a>
+                @if(level2?.childrens.length > 0) {
+                <ul class="level2">
+                  @for(level3 of level2?.childrens; track level3.id) {
+                  <li class="level3">
+                    <a
+                    [routerLink]="['/categories/' + level3?.urlsource?.url]"
+                      class="link mc-parent"
+                      >{{level3.name}}</a
+                    >
+                  </li>
+                }
+                </ul>
+              }
+              </li>
+            }
+            </ul>
+
+            }
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>

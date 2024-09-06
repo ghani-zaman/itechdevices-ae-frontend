@@ -1,0 +1,37 @@
+<div class="p-card">
+  <div class="p-img">
+    <img loading="lazy" *ngIf="product?.images.thumbnail && product.images.thumbnail != null" alt="{{product?.name}}" [src]="product.images.thumbnail"  srcset="">
+      <img loading="lazy" *ngIf="!product.images.thumbnail || product.images.thumbnail == null " alt="{{product?.name}}" [src]="'assets/images/no-image.webp'"  srcset="">
+  </div>
+  <h3 class="p-title">
+    {{product?.title | cuttext:100}}
+  </h3>
+  <div class="p-details">
+    @if(product?.refurbished_grade_a_price == null || product?.refurbished_grade_a_price == 0){
+      <p class="herotext">
+        <span>Call for Price:</span>
+        <a href="tel:+971554255786">+971-5-54255786</a>
+      </p>
+
+    } @else{
+    <div
+          class="p-pricing"
+          *ngIf="product?.discount !== null && product?.discount !== 0"
+        >
+          <p class="p-price">{{ product?.refurbished_grade_a_price | currency }}</p>
+          <p class="disc-price">
+            {{ product | priceConversion : "refurbished_grade_a_price" | currency }}
+          </p>
+        </div>
+        <div
+          class="p-pricing"
+          *ngIf="product?.discount === null || product?.discount === 0"
+        >
+          <p class="p-price">{{ product?.refurbished_grade_a_price | currency }}</p>
+        </div>
+      }
+  </div>
+  <!-- <div class="learn-more">
+    Learn More
+  </div> -->
+</div>

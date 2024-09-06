@@ -1,0 +1,14 @@
+
+.product-finder-ctn {background: url("/assets/images/productfinderbackground.webp") no-repeat center;background-size:cover;padding-top: 20px;padding-bottom: 10px;}
+.product-finder-ctn .product-finder-ctn-inner h2 {color: white;font-size: 18px;font-weight: bold;margin-bottom: 5px;}
+.product-finder-ctn .product-finder-ctn-inner p {color: white;margin-bottom: 15px;}
+.product-finder-ctn .product-finder-ctn-inner form select, .ng-select {margin: 10px 0;} 
+.product-finder-ctn .product-finder-ctn-inner form button {background: transparent -webkit-gradient(linear, left top, left bottom, from(#ffd987), to(#f4ab0c)) 0% 0%;background: transparent linear-gradient(180deg, #ffd987 0%, #f4ab0c 100%) 0% 0%;border: none;color: white;padding: 10px 0;cursor: pointer;min-width: 150px;text-align: center;}
+.product-finder-ctn .services .service-box {margin-top: 15px;}
+.product-finder-ctn .services .service-box img {-webkit-filter: invert(1);filter: invert(1);}
+.product-finder-ctn .services .service-box h5 {color: white;}
+.product-finder-ctn .services .service-box p {color: white;}
+
+
+
+

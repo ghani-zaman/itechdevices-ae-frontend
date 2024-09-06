@@ -1,0 +1,451 @@
+<!-- Registration Page start-->
+<div class="checkOut register">
+  <div class="home-container">
+
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+  </div>
+  <div class="home-container" *ngIf="!businessAccount">
+
+    <div class="row g-0 register-box new-form">
+      <div class="col-md-9" *ngIf="formCreated">
+        <div class="regiter-form">
+          <h1 class="form-title-blue">Personal Account</h1>
+          <p class="form-text">Shopping for business? <a class="text-decoration-underline green-text"
+            (click)="businessAccountf()">Create a business account</a></p>
+
+          <!--User Info Part-->
+
+          <div class="user-form form-body-inner">
+            <!-- <h2>User Informatiom</h2> -->
+            <form [formGroup]="registerForm" (submit)="submitForm(registerForm)">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="FirstName">First Name*</label>
+                    <input formControlName="first_name" type="text" class="form-control">
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.first_name.invalid && (registerForm.controls.first_name.dirty || registerForm.controls.first_name.touched)">
+                      <p class="error" *ngIf="registerForm.controls.first_name.hasError('required') ">
+                        Please enter your first name
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="LastName">Last Name*</label>
+                    <input formControlName="last_name" type="text" class="form-control">
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.last_name.invalid && (registerForm.controls.last_name.dirty || registerForm.controls.last_name.touched)">
+                      <p class="error" *ngIf="registerForm.controls.last_name.hasError('required') ">
+                        Please enter your last name
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Email">E-mail Address*</label>
+                    <input formControlName="email" type="email" class="form-control">
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.email.invalid && (registerForm.controls.email.dirty || registerForm.controls.email.touched)">
+                      <p class="error" *ngIf="registerForm.controls.email.hasError('required') ">
+                        Please enter the your email address
+                      </p>
+                      <p class="error" *ngIf="registerForm.controls.email.hasError('email') ">
+                        Please enter a valid email address
+                      </p>
+                      <p class="error" *ngIf="registerForm.controls.email.hasError('uniqueValidator') ">
+                        Email address already taken
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="ConfirmEmail">Phone*</label>
+                    <input formControlName="phone" type="text" class="form-control">
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.phone.invalid && (registerForm.controls.phone.dirty || registerForm.controls.phone.touched)">
+                      <p class="error" *ngIf="registerForm.controls.phone.hasError('required') ">
+                        Please enter your phone
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="Pass">Password*</label>
+                    <div class="password-container">
+                    <input formControlName="password" type="{{(showPassword)? 'text' : 'password'}}" class="form-control password-input">
+                    <span class="toggle-password" >
+                      @if(!showPassword){
+                      <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password" width="20" height="16"></span>
+                      } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password" width="20" height="16"></span>
+                      }
+                    </span>
+                  </div>
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.password.invalid && (registerForm.controls.password.dirty || registerForm.controls.password.touched)">
+                      <p class="error" *ngIf="registerForm.controls.password.hasError('required') ">
+                        Please enter your password
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="ConfirmPass">Confirm Password*</label>
+                    <div class="password-container">
+                    <input formControlName="confirm_password" type="{{(showPassword)? 'text' : 'password'}}" class="form-control password-input">
+                    <span class="toggle-password" >
+                      @if(!showPassword){
+                      <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password" width="20" height="16"></span>
+                      } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password" width="20" height="16"></span>
+                      }
+                    </span>
+                    </div>
+                    <div class="error-block"
+                      *ngIf="registerForm.controls.confirm_password.invalid && (registerForm.controls.confirm_password.dirty || registerForm.controls.confirm_password.touched)">
+                      <p class="error" *ngIf="registerForm.controls.confirm_password.hasError('required') ">
+                        Please enter your password again
+                      </p>
+                      <p class="error" *ngIf="registerForm.controls.confirm_password.hasError('confirmedValidator') ">
+                        Passwords do not match.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 p-l-10">
+                  <div class="form-check custom-check-margin">
+                    <input formControlName="newsletter" type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label ms-2" for="exampleCheck1">Sign me up for promotional offers only available
+                      to e-mail subscribers.</label>
+                  </div>
+                </div>
+                <!-- user Info Part End-->
+                <br />
+
+                  <div class="col-sm-12">
+                    <div class="form-group captcha"  >
+
+                      <re-captcha (resolved)="submitNow(registerForm)"  size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                    </div>
+                  </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <button [class.spinner]="registerLoading" [disabled]=" registerLoading"
+                      type="submit" class="btn">Create an Account</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="register-right-box">
+          <h1>Already Sign Up?</h1>
+          <p class="form-text">If you have an account sign in with your email address.</p>
+          <a class="btn" [routerLink]="['/user/login']">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-container" *ngIf="businessAccount">
+    <div class="row register-box new-form" *ngIf="bformCreated">
+      <div class="col-md-12">
+        <div class="regiter-form " >
+          <h1>Business Account</h1>
+          <small class="form-text">Shopping for yourself? <a class="text-decoration-underline green-text"
+              (click)="personalAccountf()">Create a personal account</a></small>
+          <br />
+          <form [formGroup]="bregisterForm" (submit)="submitFormRegister(bregisterForm)">
+          <div class="business-form form-body-inner">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Business">Business Type*</label>
+                  <select class="form-control" formControlName="business_type">
+                    <!--<option value="Business 1-19 Employee">Business 1-19 Employee</option>-->
+                    <option value="Reseller">Reseller</option>
+                    <option value="System Integrator">System Integrator</option>
+                    <option value="Small/Medium Enterprise">Small/Medium Enterprise</option>
+                    <option value="Large Enterprise">Large Enterprise</option>
+                    <option value="K-12 Education">K-12 Education</option>
+                    <option value="Higher Education">Higher Education</option>
+                    <option value="Federal & Govt">Federal & Govt.</option>
+                    <option value="Military & Defense">Military & Defense</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Business">Employee Size*</label>
+                  <select class="form-control" name="employee_size">
+                    <option value="1-10 employees">1-10 employees</option>
+                    <option value="11-50 employees">11-50 employees</option>
+                    <option value="51-200 employees">51-200 employees</option>
+                    <option value="201-500 employees">201-500 employees</option>
+                    <option value="501-1000 employees">501-1000 employees</option>
+                    <option value="1001-5000 employees">1001-5000 employees</option>
+                    <option value="5001-10,000 employees">5001-10,000 employees</option>
+                    <option value="10,001+ employees">10,001+ employees</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Name">Organization Name*</label>
+                  <input formControlName="company_name" type="text" class="form-control">
+                  <div class="error-block"
+                  *ngIf="bregisterForm.controls.company_name.invalid && (bregisterForm.controls.company_name.dirty || bregisterForm.controls.company_name.touched)">
+                  <p class="error" *ngIf="bregisterForm.controls.company_name.hasError('required') ">
+                    Please enter your organisation name
+                  </p>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Phone">Phone*</label>
+                  <input formControlName="phone" type="text" class="form-control">
+                  <div class="error-block"
+                  *ngIf="bregisterForm.controls.phone.invalid && (bregisterForm.controls.phone.dirty || bregisterForm.controls.phone.touched)">
+                  <p class="error" *ngIf="bregisterForm.controls.phone.hasError('required') ">
+                    Please enter your phone
+                  </p>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="address1">Billing Address Line1*</label>
+                  <input formControlName="street_address1"  type="text" class="form-control">
+                  <div class="error-block"
+                  *ngIf="bregisterForm.controls.street_address1.invalid && (bregisterForm.controls.street_address1.dirty || bregisterForm.controls.street_address1.touched)">
+                  <p class="error" *ngIf="bregisterForm.controls.street_address1.hasError('required') ">
+                    Please enter your address
+                  </p>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="address2">Billing Address Line2*</label>
+                  <input formControlName="street_address2" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Country*</label>
+                  <ng-select placeholder="Select Country" formControlName="country"
+                      (change)="getStates($event)">
+                      <ng-option *rxFor="let item of countriesList"
+                          [value]="item?.iso2">{{item?.name}}</ng-option>
+                  </ng-select>
+                  <div class="error-block"
+                      *ngIf="bregisterForm.controls.country.invalid && (bregisterForm.controls.country.dirty || bregisterForm.controls.country.touched)">
+                      <p class="error" *ngIf="bregisterForm.controls.country.hasError('required') ">
+                          Please enter country
+                      </p>
+
+                  </div>
+
+              </div>
+              </div>
+              <div class="col-md-6" [class.hidden]="bregisterForm?.controls['country']?.value != 'US' && bregisterForm?.controls['country']?.value != 'CA'">
+                <div class="form-group">
+                    <label>State/Province*</label>
+                    <ng-select placeholder="Select State" formControlName="state"
+                        (change)="getCities($event)" >
+                        <ng-option *rxFor="let item of stateList"
+                            [value]="item?.name">{{item?.name}}</ng-option>
+                    </ng-select>
+                    <div class="error-block"
+                        *ngIf="bregisterForm.controls.state.invalid && (bregisterForm.controls.state.dirty || bregisterForm.controls.state.touched)">
+                        <p class="error" *ngIf="bregisterForm.controls.state.hasError('required') ">
+                            Please enter your state
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" class="form-control"  formControlName="city">
+                    <!--<ng-select placeholder="Select City" formControlName="city">
+                        <ng-option *rxFor="let item of cityList"
+                            [value]="item?.city_name">{{item?.city_name}}</ng-option>
+                    </ng-select>-->
+                    <div class="error-block"
+                        *ngIf="bregisterForm.controls.city.invalid && (bregisterForm.controls.city.dirty || bregisterForm.controls.city.touched)">
+                        <p class="error" *ngIf="bregisterForm.controls.city.hasError('required') ">
+                            Please enter city
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Zip/Postal Code*</label>
+                    <input formControlName="zip" type="text" class="form-control">
+                    <div class="error-block"
+                        *ngIf="bregisterForm.controls.zip.invalid && (bregisterForm.controls.zip.dirty || bregisterForm.controls.zip.touched)">
+                        <p class="error" *ngIf="bregisterForm.controls.zip.hasError('required') ">
+                            Please enter the zip code
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+            <br />
+            <!--User Info Part-->
+            <h2>User Informatiom</h2>
+            <small class="form-text text-muted">Provide the information for the Primary User who will serve as the
+              account
+              administrator.</small>
+            <br />
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="FirstName">First Name*</label>
+                  <input formControlName="first_name" type="text" class="form-control">
+                  <div class="error-block"
+                      *ngIf="bregisterForm.controls.first_name.invalid && (bregisterForm.controls.first_name.dirty || bregisterForm.controls.first_name.touched)">
+                      <p class="error" *ngIf="bregisterForm.controls.first_name.hasError('required') ">
+                        Please enter your first name
+                      </p>
+                    </div>
+
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="LastName">Last Name*</label>
+                  <input formControlName="last_name" type="text" class="form-control">
+                  <div class="error-block"
+                  *ngIf="bregisterForm.controls.last_name.invalid && (bregisterForm.controls.last_name.dirty || bregisterForm.controls.last_name.touched)">
+                  <p class="error" *ngIf="bregisterForm.controls.last_name.hasError('required') ">
+                    Please enter your last name
+                  </p>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="Title">Job Title</label>
+                  <input formControlName="job_title" type="text" class="form-control">
+                  <div class="error-block"
+                  *ngIf="bregisterForm.controls.job_title.invalid && (bregisterForm.controls.job_title.dirty || bregisterForm.controls.job_title.touched)">
+                  <p class="error" *ngIf="bregisterForm.controls.job_title.hasError('required') ">
+                    Please enter your job title
+                  </p>
+                </div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Email">E-mail Address*</label>
+                  <input formControlName="email" type="email" class="form-control">
+                  <div class="error-block"
+                      *ngIf="bregisterForm.controls.email.invalid && (bregisterForm.controls.email.dirty || bregisterForm.controls.email.touched)">
+                      <p class="error" *ngIf="bregisterForm.controls.email.hasError('required') ">
+                        Please enter the your email address
+                      </p>
+                      <p class="error" *ngIf="bregisterForm.controls.email.hasError('email') ">
+                        Please enter a valid email address
+                      </p>
+                      <p class="error" *ngIf="bregisterForm.controls.email.hasError('uniqueValidator') ">
+                        Email address already taken
+                      </p>
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Pass">Password*</label>
+                  <div class="password-container">
+                    <input formControlName="password" type="{{(showPassword)? 'text' : 'password'}}" class="form-control password-input">
+                    <span class="toggle-password" >
+                      @if(!showPassword){
+                      <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password" width="20" height="16"></span>
+                      } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password" width="20" height="16"></span>
+                      }
+                    </span>
+                  </div>
+                    <div class="error-block"
+                      *ngIf="bregisterForm.controls.password.invalid && (bregisterForm.controls.password.dirty || bregisterForm.controls.password.touched)">
+                      <p class="error" *ngIf="bregisterForm.controls.password.hasError('required') ">
+                        Please enter your password
+                      </p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ConfirmPass">Confirm Password*</label>
+                  <div class="password-container">
+                    <input formControlName="confirm_password" type="{{(showPassword)? 'text' : 'password'}}" class="form-control password-input">
+                    <span class="toggle-password" >
+                      @if(!showPassword){
+                      <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password" width="20" height="16"></span>
+                      } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password" width="20" height="16"></span>
+                      }
+                    </span>
+                    </div>
+                    <div class="error-block"
+                      *ngIf="bregisterForm.controls.confirm_password.invalid && (bregisterForm.controls.confirm_password.dirty || bregisterForm.controls.confirm_password.touched)">
+                      <p class="error" *ngIf="bregisterForm.controls.confirm_password.hasError('required') ">
+                        Please enter your password again
+                      </p>
+                      <p class="error" *ngIf="bregisterForm.controls.confirm_password.hasError('confirmedValidator') ">
+                        Passwords do not match.
+                      </p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-12 p-l-10">
+                <div class="form-check custom-check-margin">
+                  <input formControlName="business_subscriber" type="checkbox" class="form-check-input" id="subscription">
+                  <label class="form-check-label ms-2" for="subscription">Sign me up for promotional offers only available
+                    to e-mail subscribers.</label>
+                </div>
+              </div>
+              <!-- user Info Part End-->
+              <br />
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <re-captcha (resolved)="submitNowRegister(bregisterForm)"  size="invisible" #captchaRefr="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                  <button [class.spinner]="registerLoading" [disabled]=" registerLoading"
+                    type="submit"  class="btn">Create an Account</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Registration Page End-->

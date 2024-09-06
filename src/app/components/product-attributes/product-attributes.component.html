@@ -1,0 +1,152 @@
+<table class="table table-striped">
+  <tbody>
+    <ng-container *ngIf="list[0].attributes.result.length > 0">
+
+    <tr
+      *rxFor="let item of list[0].attributes.result; let i = index"
+      [hidden]="item.attribute_value === null"
+    >
+      <th scope="row">{{ item.attribute_title }}</th>
+      <td
+        [innerHTML]="
+          item.attribute_value + ' ' + (item.unit === null ? '' : item.unit)
+            | htmlSanitizer
+        "
+      ></td>
+      <ng-container *ngIf="list?.length>1">
+        <ng-container
+          *ngIf="list[1] && list[1].attributes && list[1].attributes.result && list[1].attributes.result.length > 0"
+        >
+          <ng-container
+            *rxFor="let item1 of list[1].attributes.result; let j = index"
+          >
+            <ng-container *ngIf="item.attribute_id == item1.attribute_id">
+              <td
+                [innerHTML]="
+                  item1.attribute_value +
+                    ' ' +
+                    (item1.unit === null ? '' : item1.unit) | htmlSanitizer
+                "
+              ></td>
+            </ng-container>
+          </ng-container>
+          <td *ngIf="!checkAttrbutesList(item.attribute_id, list[1].attributes.result, 'attribute_id')">N/A</td>
+        </ng-container>
+        <td
+          *ngIf="!list[1] || !list[1].attributes || !list[1].attributes.result"
+        >
+          N/A
+        </td>
+      </ng-container>
+      <ng-container *ngIf="list?.length>2">
+        <ng-container
+          *ngIf="list[2] && list[2].attributes && list[2].attributes.result && list[2].attributes.result.length > 0"
+        >
+          <ng-container
+            *rxFor="let item2 of list[2].attributes.result; let k = index"
+          >
+            <ng-container *ngIf="item.attribute_id == item2.attribute_id">
+              <td
+                [innerHTML]="
+                  item2.attribute_value +
+                    ' ' +
+                    (item2.unit === null ? '' : item2.unit) | htmlSanitizer
+                "
+              ></td>
+            </ng-container>
+          </ng-container>
+          <td *ngIf="!checkAttrbutesList(item.attribute_id, list[2].attributes.result, 'attribute_id')">N/A</td>
+        </ng-container>
+        <td
+          *ngIf="!list[2] || !list[2].attributes || !list[2].attributes.result"
+        >
+          N/A
+        </td>
+      </ng-container>
+
+      <!--<td *ngIf="list[1].attributes.result[i].attribute_title == item.attribute_title" [innerHTML]="(list[1].attributes.result[i].attribute_value + ' ' + ((list[1].attributes.result[i].unit===null)? '' : list[1].attributes.result[i].unit)) | htmlSanitizer"></td>
+          <td *ngIf="list[2].attributes.result[i].attribute_title == item.attribute_title" [innerHTML]="(list[2].attributes.result[i].attribute_value + ' ' + ((list[2].attributes.result[i].unit===null)? '' : list[2].attributes.result[i].unit)) | htmlSanitizer"></td>-->
+    </tr>
+  </ng-container>
+  <ng-container *ngIf="list[0].jattributes != null && list[0].jattributes.length > 0">
+
+    <tr *rxFor="let ite of list[0].jattributes; let i = index">
+      <th scope="row">{{ ite.name }}</th>
+      <td>
+        <ul class="m0 pl20 multiattribute" *ngIf="ite.attributes.length > 0">
+          <ng-container>
+            <li *rxFor="let atb of ite.attributes">
+              <span *rxFor="let item of atb">
+                {{ item.SELECTED_VALUE || "" }}
+                {{
+                  item.SELECTED_UNIT_DETAIL
+                    ? item.SELECTED_UNIT_DETAIL.title
+                    : ""
+                }}</span
+              >
+            </li>
+          </ng-container>
+        </ul>
+      </td>
+      <ng-container *ngIf="list.length>1">
+        <ng-container *ngIf="list[1] && list[1].jattributes">
+          <ng-container *rxFor="let ite1 of list[1].jattributes; let j = index">
+            <ng-container *ngIf="ite.id == ite1.id">
+              <td>
+                <ul
+                  class="m0 pl20 multiattribute"
+                  *ngIf="ite1.attributes.length > 0"
+                >
+                  <ng-container>
+                    <li *rxFor="let atb of ite1.attributes">
+                      <span *rxFor="let itemx of atb">
+                        {{ itemx.SELECTED_VALUE || "" }}
+                        {{
+                          itemx.SELECTED_UNIT_DETAIL
+                            ? itemx.SELECTED_UNIT_DETAIL.title
+                            : ""
+                        }}</span
+                      >
+                    </li>
+                  </ng-container>
+                </ul>
+              </td>
+            </ng-container>
+          </ng-container>
+          <td *ngIf="!checkAttrbutesList(ite.id, list[1].jattributes, 'id')">N/A</td>
+        </ng-container>
+        <td *ngIf="!list[1] || !list[1].jattributes">N/A</td>
+      </ng-container>
+      <ng-container *ngIf="list.length>2">
+        <ng-container *ngIf="list[2] && list[2].jattributes">
+          <ng-container *rxFor="let ite2 of list[2].jattributes; let k = index">
+            <ng-container *ngIf="ite.id == ite2.id">
+              <td>
+                <ul
+                  class="m0 pl20 multiattribute"
+                  *ngIf="ite2.attributes.length > 0"
+                >
+                  <ng-container>
+                    <li *rxFor="let atb of ite2.attributes">
+                      <span *rxFor="let itemx of atb">
+                        {{ itemx.SELECTED_VALUE || "" }}
+                        {{
+                          itemx.SELECTED_UNIT_DETAIL
+                            ? itemx.SELECTED_UNIT_DETAIL.title
+                            : ""
+                        }}</span
+                      >
+                    </li>
+                  </ng-container>
+                </ul>
+              </td>
+            </ng-container>
+          </ng-container>
+          <td *ngIf="!checkAttrbutesList(ite.id, list[2].jattributes, 'id')">N/A</td>
+        </ng-container>
+        <td *ngIf="!list[2] || !list[2].jattributes">N/A</td>
+      </ng-container>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

@@ -1,0 +1,55 @@
+.features-brand-ctn {
+  padding: 20px 0 0;
+}
+
+.features-brand-ctn
+  .features-brand-slider
+  swiper
+  .swiper-wrapper
+  .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.brand-logo{
+  max-width:100%;
+  object-fit: contain;
+}
+.swiper-button-nextb, .swiper-button-prevb{
+  background: url('/assets/icons/arrow-right.svg') no-repeat;
+  width: 11px;
+  height: 17px;
+  position: absolute;
+  top: 50%;
+  opacity: 0.7;
+  z-index: 999;
+}
+.swiper-button-nextb {
+  transform: translateY(-50%);
+  right: -15px;
+}
+
+.swiper-button-prevb {
+  transform: translateY(-50%) rotate(180deg);
+  left: -15px;
+}
+
+.swiper-button-prevb[aria-disabled="true"] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.swiper-button-nextb[aria-disabled="true"] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.swiper-slide, swiper-slide{padding: 20px 10px;}
+.features-brand-slider .my-swiper a {
+  box-shadow: 0px 4px 20px 0px #0000001A;
+  border: 3px solid transparent;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+}
+.features-brand-slider .my-swiper a:hover {border-color: #0B6AB0;}

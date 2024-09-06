@@ -1,0 +1,13 @@
+<div class="star-rating">
+  @for(star of filledStars; track star){
+    @if(star === 1){
+      <span class="star filled" [ngClass]="{'big': (size === 'big'), small: (size === 'small')}">&#9733;</span>
+    }
+    @if(star === 0.5) {
+      <span class="star half-filled" [ngClass]="{'big': (size === 'big'), small: (size === 'small')}">&#9733;</span>
+    }
+  }
+  @for(_ of emptyStars; track _){
+    <span class="star" [ngClass]="{'big': (size === 'big'), small: (size === 'small')}">&#9733;</span>
+  }
+</div>

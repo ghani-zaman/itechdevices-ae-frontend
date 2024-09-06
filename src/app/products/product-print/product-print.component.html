@@ -1,0 +1,127 @@
+<p style="font-size: 24px;">{{product?.title}}</p>
+<div class="prodimg">
+    <div *rxFor="let item of product?.images; let i=index" class="product-images">
+        <img loading="lazy" src="{{item.image}}" width="auto" height="auto" />
+    </div>
+</div>
+<p style="font-size: 18px;">Price: {{ product[condition] | currency: 'AED ' }}</p>
+<p><b>Manufacturer: </b>{{product?.brand_name}}</p>
+<p><b>Mfr. Part#: </b>{{product?.sku}}</p>
+<p><b>Estimated Ship: </b>24-48 hrs</p>
+
+<div>
+    <div style="color: black" *ngIf="product?.description != null" [innerHTML]="product?.description | htmlSanitizer">
+    </div>
+
+    <p class="headtable" *ngIf=" (groupHeaders && groupHeaders.length === 0) && product?.attributes.length  >0 ">General Information</p>
+
+    <table *ngIf="  (groupHeaders && groupHeaders.length === 0) && product?.attributes.length  >0 ">
+
+        <tbody>
+            <tr *rxFor="let item of product?.attributes; let i = index" [hidden]="item.attribute_value === null">
+                <th scope="row">{{ item.attribute_title }}</th>
+                <td [innerHTML]="(item.attribute_value + ' ' + ((item.unit===null)? '' : item.unit)) | htmlSanitizer">
+                </td>
+            </tr>
+            <tr *rxFor="let ite of product?.jattributes; let i = index">
+                <th scope="row">{{ ite.name }}</th>
+                <td>
+
+                    <ul class="m0  multiattribute" *ngIf="ite.attributes.length > 0">
+
+                        <ng-container>
+                            <li *rxFor="let atb of ite.attributes">
+                                <span *rxFor="let item of atb"> {{ item.SELECTED_VALUE ||
+                  ''}} {{ item.SELECTED_UNIT_DETAIL?item.SELECTED_UNIT_DETAIL.title : ''}}</span>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<div *ngIf="groupHeaders != null && groupHeaders?.length > 0" class="row tab_body">
+
+    <table style="width: 95%;" *rxFor="let header of groupHeaders; index as indx">
+        <thead *ngIf="(product?.attributes && product?.attributes.length > 0 && checkHeader(product?.attributes,header?.attributes)) || (product?.jattributes && product?.jattributes.length > 0 && checkHeaderJoint(product?.jattributes,header?.joint_attributes)) ">
+            <th class="header-title" colspan="2">
+                <p class="headtable">{{ header.title }}</p>
+            </th>
+        </thead>
+        <tbody *ngIf="!attribLoading">
+            <ng-container *rxFor="let i of product?.attributes; index as indx">
+
+                <tr *ngIf="checkArray(i.attribute_id, header.attributes) != -1 && i.attribute_value != 'N/A' && i.attribute_value != ''">
+                    <td width="50%">
+                        <span class="attribute-title">{{i.attribute_title}}</span>
+                    </td>
+                    <td width="50%">
+                        <div class="attribute-value">
+              <span *ngIf="!i.attribute_value">N/A</span>
+              <span class="multiattribute" *ngIf="i.attribute_value"
+                innerHTML="{{i.attribute_value + ' ' + (i.unit || '')}}"></span>
+
+            </div>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *rxFor="let i of product?.jattributes; index as indx">
+
+                <tr *ngIf="checkArray(i.id, header.joint_attributes) != -1 && i.attributes.length !== 0">
+                    <td width="50%">
+                        <span class="attribute-title">{{i.name}}</span>
+                    </td>
+                    <td width="50%">
+                        <div class="attribute-value">
+              <ng-container *ngIf="i.attributes.length === 0">N/A</ng-container>
+              <ul class="m0 pl20 multiattribute" *ngIf="i.attributes.length > 0">
+
+                <ng-container>
+                  <li *rxFor="let atb of i.attributes">
+                    <span *rxFor="let item of atb"> {{ item.SELECTED_VALUE ||
+                      ''}} {{ item.SELECTED_UNIT_DETAIL?item.SELECTED_UNIT_DETAIL.title : ''}}</span>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="row tab_body" style="padding: 30px 0 0 0" *ngIf="product?.f1 != null || product?.f2 != null || product?.f3 != null ">
+    <table style="width: 95%;">
+        <thead>
+            <th class="header-title" colspan="2">
+                <p style="font-size: 24px;">Technical Documents</p>
+            </th>
+        </thead>
+        <tbody>
+            <tr *ngIf="product?.f1 != null">
+                <td>
+                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f1">{{(product?.fn1 != null)? product?.fn1
+            : product?.f1 }}</a>
+                </td>
+            </tr>
+            <tr *ngIf="product?.f2 != null">
+                <td>
+                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f2">{{(product?.fn2 != null)? product?.fn2
+            : product?.f2 }}</a>
+                </td>
+            </tr>
+            <tr *ngIf="product?.f3 != null">
+                <td>
+                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f3">{{(product?.fn3 != null)? product?.fn3
+            : product?.f3 }}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

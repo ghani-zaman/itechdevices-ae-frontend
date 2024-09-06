@@ -1,0 +1,126 @@
+<!--Wishlist HTML Start -->
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <h1>Wishlist</h1>
+    </div>
+</div>
+<div class="box mb-4">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-md-6">
+            <div class="quickorder">
+                <div class="input-group">
+                    <input [(ngModel)]="keyword" type="text" class="form-control" placeholder="Search by product, type#"
+                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <button (click)="getWishList()" class="btn m-0 input-group-text" id="basic-addon2">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="ordertable">
+            <div class="table-responsive">
+              <app-block-loader [hidden]="!wloading"></app-block-loader>
+                <table *ngIf="wishlist?.products.length > 0" width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <!--<th>Status</th>-->
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>&nbsp; </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *rxFor="let item of wishlist.products; let i = index;">
+                        <td class="pr-name" codepen="5">
+                            <a class="scDlt" (click)="removeFromWishList(item)"><img src="/assets/svg/delete.svg" loading="lazy" alt="delete wishlist product" width="14" height="16"></a>
+                            <span title="{{item.title}}">
+                                <a [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]">{{item?.title |
+                                    cuttext:500}}</a>
+                            </span>
+                        </td>
+                        <td class="pr-price" style="min-width: 130px;"> {{item[item.condition] | currency: 'AED ' }}</td>
+                        <!--<td class="pr-status">panding</td>-->
+                        <td class="pr-input">
+                            <div class="pid">
+                                <!-- <div class="value-button" id="decrease" (click)="updateQuantity(-1, i)"
+                                    value="Decrease Value">-</div> -->
+                                <input style="width: 100px;" class="form-control" [(ngModel)]="item.qty" type="number" id="number" />
+                                <!-- <div class="value-button" id="increase" (click)="updateQuantity(1, i)"
+                                    value="Increase Value">+</div> -->
+                            </div>
+                        </td>
+                        <td style="min-width: 130px;">{{ item[item.condition] * item.qty | currency: 'AED ' }}</td>
+                        <td class="pr-btn">
+                            <button [class.spinner]="cartLoading == item.id" [disabled]="cartLoading == item.id"
+                                (click)="addToCart(item)" class="btn addTocart m-0">Add to cart</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!wloading && (wishlist == null || wishlist?.products.length == 0)" class="row">
+    <div class="col-md-12 mb-3">
+        <h1>EMPTY LIST</h1>
+    </div>
+</div>
+<!--Wishlist HTML End -->
+<!--Wishlist Deisgn Start -->
+<!--<div class="account_info">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div *ngIf="!userlist" class="container">
+        <h1 class="csi wish-title"><span>Wish List</span> </h1>
+    </div>
+    <app-block-loader [hidden]="!wloading"></app-block-loader>
+    <div class="home-container" *ngIf="!wloading">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="oder_his table-entry" *ngIf="wishlist?.products.length > 0">
+                    <tbody>
+                        <tr class="table-top-green">
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                          <th>Status</th>--
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>&nbsp; </th>
+                        </tr>
+                        <tr *rxFor="let item of wishlist.products; let i = index;">
+                            <td class="pr-name"> <a class="scDlt" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></a><span
+                                    title="{{item.title}}"><a
+                                        [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]">{{item?.title |
+                                        cuttext:50}}</a></span></td>
+                            <td class="pr-price"> {{item[item.condition] | currency: 'AED ' }}</td>
+                           <td class="pr-status">panding</td>--
+                            <td class="pr-input">
+                                <div class="pid">
+                                    <div class="value-button" id="decrease" (click)="updateQuantity(-1, i)"
+                                        value="Decrease Value">-</div>
+                                    <input [(ngModel)]="item.qty" type="number" id="number" />
+                                    <div class="value-button" id="increase" (click)="updateQuantity(1, i)"
+                                        value="Increase Value">+</div>
+                                </div>
+                            </td>
+                            <td>{{ item[item.condition] * item.qty | currency: 'AED ' }}</td>
+                            <td class="pr-btn">
+                                <button [class.spinner]="cartLoading == item.id" [disabled]="cartLoading == item.id"
+                                    (click)="addToCart(item)" class="btn addTocart">Add to cart</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" *ngIf="wishlist?.products.length === 0">
+                    <h1>EMPTY LIST DESIGN</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+Wishlist Deisgn End -->

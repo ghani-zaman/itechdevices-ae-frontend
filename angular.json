@@ -1,0 +1,333 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false,
+    "cache": { "enabled": false}
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "salsoftfront": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "css"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/salsoftfront",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/robots.txt",
+              "src/shopperapproved.js"
+            ],
+            "styles": [
+              "src/styles.css",
+              "src/assets/css/new-design.css",
+              "node_modules/ngx-lightbox/lightbox.css",
+              "node_modules/swiper/swiper-bundle.css",
+              "node_modules/swiper/modules/pagination.min.css",
+              "node_modules/swiper/modules/navigation.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/ngx-smart-modal/styles/ngx-smart-modal.css",
+              "src/assets/css/bootstrap.css"
+            ],
+            "scripts": [
+              "src/assets/js/hdd.js",
+              "src/assets/js/bootstrap.js",
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ],
+            "server": "src/main.server.ts",
+            "prerender": {
+              "discoverRoutes": false,
+              "routesFile": "proutes.txt"
+            },
+            "ssr": {
+              "entry": "server.ts"
+            },
+            "optimization": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "outputHashing": "all",
+              "optimization": {"styles": {"inlineCritical": false }}
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "outputHashing": "all",
+              "optimization": {"styles": {"inlineCritical": false }}
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "buildx": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "ngx-lightbox"
+           ],
+            "outputPath": "dist/salsoftfront/browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/robots.txt"
+            ],
+            "styles": [
+              "src/styles.css",
+              "src/assets/css/new-design.css",
+              "node_modules/ngx-lightbox/lightbox.css",
+              "node_modules/swiper/swiper-bundle.css",
+              "node_modules/swiper/modules/pagination.min.css",
+              "node_modules/swiper/modules/navigation.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/ngx-smart-modal/styles/ngx-smart-modal.css",
+              "src/assets/css/bootstrap.css"
+            ],
+            "scripts": [
+              "src/assets/js/hdd.js",
+              "src/assets/js/bootstrap.js",
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "salsoftfront:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "salsoftfront:build:production"
+            },
+            "staging": {
+              "buildTarget": "salsoftfront:build:staging"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "salsoftfront:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "salsoftfront:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "salsoftfront:serve:production"
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/salsoftfront/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false,
+            "buildOptimizer": false
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true,
+              "buildOptimizer": true
+            },
+            "staging": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true,
+              "buildOptimizer": true
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "salsoftfront:build",
+            "serverTarget": "salsoftfront:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "salsoftfront:build:production",
+              "serverTarget": "salsoftfront:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "salsoftfront:build:production",
+            "serverTarget": "salsoftfront:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
+          }
+        }
+      }
+    }
+  }
+}

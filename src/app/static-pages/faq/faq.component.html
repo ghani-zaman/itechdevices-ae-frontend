@@ -1,0 +1,668 @@
+<main class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div class="static-container">
+        <div class="row ">
+            <div class="col-sm-3">
+                <div class="nav flex-sm-column nav-pills" id="acc-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link " [class.active]="currentTab === 1" id="acc-prod-tab" data-toggle="pill" (click)="changeTab(1)" role="tab" aria-controls="acc-home" aria-selected="true">Products</a>
+                    <a class="nav-link" [class.active]="currentTab === 2" id="acc-cond-tab" data-toggle="pill" (click)="changeTab(2)" role="tab" aria-controls="acc-profile" aria-selected="false">Condition</a>
+                    <a class="nav-link" [class.active]="currentTab === 3" id="acc-warr-tab" data-toggle="pill" (click)="changeTab(3)" role="tab" aria-controls="acc-messages" aria-selected="false">Warranty &
+                        Return</a>
+                    <a class="nav-link" [class.active]="currentTab === 4" id="acc-shipping-tab" data-toggle="pill" (click)="changeTab(4)" role="tab" aria-controls="acc-settings" aria-selected="false">Shipping</a>
+                    <a class="nav-link" [class.active]="currentTab === 5" id="acc-payments-tab" data-toggle="pill" (click)="changeTab(5)" role="tab" aria-controls="acc-payments" aria-selected="false">Payments</a>
+                    <a class="nav-link" [class.active]="currentTab === 6" id="acc-ordsta-tab" data-toggle="pill" (click)="changeTab(6)" role="tab" aria-controls="acc-order-status" aria-selected="false">Order
+                        Status</a>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="tab-content" id="acc-tabContent">
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 1 }" id="acc-home" role="tabpanel" aria-labelledby="acc-home-tab">
+                        <div class="accordion" id="firstFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-one">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-one" aria-expanded="false" aria-controls="collapseOne-one">What is the typical
+                                        dispatch time for 'In-stock' items on itechdevices.ae?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-one" class="accordion-collapse collapse" aria-labelledby="headingOne-one" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> In-stock items are usually dispatched within 1 to 4 business days if orders are placed prior to 2:00 p.m. PST.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-two" aria-expanded="false" aria-controls="collapseOne-two">Can I expect my order to
+                                        be delivered by the end of the business day if I choose express delivery?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-two" class="accordion-collapse collapse" aria-labelledby="headingOne-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Yes, express delivery is available for prompt shipping. If orders are made by 2:00 p.m. PST, available items can be delivered by the end of the business day.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-three" aria-expanded="false" aria-controls="collapseOne-three">What happens if the item
+                                        I ordered is 'out-of-stock' or marked as 'call for price'?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-three" class="accordion-collapse collapse" aria-labelledby="headingOne-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> 'Out-of-stock' or 'call for price' items may not be on-hand and are typically arranged and dispatched in 3 to 8 business days.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-four" aria-expanded="false" aria-controls="collapseOne-four">Is it possible to have
+                                        orders with multiple products shipped at different times?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-four" class="accordion-collapse collapse" aria-labelledby="headingOne-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Yes, orders with different delivery schedules can be processed through split shipping options. Extra shipping fees may apply.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-five" aria-expanded="false" aria-controls="collapseOne-five">Can Itech Devices
+                                        facilitate centralized order deliveries for multiple offices?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-five" class="accordion-collapse collapse" aria-labelledby="headingOne-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Yes, centralized orders for multiple offices are possible, but essential security verifications and shipping fees may apply.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-six" aria-expanded="false" aria-controls="collapseOne-six">Are quoted prices
+                                        inclusive of sales taxes?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-six" class="accordion-collapse collapse" aria-labelledby="headingOne-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> No, quoted prices do not include relevant sales taxes. Additional taxes, if applicable, will be charged to the customer.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-seven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-seven" aria-expanded="false" aria-controls="collapseOne-seven">Can the price of ordered
+                                        items change after placing an order?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-seven" class="accordion-collapse collapse" aria-labelledby="headingOne-seven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Yes, the price of ordered items may change due to quick market fluctuations. Itech Devices retains the right to adjust prices, with prior notification to the customer before delivery.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-eight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-eight" aria-expanded="false" aria-controls="collapseOne-eight">What happens if the
+                                        ordered item is unavailable?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-eight" class="accordion-collapse collapse" aria-labelledby="headingOne-eight" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> If an ordered item is unavailable, a functionally equivalent item may be dispatched. If you prefer a precise product specification without substitutions, please consult our team regarding its availability.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-nine">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-nine" aria-expanded="false" aria-controls="collapseOne-nine">Can Itech Devices
+                                        cancel orders or limit order quantity?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-nine" class="accordion-collapse collapse" aria-labelledby="headingOne-nine" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Yes, Itech Devices retains the authority to cancel orders or limit order quantity in certain instances, such as delays in order confirmation or product unavailability.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-ten">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-ten" aria-expanded="false" aria-controls="collapseOne-ten">How often are product
+                                        information discrepancies corrected on the website?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-ten" class="accordion-collapse collapse" aria-labelledby="headingOne-ten" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> Discrepancies in pricing or stock availability are corrected during periodic website updates, which can occur within a span of 1 to 30 days.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne-eleveen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-eleveen" aria-expanded="false" aria-controls="collapseOne-eleveen">What should I do if I
+                                        have inquiries about order acceptance, pricing, or availability?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne-eleveen" class="accordion-collapse collapse" aria-labelledby="headingOne-eleveen" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body"> For inquiries, please contact Itech Devices at (866) 705-5346.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 2 }" id="acc-profile" role="tabpanel" aria-labelledby="acc-profile-tab">
+                        <div class="accordion" id="secondFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-One">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-One" aria-expanded="false" aria-controls="collapseTwo-One">
+                                        What does the term "Certified Refurbished" mean at Itech Devices?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-One" class="accordion-collapse collapse" aria-labelledby="headingTwo-One" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">"Certified Refurbished" indicates that the product has undergone a thorough inspection and testing process to meet specific quality standards. These products come with a 90-day replacement policy, with a 30-day warranty
+                                        for refunds.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-two" aria-expanded="false" aria-controls="collapseTwo-two">
+                                        Are all products at Itech Devices Certified Refurbished?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-two" class="accordion-collapse collapse" aria-labelledby="headingTwo-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">No, not all products are Certified Refurbished. Itech Devices offers a range of new and refurbished products. Please check the product listing for the specific condition of each item.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-three" aria-expanded="false" aria-controls="collapseTwo-three">
+                                        Can I expect the same warranty coverage for new and refurbished products?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-three" class="accordion-collapse collapse" aria-labelledby="headingTwo-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Warranty coverage may vary between new and refurbished products. New products may come with manufacturer warranties, while refurbished products typically have a 90-day replacement policy. Refer to the product details
+                                        for specific warranty information.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-four" aria-expanded="false" aria-controls="collapseTwo-four">
+                                        What should I consider when purchasing a Certified Refurbished product?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-four" class="accordion-collapse collapse" aria-labelledby="headingTwo-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">When purchasing a Certified Refurbished product, consider that it has undergone testing and inspection to ensure functionality and quality. Review the warranty details and return policy specific to refurbished items.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-five" aria-expanded="false" aria-controls="collapseTwo-five">
+                                        Are there any cosmetic imperfections in Certified Refurbished products?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-five" class="accordion-collapse collapse" aria-labelledby="headingTwo-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Certified Refurbished products may have minor cosmetic imperfections, but they undergo rigorous testing to ensure proper functionality. These imperfections do not affect the product's performance.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo-six" aria-expanded="false" aria-controls="collapseTwo-six">
+                                        How do I identify the condition of a product on the Itech Devices website?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo-six" class="accordion-collapse collapse" aria-labelledby="headingTwo-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">The product listing on the Itech Devices website will specify the condition of each item. Look for labels such as "New" or "Certified Refurbished" in the product description</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 3 }" id="acc-messages" role="tabpanel" aria-labelledby="acc-messages-tab">
+                        <div class="accordion" id="thirdFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-one">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-one" aria-expanded="false" aria-controls="collapseThree-one">What warranty
+                                        coverage does Itech Devices provide for refurbished products?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-one" class="accordion-collapse collapse" aria-labelledby="headingThree-one" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">All certified refurbished products listed on Itech Devices come with a 90-day replacement policy. If a refund is preferred, please note that the warranty coverage is 30 days from the order receiving date.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-two" aria-expanded="false" aria-controls="collapseThree-two">What is the warranty
+                                        duration for services provided by Itech Devices?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-two" class="accordion-collapse collapse" aria-labelledby="headingThree-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Itech Devices offers no guarantees on the duration of its services. Customers should acknowledge that services may not necessarily align with their requirements, be continuous, prompt, secure, or free from errors.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-three" aria-expanded="false" aria-controls="collapseThree-three">Is there any user
+                                        responsibility mentioned in the warranty terms?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-three" class="accordion-collapse collapse" aria-labelledby="headingThree-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, users are responsible for any materials downloaded or acquired through the use of Itech Devices services. Customers bear complete responsibility for any damage to their computer system or data loss resulting from
+                                        such activities.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-four" aria-expanded="false" aria-controls="collapseThree-four">What limitations of
+                                        liability should customers be aware of?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-four" class="accordion-collapse collapse" aria-labelledby="headingThree-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Under no circumstances shall Itech Devices be held responsible for any direct, indirect, incidental, special, punitive, or consequential damages, whether resulting from the use, misuse, or inability to use any product
+                                        purchased from Itech Devices.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-five" aria-expanded="false" aria-controls="collapseThree-five">Do products sold by
+                                        Itech Devices come with a manufacturer warranty?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-five" class="accordion-collapse collapse" aria-labelledby="headingThree-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, some products come with a 1+ year manufacturer warranty, covering returns, replacements, and support. For warranty claims or support, customers are advised to contact the manufacturer directly, following their
+                                        terms and conditions.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-six" aria-expanded="false" aria-controls="collapseThree-six">As a distributor and
+                                        reseller, does Itech Devices manufacture the products it sells? </button>
+                                </h2>
+                                <div id="collapseThree-six" class="accordion-collapse collapse" aria-labelledby="headingThree-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">No, Itech Devices serves as a distributor and reseller, not as a manufacturer of the products sold. The warranties provided are in accordance with the terms mentioned in the document.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-seven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-seven" aria-expanded="false" aria-controls="collapseThree-seven">Are there any
+                                        specific exclusions mentioned in the warranty terms?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-seven" class="accordion-collapse collapse" aria-labelledby="headingThree-seven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, Itech Devices disclaims responsibility for personal injuries or property damage potentially resulting from the use of products/services purchased. Exclusions include, but are not limited to, missing memory or flash
+                                        cards, software-related issues, customer-induced damage, and more.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-eight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-eight" aria-expanded="false" aria-controls="collapseThree-eight">How should customers
+                                        report damages that occurred during transit?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-eight" class="accordion-collapse collapse" aria-labelledby="headingThree-eight" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Damages during transit should be reported within 2 working days of delivery, providing pictures as documentation. Valid claims will be processed upon receipt of the returned component(s), and customers should maintain
+                                        the warranty card and a copy of the invoice for all warranty claims.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-nine">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-nine" aria-expanded="false" aria-controls="collapseThree-nine">Can I return a
+                                        product if I changed my mind or no longer need it?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-nine" class="accordion-collapse collapse" aria-labelledby="headingThree-nine" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, you can return a product within thirty (30) days of the purchase date for a full refund or exchange as long as it is in unused condition with all original tags and labels attached.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-ten">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-ten" aria-expanded="false" aria-controls="collapseThree-ten">How long does it
+                                        take to receive a refund after returning an item?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-ten" class="accordion-collapse collapse" aria-labelledby="headingThree-ten" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">After receiving the return and inspecting the item, Itech Devices will process the return or exchange. Please allow at least ten (10) days from the receipt of your item to process your return or exchange.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-eleven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-eleven" aria-expanded="false" aria-controls="collapseThree-eleven">How can customers
+                                        initiate a return?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-eleven" class="accordion-collapse collapse" aria-labelledby="headingThree-eleven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">To return an item, please email customer service at rma&#64;itechdevices.ae to obtain a Return Merchandise Authorization (RMA) number. After receiving the RMA number, securely package the item with the proof of purchase
+                                        and mail it to the provided address.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-twelve">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-twelve" aria-expanded="false" aria-controls="collapseThree-twelve">Who is responsible
+                                        for return shipping charges?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-twelve" class="accordion-collapse collapse" aria-labelledby="headingThree-twelve" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Customers are responsible for all return shipping charges. It is recommended to use a trackable method for returns.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-thirteen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-thirteen" aria-expanded="false" aria-controls="collapseThree-thirteen">Are there any
+                                        exceptions to the return policy?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-thirteen" class="accordion-collapse collapse" aria-labelledby="headingThree-thirteen" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">For defective or damaged products, customers should contact Itech Devices to arrange a refund or exchange. A 25% restocking fee will be charged for all returns, and additional conditions may apply, leading to a 50%
+                                        restocking fee.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-fourteen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-fourteen" aria-expanded="false" aria-controls="collapseThree-fourteen">What conditions may
+                                        result in a 50% restocking fee?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-fourteen" class="accordion-collapse collapse" aria-labelledby="headingThree-fourteen" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Conditions such as missing or replaced components, receiving a product that works correctly, damaged or tampered packaging, and post-warranty RMA eligibility may lead to a 50% restocking fee.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-fifteen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-fifteen" aria-expanded="false" aria-controls="collapseThree-fifteen">What factors may
+                                        result in a denial of replacement?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-fifteen" class="accordion-collapse collapse" aria-labelledby="headingThree-fifteen" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Mismatch with RMA form, physical damage, or tampering with the product may lead to a denial of replacement.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree-sixteen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree-sixteen" aria-expanded="false" aria-controls="collapseThree-sixteen">Are there any
+                                        restrictions on international returns?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree-sixteen" class="accordion-collapse collapse" aria-labelledby="headingThree-sixteen" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">International returns are accepted, but customers are responsible for all return shipping charges. Additionally, the same return policy conditions apply, including the thirty (30) days postmark period.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 4 }" id="acc-settings" role="tabpanel" aria-labelledby="acc-settings-tab">
+                        <div class="accordion" id="fourFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-one">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-one" aria-expanded="false" aria-controls="collapseFour-one">How can I track
+                                        my package from Itech Devices?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-one" class="accordion-collapse collapse" aria-labelledby="headingFour-one" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">You can track your package by using the provided tracking number. If you encounter any issues with the tracking number, wait a few days for all items to arrive. If inconsistencies persist, contact our shipping department
+                                        for assistance.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-two" aria-expanded="false" aria-controls="collapseFour-two">What should I do
+                                        if my tracking number isn't working?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-two" class="accordion-collapse collapse" aria-labelledby="headingFour-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">If your tracking number isn't working, it's possible that one of your packages has been separated. Wait for a few days for all items to arrive, and if issues persist, inform our shipping department. For damaged packages,
+                                        contact the carrier directly for resolution.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-three" aria-expanded="false" aria-controls="collapseFour-three">Can I reschedule
+                                        the delivery time with FedEx or DHL?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-three" class="accordion-collapse collapse" aria-labelledby="headingFour-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, you can reschedule your delivery time with FedEx and DHL. Refer to the InfoNotice received for options or use the carrier's online platform to make changes to the delivery time or location.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-four" aria-expanded="false" aria-controls="collapseFour-four">Does Itech Devices ship internationally?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-four" class="accordion-collapse collapse" aria-labelledby="headingFour-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, Itech Devices ships internationally using DHL and FedEx International. Customers are responsible for any customs and duties applicable to their orders.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-five" aria-expanded="false" aria-controls="collapseFour-five">Can I ship to an
+                                        APO or FPO address?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-five" class="accordion-collapse collapse" aria-labelledby="headingFour-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, Itech Devices does ship to APO and FPO addresses. However, delivery times for these orders can range from 5 to 10 working days due to limitations.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-six" aria-expanded="false" aria-controls="collapseFour-six">What does free
+                                        standard shipping include?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-six" class="accordion-collapse collapse" aria-labelledby="headingFour-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Free standard shipping typically processes orders within 1-3 days, with delivery within 4-6 business days. Free shipping is not available to Alaska and Hawaii. Carriers used include FedEx, DHL, and USPS.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-seven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-seven" aria-expanded="false" aria-controls="collapseFour-seven">What are the
+                                        shipping times and cut-off for different delivery options?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-seven" class="accordion-collapse collapse" aria-labelledby="headingFour-seven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Itech Devices offers various shipping options, including Quick Arrival, Speedy 3-Day Transit, Faster 2-Day Option, Next-Day Standard, Priority Next-Day, Global Deliveries, Military Addresses (APO/FPO), Canadian and
+                                        Puerto Rican Orders, and Weekend Arrival. Cut-off times range from 2 p.m. to 12 p.m. PST.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour-eight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour-eight" aria-expanded="false" aria-controls="collapseFour-eight">Does Itech Devices process orders on weekends or major holidays?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour-eight" class="accordion-collapse collapse" aria-labelledby="headingFour-eight" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">No, we do not process or ship orders on weekends or major holidays. While we strive for same-day shipping, it is not guaranteed.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 5 }" id="acc-payments" role="tabpanel" aria-labelledby="acc-payments-tab">
+                        <div class="accordion" id="fiveFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-one">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-one" aria-expanded="false" aria-controls="collapseFive-one">What forms of
+                                        credit cards does Itech Devices accept for payment?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-one" class="accordion-collapse collapse" aria-labelledby="headingFive-one" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Itech Devices accepts Visa, MasterCard, American Express, and Discover for credit card payments.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-two" aria-expanded="false" aria-controls="collapseFive-two">Can I make a
+                                        payment using a bank transfer or wire transfer?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-two" class="accordion-collapse collapse" aria-labelledby="headingFive-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, you can make payments through bank transfers or wire transfers at Itech Devices.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-three" aria-expanded="false" aria-controls="collapseFive-three">Does Itech Devices Offer Net Credit as a payment option?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-three" class="accordion-collapse collapse" aria-labelledby="headingFive-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, Net Credit is accepted as a form of payment at Itech Devices with certain terms. Contact your dedicated account manager for further details.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-four" aria-expanded="false" aria-controls="collapseFive-four">Are there any
+                                        additional fees associated with specific payment methods?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-four" class="accordion-collapse collapse" aria-labelledby="headingFive-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Generally, there are no additional fees associated with the accepted payment methods. However, it's advisable to check with your financial institution for any potential transaction fees.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-five" aria-expanded="false" aria-controls="collapseFive-five">Can I use a debit
+                                        card for payments at Itech Devices?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-five" class="accordion-collapse collapse" aria-labelledby="headingFive-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Debit cards with Visa or MasterCard logos are generally accepted as a form of credit card payment at Itech Devices.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-six" aria-expanded="false" aria-controls="collapseFive-six">Is my credit card
+                                        information secure when making a payment at Itech Devices?</button>
+                                </h2>
+                                <div id="collapseFive-six" class="accordion-collapse collapse" aria-labelledby="headingFive-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, Itech Devices takes measures to ensure the security of your credit card information. We use industry-standard encryption protocols to safeguard your payment details.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-seven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-seven" aria-expanded="false" aria-controls="collapseFive-seven">What information
+                                        is required when making a bank transfer or wire transfer payment?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-seven" class="accordion-collapse collapse" aria-labelledby="headingFive-seven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">When making a bank transfer or wire transfer payment, you will typically need to provide specific account details, including the recipient's account number and bank information. Please contact customer service for detailed
+                                        instructions.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive-eight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive-eight" aria-expanded="false" aria-controls="collapseFive-eight">How do I know if
+                                        my payment was successfully processed?
+                                    </button>
+                                </h2>
+                                <div id="collapseFive-eight" class="accordion-collapse collapse" aria-labelledby="headingFive-eight" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Once your payment is successfully processed, you will receive a confirmation email. If you encounter any issues or do not receive confirmation, please contact our customer service for assistance.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show': currentTab === 6 }" id="acc-order-status" role="tabpanel" aria-labelledby="acc-order-status-tab">
+                        <div class="accordion" id="sixFaq">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-one">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-one" aria-expanded="false" aria-controls="collapseSix-one">How can I check
+                                        the status of my order with Itech Devices?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-one" class="accordion-collapse collapse" aria-labelledby="headingSix-one" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">To check the status of your order, log in to your account on the Itech Devices website and navigate to the "Order History" section. There, you can view the current status of your order.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-two">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-two" aria-expanded="false" aria-controls="collapseSix-two">What do the
+                                        different order statuses mean?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-two" class="accordion-collapse collapse" aria-labelledby="headingSix-two" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Order statuses typically include "Processing," indicating that your order is being prepared, "Shipped," indicating that it has been sent out, and "Delivered," indicating successful receipt. You can find more details
+                                        in the "Order History" section.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-three">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-three" aria-expanded="false" aria-controls="collapseSix-three">Can I modify or
+                                        cancel my order after it has been placed?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-three" class="accordion-collapse collapse" aria-labelledby="headingSix-three" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Once an order is placed, it cannot be modified or canceled. Please ensure that all details are accurate before confirming your order.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-four">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-four" aria-expanded="false" aria-controls="collapseSix-four">Why is my order
+                                        stuck in the "Processing" status?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-four" class="accordion-collapse collapse" aria-labelledby="headingSix-four" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">The "Processing" status means that your order is being prepared for shipment. If it remains in this status for an extended period, contact our customer service for further assistance.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-five">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-five" aria-expanded="false" aria-controls="collapseSix-five">How long does it
+                                        take for an order to move from "Processing" to "Shipped"?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-five" class="accordion-collapse collapse" aria-labelledby="headingSix-five" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">The transition from "Processing" to "Shipped" typically takes 1-3 business days. You will receive a confirmation email with tracking information once your order has been shipped.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-six">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-six" aria-expanded="false" aria-controls="collapseSix-six">My order shows as
+                                        "Delivered," but I haven't received it. What should I do?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-six" class="accordion-collapse collapse" aria-labelledby="headingSix-six" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">If your order shows as "Delivered" but you haven't received it, first check with neighbors or family members. If the issue persists, contact the carrier and our customer service for assistance.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix-seven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix-seven" aria-expanded="false" aria-controls="collapseSix-seven">Can I track
+                                        multiple packages for the same order separately?
+                                    </button>
+                                </h2>
+                                <div id="collapseSix-seven" class="accordion-collapse collapse" aria-labelledby="headingSix-seven" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">Yes, if your order is shipped in multiple packages, you will receive separate tracking numbers. You can track each package individually using the provided tracking numbers.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

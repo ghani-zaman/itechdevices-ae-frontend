@@ -1,0 +1,25 @@
+<!-- <div class="top-brands">
+  <div class="brands-box">
+    <app-block-loader [hidden]="!loading"></app-block-loader>
+    <ng-container *rxFor="let item of data.value">
+      <div class="single-brand">
+        <img loading="lazy" alt="{{item.brand.name}}" [lazyLoad]="imagePath + item.brand.imageUrl">
+      </div>
+    </ng-container>
+  </div>
+</div> -->
+
+
+
+<div class="features-brand-slider">
+  <swiper-container navigation="true"  [breakpoints]="options" class="my-swiper">
+    <ng-container *rxFor="let item of data.value">
+      <swiper-slide swiperSlide>
+        <a href="brand{{item.url}}" class="brand-div"><img loading="lazy" class="brand-logo" alt="{{item.brand.name}}"
+            [lazyLoad]="imagePath + item.brand.imageUrl" /></a>
+      </swiper-slide>
+    </ng-container>
+
+
+  </swiper-container>
+</div>

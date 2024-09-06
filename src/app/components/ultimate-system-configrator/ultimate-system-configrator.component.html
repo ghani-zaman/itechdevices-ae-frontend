@@ -1,0 +1,267 @@
+<div class="product-finder-ctn home-container">
+  <div class="product-finder-ctn-inner">
+    <h2>Product Finder</h2>
+    <p>
+      Personalized search for manufacturer, system product and variant effortlessly.
+    </p>
+    <ng-container *ngIf="formCreated">
+
+      <form class="row align-items-center" [formGroup]="form" (submit)="searchNow(form)">
+      <div class="col-sm-6 col-md">
+        <ng-select [class.spinner]="loadingBrands" (change)="loadTypes(form.controls.brand.value)"
+          placeholder="--Select Manufacturer--" formControlName="brand">
+          <ng-option *rxFor="let item of (brandsList | async)?.data; trackBy: trackByMethod" [value]="item?.id">{{item?.name}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-sm-6 col-md">
+        <ng-select [class.spinner]="loadingTypes"
+          (change)="loadTypesSeries(form.controls.type.value, form.controls.brand.value)"
+          placeholder="--Select System Type--" formControlName="type">
+          <ng-container *rxFor="let item of ptypes">
+            <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+          </ng-container>
+        </ng-select>
+      </div>
+      <div class="col-sm-6 col-md">
+        <ng-select [class.spinner]="loadingSeries"
+          (change)="loadTypesSeriesModels(form.controls.series.value, form.controls.type.value, form.controls.brand.value)"
+          placeholder="--Select Series--" formControlName="series">
+          <ng-container *rxFor="let item of series">
+            <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+          </ng-container>
+        </ng-select>
+      </div>
+      <div class="col-sm-6 col-md">
+        <ng-select [class.spinner]="loadingModels" placeholder="--Select Model--" formControlName="model">
+          <ng-container *rxFor="let item of models">
+            <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+          </ng-container>
+        </ng-select>
+      </div>
+      <div class="col-auto">
+          <button type="submit">Get it Now</button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div class="services row justify-content-md-around">
+    <div class="service-box col-auto d-flex">
+      <div>
+        <img loading="lazy" src="/assets/images/icons8-clock-50.png" alt="" srcset="" />
+      </div>
+
+      <div>
+        <h5>Express Delivery</h5>
+        <p>Within promised ETAs</p>
+      </div>
+    </div>
+
+    <div class="service-box col-auto d-flex">
+      <img loading="lazy" src="/assets/images/icons8-free-shipping-50.png" alt="" srcset="" />
+
+      <div>
+        <h5>Free Shipping</h5>
+        <p>Over orders worth $50</p>
+      </div>
+    </div>
+
+    <div class="service-box col-auto d-flex">
+      <img loading="lazy" src="/assets/images/icons8-guarantee-50.png" alt="" srcset="" />
+
+      <div>
+        <h5>Quality assured</h5>
+        <p>Matching global standards</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- top featurd points--
+<div class="container padd-0">
+
+    <div class="row feature-box">
+
+        <div class="col-sm-3 flex-center">
+            <div class="float-left  welcome-icon">
+                <img loading="lazy" src="assets/images/time.png">
+            </div>
+            <div class="float-left">
+                <p class="welcome-row-title" style="padding-top: 10px;">Express delivery<br>
+                    <span class="welcome-row-subtitle">Within promised ETAs</span>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="col-sm-3 flex-center">
+            <div class="float-left welcome-icon">
+                <img loading="lazy" src="assets/images/fast.png">
+            </div>
+            <div class="float-left">
+                <p class="welcome-row-title" style="padding-top: 10px;">Free shipping<br>
+                    <span class="welcome-row-subtitle">Over orders worth $50</span>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="col-sm-3 flex-center">
+            <div class="float-left  welcome-icon">
+                <img loading="lazy" src="assets/images/certified.png">
+            </div>
+            <div class="float-left">
+                <p class="welcome-row-title" style="padding-top: 10px;">TAA compliance<br>
+                    <span class="welcome-row-subtitle">Guaranteed compliant products</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-3 flex-center">
+            <div class="float-left  welcome-icon">
+                <img loading="lazy" src="assets/images/dollar.png">
+            </div>
+            <div class="float-left">
+                <p class="welcome-row-title" style="padding-top: 10px;">Quality assured<br>
+                    <span class="welcome-row-subtitle">Matching global standards</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!- top featurd points->
+
+
+<!-System configuration box->
+<div style="background: url('../../../assets/images/product-finder-bg.png') no-repeat; background-size: cover;" data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos="flip-right" data-aos-once="true" class="container home-form-box white-box">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="blue-double-line">Product Finder <br/>
+                <hr class="yellow-border">
+            </h2>
+        </div>
+
+    </div>
+    <ng-container *ngIf="formCreated">
+
+        <form [formGroup]="form" (submit)="searchNow(form)">
+            <div class="row">
+                <div class="col-lg-11">
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group" *ngIf="brands?.length > 0">
+                                <label for="email">Select Manufacturer</label>
+                                <!-<select formControlName="brand" class="form-control" (change)="loadTypes(form.controls.brand.value)">
+
+                              <option  [value]='null'>
+                                <ng-container *ngIf="loadingBrands">
+                                  Loading...
+                                </ng-container>
+                                <ng-container *ngIf="!loadingBrands">
+                                  --Select Manufacturer--
+                                </ng-container>
+
+                              </option>
+                              <option *rxFor="let item of brands" [value]="item?.id">{{item?.name}}</option>
+                          </select>->
+                                <ng-select [class.spinner]="loadingBrands" (change)="loadTypes(form.controls.brand.value)" placeholder="--Select Manufacturer--" formControlName="brand">
+                                    <ng-option *rxFor="let item of brands" [value]="item?.id">{{item?.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="email">Select System Type</label>
+                                <!-<select formControlName="type" class="form-control" (change)="loadTypesSeries(form.controls.type.value, form.controls.brand.value)">
+                              <option  [value]='null'>
+                                <ng-container *ngIf="loadingTypes || loadingBrands">
+                                  Loading...
+                                </ng-container>
+                                <ng-container *ngIf="!loadingTypes && !loadingBrands">
+                                  --Select System Type--
+                                </ng-container>
+
+                              </option>
+                              <ng-container *rxFor="let item of ptypes">
+                                <option *ngIf="item.value != null"  [value]="item?.value">{{item?.value}}</option>
+                              </ng-container>
+
+                          </select>->
+                                <ng-select [class.spinner]="loadingTypes" (change)="loadTypesSeries(form.controls.type.value, form.controls.brand.value)" placeholder="--Select System Type--" formControlName="type">
+                                    <ng-container *rxFor="let item of ptypes">
+                                        <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="email">Select Series</label>
+                                <!-<select formControlName="series" class="form-control"  (change)="loadTypesSeriesModels(form.controls.series.value, form.controls.type.value, form.controls.brand.value)">
+                              <option  [value]='null'>
+                                <ng-container *ngIf="loadingSeries || loadingTypes || loadingBrands">
+                                  Loading...
+                                </ng-container>
+                                <ng-container *ngIf="!loadingSeries && !loadingTypes && !loadingBrands">
+                                  --Select Series--
+                                </ng-container>
+
+                              </option>
+                              <ng-container *rxFor="let item of series">
+                                <option *ngIf="item.value != null"  [value]="item?.value">{{item?.value}}</option>
+                              </ng-container>
+
+                          </select>->
+                                <ng-select [class.spinner]="loadingSeries" (change)="loadTypesSeriesModels(form.controls.series.value, form.controls.type.value, form.controls.brand.value)" placeholder="--Select Series--" formControlName="series">
+                                    <ng-container *rxFor="let item of series">
+                                        <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="email">Select Product</label>
+                                <!-<select formControlName="model" class="form-control">
+                              <option  [value]='null'>
+                                <ng-container *ngIf="loadingModels || loadingSeries || loadingTypes || loadingBrands">
+                                  Loading...
+                                </ng-container>
+                                <ng-container *ngIf="!loadingModels  && !loadingSeries && !loadingTypes && !loadingBrands">
+                                  --Select Model--
+                                </ng-container>
+
+                              </option>
+                              <ng-container *rxFor="let item of models">
+                                <option *ngIf="item.value != null"  [value]="item?.value">{{item?.value}}</option>
+                              </ng-container>
+
+                          </select>->
+                                <ng-select [class.spinner]="loadingModels" placeholder="--Select Model--" formControlName="model">
+                                    <ng-container *rxFor="let item of models">
+                                        <ng-option *ngIf="item.value != null" [value]="item?.value">{{item?.value}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-1 v-center">
+                    <button type="submit" class="btn btn-orange">Go</button>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</div>
+<--System configuration box-->

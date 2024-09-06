@@ -1,0 +1,26 @@
+<div *ngIf="true || isBrowser" class="home-container">
+  <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+</div>
+<div *ngIf="true || isBrowser" class="home-container category-container">
+  <div class="filters-tab">
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="filternavbar" aria-labelledby="filternavbarLabel">
+      <h2 class="tab-heading">Filter</h2>
+      <app-filters *ngIf="!filterLoading" [filtersArray]="filters" [currentFilters]="queryFilters"
+        (finalData)="filtersChanged($event)"></app-filters>
+    </div>
+  </div>
+  <div class="main-tab">
+    <!--<h2 class="tab-heading">{{ category?.title }}</h2>
+    <app-top-categories> </app-top-categories>-->
+
+    <h2 class="tab-heading">{{ (keyword == '*')? 'All Products' : keyword }}</h2>
+    <app-block-loader [hidden]="!productLoading"></app-block-loader>
+    <app-product-list (changeOrderEvent)="changeOrder($event)" (pageChangeEvent)="changePage($event)"
+      [products]="products" [total]="totalProducts" [cpage]="currentPage" [limit]="defaultPageSize"
+      [loading]="productLoading"  [sortOrder]="sortOrder">
+    </app-product-list>
+
+    <!--<h2 class="tab-heading">Featured Brands</h2>
+    <app-top-brands></app-top-brands>-->
+  </div>
+</div>

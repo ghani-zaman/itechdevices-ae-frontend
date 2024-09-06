@@ -1,0 +1,210 @@
+.ctn--inner {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.ctn--inner .contact-us {
+    width: 30%;
+    background-color: var(--primary);
+    color: white;
+    padding: 2.5rem;
+}
+
+.icon-box-ctn {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.icon-box-ctn>p {
+    padding-left: 20px;
+}
+
+.icon-box-ctn>p>span {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+    line-height: 1em;
+}
+
+.ctn--inner .contact-us .icon-box-ctn .icon-box {
+    display: flex;
+    align-items: flex-start;
+}
+
+.ctn--inner .contact-us .icon-box-ctn .icon-box img {
+    width: 1.5rem;
+}
+
+.contactform form .first-section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    color: var(--primary);
+}
+
+.contactform form .first-section .fname {
+    width: 100%;
+}
+
+.contactform form .first-section .fname input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section .lname {
+    width: 100%;
+}
+
+.contactform form .first-section .lname input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section input {
+    border: none;
+    padding: 0.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.contactform form .first-section2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    color: var(--primary);
+    margin-top: 1rem;
+}
+
+.contactform form .first-section2 .email {
+    width: 100%;
+}
+
+.contactform form .first-section2 .email input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section2 .phone {
+    width: 100%;
+}
+
+.contactform form .first-section2 .phone input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section2 input {
+    border: none;
+    padding: 0.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.contactform form .first-section3 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    color: var(--primary);
+    margin-top: 1rem;
+}
+
+.contactform form .first-section3 .company {
+    width: 100%;
+}
+
+.contactform form .first-section3 .company input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section3 .business {
+    width: 100%;
+}
+
+.contactform form .first-section3 .business input {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.contactform form .first-section3 input {
+    border: none;
+    padding: 0.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.message {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 97%;
+    margin-top: 1rem;
+    color: var(--primary);
+}
+
+.message textarea {
+    border: none;
+    padding: 1rem;
+}
+
+.faq-ctn {
+    width: 90%;
+    margin: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.faq-ctn .freq-ask-q {
+    width: 30%;
+}
+
+.faq-ctn .faq {
+    width: 70%;
+}
+
+@media (max-width: 480px) {
+    .ctn--inner {
+        flex-wrap: wrap;
+    }
+    .ctn--inner>.contact-us {
+        width: 100%;
+        padding: 1.5rem;
+    }
+    .ctn--inner>.contactform {
+        width: 100%;
+        padding: 1.5rem;
+    }
+}

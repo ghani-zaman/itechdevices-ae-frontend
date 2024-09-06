@@ -1,0 +1,124 @@
+<div class="cartSec">
+  <app-block-loader [hidden]="!cartload"></app-block-loader>
+  <div class="container" *ngIf="cart != null && cart?.products.length > 0" [@enter]>
+    <div class="row">
+      <div class="col-sm-9">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *rxFor="let item of cart?.products; let i = index" [@delcart]>
+              <td data-column="Product">
+                <a [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]"><img class="cart-image"
+                    [lazyLoad]="item?.images[0].image" alt="{{item?.title}}" width="" height="" /></a>
+                <span title="{{ item?.title }}"><a
+                    [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]">{{item?.title |
+                    cuttext:50}}</a></span>
+              </td>
+              <td data-column="Price">
+                {{ item[item.condition] | currency: 'AED ' }}
+              </td>
+              <td data-column="Qty">
+                <span class="qtyBox">
+                  <button type="button" class="decreaseVal" (click)="updateQuantity(-1, i)">
+                    -
+                  </button>
+                  <input type="number" [(ngModel)]="item.qty" min="1" max="22" class="val" />
+                  <button type="button" class="increaseVal" (click)="updateQuantity(1, i)">
+                    +
+                  </button>
+                </span>
+              </td>
+              <td data-column="Price">
+                {{ item[item.condition] * item.qty | currency: 'AED ' }}
+              </td>
+              <td data-column="Subtotal">
+                <button type="button" (click)="removeProduct(i)">
+                  <img src="/assets/svg/delete.svg" loading="lazy" alt="Delete Product" width="" height="">
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="coupon">
+          <div class="row">
+            <div class="col-sm-7">
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Enter Discount Code" aria-label="search" />
+                <button class="btn btn-success" type="submit">
+                  Apply Coupon
+                </button>
+              </form>
+            </div>
+            <div class="col-sm-5" style="text-align: right">
+              <button [class.spinner]="deleting" [disabled]="deleting" class="btn btn-success cart-clear"
+                (click)="emptyCart()" type="submit">
+                Clear All
+              </button>
+              <button [class.spinner]="updating" [disabled]="updating" class="btn btn-success" (click)="updateCart()"
+                type="submit">
+                Update Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h3>Summary</h3>
+        <div class="sumBox">
+          <p>
+            Subtotal<span>{{ cart?.sub_total | currency: 'AED ' }}</span>
+          </p>
+          <hr />
+          <h3>Shipping</h3>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+            <label class="form-check-label" for="flexRadioDefault1">
+              Free Shipping
+            </label>
+          </div>
+          <div class="togBox">
+            <p data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+              aria-controls="collapseExample">
+              Calculate Shipping
+              <span> <img src="/assets/svg/down-arrow.svg" loading="lazy" height="" width="" alt="Calculate Shipping"> </span>
+            </p>
+
+            <div class="collapse" id="collapseExample">
+              <form>
+                <div class="form-group">
+                  <label for="exampleInputdis">Enter Discount Code</label>
+                  <input type="text" class="form-control" id="exampleInputdis" placeholder="Enter Discount Code"
+                    aria-describedby="emailHelp" />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Apply Discount
+                </button>
+              </form>
+            </div>
+          </div>
+          <hr />
+          <p>
+            Order Total<span>{{ cart?.total_amount | currency: 'AED ' }}</span>
+          </p>
+          <button (click)="gotoCheckout()" type="button" class="btn btn-primary">Go to Checkout</button>
+          <a class="cts" [routerLink]="['/']">Continue to Shopping</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="cart == null || cart?.products.length === 0">
+    <div class="row">
+      <div class="col-sm-9">
+        <h1>Empty cart design required here</h1>
+      </div>
+    </div>
+  </div>
+</div>

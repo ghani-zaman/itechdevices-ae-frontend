@@ -1,0 +1,13 @@
+
+<ngx-loading-bar [includeSpinner]="false" [color]="'#3190d2'" [height]="'5px'"></ngx-loading-bar>
+<!-- <app-top-bar></app-top-bar> -->
+
+<app-top-header style="min-height:172px;"></app-top-header>
+
+
+<div class="body-content" style="min-height: 90vh;">
+    <router-outlet></router-outlet>
+    <router-outlet name="print"></router-outlet>
+</div>
+<app-footer></app-footer>
+

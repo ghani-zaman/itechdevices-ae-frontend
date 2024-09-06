@@ -1,0 +1,58 @@
+.hero-ctn {
+  background-size: cover;
+  background-position: center;
+  padding: 40px 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 300px;
+}
+
+.hero-ctn h1 {
+  font-size: 56px;
+  font-weight: 500;
+}
+
+.features-ctn,
+.section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.icon-row p {
+  font-size: 14px;
+}
+
+.content-overlay {
+  background-color: #ffffffd0;
+  padding: 20px;
+  z-index: 2;
+  position: absolute;
+  width: 77%;
+  margin: 0;
+  bottom: 40px;
+  left: 50px;
+}
+
+.section h2 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.nxtbanner {
+  background-color: var(--primary);
+}
+
+.nxtbanner * {
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .top-overlay img {
+    margin-top: 0px;
+  }
+
+  .content-overlay {
+    margin: 0 auto;
+  }
+}

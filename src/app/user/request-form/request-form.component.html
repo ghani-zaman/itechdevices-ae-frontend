@@ -1,0 +1,37 @@
+<div class="box getAquote py-4" *ngIf="formCreated">
+  <form [formGroup]="form" (submit)="submitForm(form)">
+      <div class="row">
+          <div class="col-sm-12">
+              <h1>Request for Quote</h1>
+          </div>
+          <div class="col-sm-4 mb-2">
+              <input formControlName="name" type="text"  class="form-control" placeholder="Name" id="">
+          </div>
+          <div class="col-sm-4 mb-2">
+              <input formControlName="company" type="text" class="form-control" placeholder="Company" id="">
+          </div>
+          <div class="col-sm-4 mb-2">
+              <input formControlName="phone" inputmode="tel" type="text" class="form-control" placeholder="Phone" id="">
+          </div>
+          <div class="col-sm-4 mb-2">
+              <input formControlName="email" inputmode="email" type="text" class="form-control" placeholder="Email" id="">
+          </div>
+          <div class="col-sm-4 mb-2">
+              <input type="text" class="form-control" formControlName="part_number" placeholder="Part Number" id="">
+          </div>
+
+            <div class="col-sm-12">
+              <div class="form-group captcha"  >
+
+                <re-captcha (resolved)="submitNow(form)" size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+              </div>
+            </div>
+
+
+          <div class="col-sm-4 mb-2 relative-box">
+              <button [class.spinner]="loading" [disabled]="loading " type="submit" class="btn w-100 m-0" id="">GO</button>
+          </div>
+
+      </div>
+  </form>
+</div>

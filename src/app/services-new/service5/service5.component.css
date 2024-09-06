@@ -1,0 +1,202 @@
+.hero-ctn {
+  background-size: cover;
+  background-position: center;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  color: white;
+}
+
+.hero-ctn .content-part {
+  width: 40%;
+}
+.hero-ctn .content-part p {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.features-ctn {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.features-ctn .feature-box {
+  display: flex;
+  margin: 50px 0px;
+  margin-bottom: 80px;
+}
+
+.features-ctn .feature-box > * {
+  flex-basis: 50%;
+}
+.features-ctn .feature-box .text-area {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.features-ctn .feature-box .icon-area {
+  text-align: center;
+}
+.features-ctn .feature-box .icon-area img {
+  width: 300px;
+}
+
+.feature-box.reversed-box > .text-area {
+  order: 2;
+}
+.feature-box.reversed-box > .icon-area {
+  order: 1;
+}
+
+@media (max-width: 480px) {
+  .hero-ctn .content-part {
+    width: 100%;
+  }
+
+  .features-ctn .feature-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .features-ctn .feature-box > * {
+    flex-basis: 100%;
+  }
+  .features-ctn .feature-box .icon-area {
+    margin-top: 30px;
+    text-align: left;
+  }
+  .features-ctn .feature-box .icon-area img {
+    width: 180px;
+  }
+
+  .feature-box.reversed-box > .text-area {
+    order: 1;
+  }
+  .feature-box.reversed-box > .icon-area {
+    order: 2;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* SERVICES CONTAINER */
+.ctn .ctn--inner .services-ctn {
+  margin-top: 2rem;
+}
+
+.ctn .ctn--inner .services-ctn .services {
+  background-image: url("/assets/images/sp5-bg.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.ctn .ctn--inner .services-ctn .services .services-section1 {
+  width: 30%;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.ctn .ctn--inner .services-ctn .services .services-section2 {
+  width: 30%;
+  color: white;
+}
+
+.ctn .ctn--inner .services-ctn .services .services-section3 {
+  width: 30%;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+}
+
+@media (max-width: 480px) {
+  .ctn .ctn--inner .hero-section {
+    background-size: cover;
+    height: 100vh;
+    padding-left: 20px;
+  }
+  .ctn .ctn--inner .hero-section .hero-section-content {
+    width: 100%;
+    height: 90vh;
+  }
+  .ctn .ctn--inner .hero-section .hero-section-content p {
+    width: 90%;
+  }
+  .ctn .ctn--inner .hero-section img {
+    width: 50%;
+  }
+  .ctn .ctn--inner .section1,
+  .ctn .ctn--inner .section2,
+  .ctn .ctn--inner .section3 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .ctn .ctn--inner .section1 .section-img,
+  .ctn .ctn--inner .section2 .section-img,
+  .ctn .ctn--inner .section3 .section-img {
+    width: 100%;
+  }
+  .ctn .ctn--inner .section1 .section-img img,
+  .ctn .ctn--inner .section2 .section-img img,
+  .ctn .ctn--inner .section3 .section-img img {
+    width: 100%;
+  }
+  .ctn .ctn--inner .section1 .title-desc,
+  .ctn .ctn--inner .section2 .title-desc,
+  .ctn .ctn--inner .section3 .title-desc {
+    width: 100%;
+  }
+  .ctn .ctn--inner .services-ctn .services {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .ctn .ctn--inner .services-ctn .services .services-section1,
+  .ctn .ctn--inner .services-ctn .services .services-section2,
+  .ctn .ctn--inner .services-ctn .services .services-section3 {
+    width: 100%;
+  }
+}

@@ -1,0 +1,44 @@
+<div *ngIf="true || isBrowser" class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div class="category-header">
+        <h1>{{ brand?.name }}</h1>
+
+        <p *ngIf="false" class="entry-text">Storage devices are any kind of computing hardware used for storing or
+            extracting objects and
+            data files. Storage devices can store information both permanently and temporarily. These devices can be
+            external or
+            internal, server or computing devices. You can get data storage devices in different forms. For example, a
+            normal
+            computer system has several storage devices counting hard disk, cache, and RAM.</p>
+    </div>
+</div>
+
+<div *ngIf="true || isBrowser" class="home-container category-container">
+    <div class="filters-tab">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="filternavbar" aria-labelledby="filternavbarLabel">
+            <h2 class="tab-heading">Refine Your Results</h2>
+            <!--<app-filters *ngIf="!filterLoading" [filtersArray]="filters" [currentFilters]="queryFilters"
+            (finalData)="filtersChanged($event)"></app-filters>-->
+
+            <app-filters *ngIf="!filterLoading" [filtersArray]="filters" [currentFilters]="queryFilters"
+                (finalData)="filtersChanged($event)" [allCats]="children" [type]="'brand'"
+                [typeid]="brand?.id"></app-filters>
+        </div>
+    </div>
+    <div class="main-tab">
+        <!--<h2 class="tab-heading">{{ brand?.name }} Brands</h2>-->
+        <!--<app-top-brands></app-top-brands>-->
+        <!--<app-top-categories [category]="category" [subcategories]="subcategories"> </app-top-categories>-->
+
+        <h2 class="tab-heading">All Products</h2>
+        <app-block-loader [hidden]="!productLoading"></app-block-loader>
+        <!--<app-product-list (changeOrderEvent)="changeOrder($event)" (pageChangeEvent)="changePage($event)"
+            [products]="products" [total]="totalProducts" [cpage]="currentPage" [limit]="defaultPageSize">
+        </app-product-list>-->
+        <app-product-list (changeOrderEvent)="changeOrder($event)" (pageChangeEvent)="changePage($event)"
+            [products]="products" [total]="totalProducts" [cpage]="currentPage" [limit]="defaultPageSize"
+            [loading]="productLoading"  [sortOrder]="sortOrder">
+        </app-product-list>
+
+    </div>
+</div>

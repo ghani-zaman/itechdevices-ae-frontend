@@ -1,0 +1,127 @@
+<div class="contact-form">
+  <div class="home-container">
+    <div class="row">
+       <div class="col-md-12 text-center">
+        <h2 class="section-title">Get Started</h2>
+        <p class="white">Contact us to get expert advice and dedicated account management today.</p>
+      </div>
+      <div *ngIf="formCreated"  class="col-md-12">
+
+         <form [formGroup]="form" (submit)="submitForm(form)">
+          <div class="row">
+            <div class="col-6 col-md-6 mb-3">
+              <input class="form-control" formControlName="name" type="text" placeholder="First Name *">
+              <div *ngIf="
+                form.controls.name.invalid &&
+                form.controls.name.errors &&
+                (form.controls.name.dirty || form.controls.name.touched)
+              ">
+                <small class="text-danger" *ngIf="form.controls.name.hasError('required')">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 col-md-6 mb-3">
+              <input class="form-control"  formControlName="lastName"  type="text" placeholder="Last Name *">
+              <div *ngIf="
+                form.controls.lastName.invalid &&
+                form.controls.lastName.errors &&
+                (form.controls.lastName.dirty || form.controls.lastName.touched)
+              ">
+                <small class="text-danger" *ngIf="form.controls.lastName.hasError('required')">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control" formControlName="email" type="email" placeholder="Email *">
+              <div *ngIf="
+                form.controls.email.invalid &&
+                form.controls.email.errors &&
+                (form.controls.email.dirty || form.controls.email.touched)
+              ">
+                <small class="text-danger" *ngIf="form.controls.email.hasError('required')">
+                  This field is required.
+                </small>
+                <small class="text-danger" *ngIf="form.controls.email.hasError('email')">
+                  Enter a valid email address.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control" formControlName="phone" type="tel" placeholder="Phone number">
+              <div *ngIf="
+                form.controls.phone.invalid &&
+                form.controls.phone.errors &&
+                (form.controls.phone.dirty || form.controls.phone.touched)
+              ">
+                <small class="text-danger" *ngIf="form.controls.phone.hasError('required')">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control" formControlName="company" type="text" placeholder="Company">
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control" formControlName="part_number" type="text" placeholder="Part number">
+              <div *ngIf="
+              form.controls.part_number.invalid &&
+              form.controls.part_number.errors &&
+              (form.controls.part_number.dirty || form.controls.part_number.touched)
+            ">
+              <small class="text-danger" *ngIf="form.controls.part_number.hasError('required')">
+                This field is required.
+              </small>
+            </div>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control" formControlName="quantity"type="number" placeholder="Required Qty">
+              <div *ngIf="
+              form.controls.quantity.invalid &&
+              form.controls.quantity.errors &&
+              (form.controls.quantity.dirty || form.controls.quantity.touched)
+            ">
+              <small class="text-danger" *ngIf="form.controls.quantity.hasError('required')">
+                This field is required.
+              </small>
+            </div>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <input class="form-control hide-arrow" formControlName="price" type="number" placeholder="Target Price">
+              <div *ngIf="
+              form.controls.price.invalid &&
+              form.controls.price.errors &&
+              (form.controls.price.dirty || form.controls.price.touched)
+            ">
+              <small class="text-danger" *ngIf="form.controls.price.hasError('required')">
+                This field is required.
+              </small>
+            </div>
+            </div>
+
+              <div class="col-sm-12">
+                <div class="form-group captcha"  >
+
+                  <re-captcha (resolved)="submitNow(form)" size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                </div>
+              </div>
+
+
+            <div class="col-12 mb-3 text-center">
+              <span class="relative-box"><button [class.spinner]="loading" [disabled]=" loading " type="submit"  class="btn">Submit</button></span>
+            </div>
+
+          </div>
+        </form>
+
+        <!-- Form Integration --
+       <iframe src="" frameborder="0">Home form here</iframe>
+        <iframe width="100%" style="min-height: 400px;" src="/assets/home.html"
+          frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe>
+         Form Integration Ends -->
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,291 @@
+<!--<div class="row">
+
+    <div class="col-md-12 mb-5">
+        <div class="box getAquote py-4">
+            <form>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Return Request</h1>
+                        <p>RMA numbers expire 14 days after they are issued. Please allow 2-3 business days for processing once Newegg has received your return. If you need to edit or cancel your return, please use the Cancel Return button. Once canceled, you can recreate your return or you can visit our Contact Us page for further assistance.</p>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label class="mb-2" for="">Order Number</label>
+                        <input formControlName="ordrnum" type="text" class="form-control" id="">
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label class="mb-2" for="">Product MPN</label>
+                        <input formControlName="prompn" type="text" class="form-control" id="">
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="mb-2" for="">Reason for Return</label>
+                        <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="col-sm-3 mb-2 relative-box">
+                        <button type="submit" class="btn w-100 m-0" id="">Submit</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="box mb-4">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-md-6">
+            <div class="quickorder">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by product, type#"
+                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <button class="btn m-0 input-group-text" id="basic-addon2">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-end">
+                <label class="me-2"><strong>Find Orders Within:</strong></label>
+                <select class="form-select w-auto">
+                    <option selected>30 Days</option>
+                    <option value="1">60 Days</option>
+                    <option value="2">90 Days</option>
+                    <option value="3">120 Days</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="ordertable">
+            <div class="table-responsive">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Status</th>
+                            <th>Ship Date</th>
+                            <th>PO#</th>
+                            <th>Job Name</th>
+                            <th>Order Date</th>
+                            <th>Order By</th>
+                            <th>Order Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a href="">s101500001.001</a>
+                            </td>
+                            <td>
+                                <span class="status">Invoice</span>
+                            </td>
+                            <td>
+                                <span>10/03/2023</span>
+                            </td>
+                            <td>
+                                <span>814</span>
+                            </td>
+                            <td>
+                                <span>Anson Park Shop</span>
+                            </td>
+                            <td>
+                                <span>10/03/2023</span>
+                            </td>
+                            <td>
+                                <span>Sheikh</span>
+                            </td>
+                            <td>
+                                <span>$299.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="">s101500001.001</a>
+                            </td>
+                            <td>
+                                <span class="status">Invoice</span>
+                            </td>
+                            <td>
+                                <span>10/03/2023</span>
+                            </td>
+                            <td>
+                                <span>814</span>
+                            </td>
+                            <td>
+                                <span>Anson Park Shop</span>
+                            </td>
+                            <td>
+                                <span>10/03/2023</span>
+                            </td>
+                            <td>
+                                <span>Sheikh</span>
+                            </td>
+                            <td>
+                                <span>$299.00</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!-- src/app/return-request/return-request.component.html -->
+
+<!-- ... Existing form ... -->
+
+<!-- src/app/return-request/return-request.component.html -->
+@if(formCreated){
+<!-- src/app/return-request/return-request.component.html -->
+
+<div class="row">
+    <div class="col-md-12 mb-5">
+        <div class="box getAquote py-4">
+            <form [formGroup]="returnRequestForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Return Request</h1>
+                        <p>RMA numbers have a validity period of 14 days from the date of issuance. Upon Itech Devices receiving your return, please allow 2-3 business days for processing. If you find the need to modify or cancel your return, kindly utilize
+                            the "Cancel Return" button. After cancellation, you can proceed to recreate your return. Alternatively, for additional assistance, feel free to visit our Contact Us page. We're here to help</p>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label class="mb-2" for="orderNumber">Order Number</label>
+                        <input formControlName="order_number" type="text" class="form-control" id="orderNumber">
+                        <div *ngIf="returnRequestForm.get('order_number').hasError('required') && returnRequestForm.get('order_number').touched" class="text-danger">
+                            Order Number is required.
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label class="mb-2" for="productMpn">Product MPN</label>
+                        <input formControlName="part_number" type="text" class="form-control" id="productMpn">
+                        <div *ngIf="returnRequestForm.get('part_number').hasError('required') && returnRequestForm.get('part_number').touched" class="text-danger">
+                            Product MPN is required.
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="mb-2" for="reason">Reason for Return</label>
+                        <textarea formControlName="reason_for_rma" class="form-control" id="reason" cols="30" rows="10"></textarea>
+                        <div *ngIf="returnRequestForm.get('reason_for_rma').hasError('required') && returnRequestForm.get('reason_for_rma').touched" class="text-danger">
+                            Reason for Return is required.
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mb-2 relative-box d-flex justify-content-between">
+                        <span class="relative-box"><button [class.spinner]="submitLoading" type="submit" class="btn btn-lg w-100 m-0" [disabled]="returnRequestForm.invalid">Submit</button></span>
+                        <button *ngIf="isUpdateMode" class="btn btn-sm btn-danger mt-0" (click)="cancelUpdate()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ... The rest of your HTML remains unchanged ... -->
+
+}
+<div class="box mb-4">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-md-6">
+            <div class="quickorder">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by order number, product MPN, or reason" [(ngModel)]="keyword">
+                    <span class="relative-box"><button  [class.spinner]="searchLoadiing"  class="btn m-0 input-group-text" (click)="onSearch()">Search</button></span>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-end">
+                <label class="me-2"><strong>Find Orders Within:</strong></label>
+                <select class="form-select w-auto" [(ngModel)]="itemsPerPage">
+          <option value="10">10 per page</option>
+
+        </select>
+            </div>
+        </div>
+    </div>
+</div>
+@if(orderReturns.length > 0){
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="ordertable">
+            <div class="table-responsive">
+                <table class="table" width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <thead>
+                        <tr>
+                            <th>Id #</th>
+                            <th>Order #</th>
+                            <th>Part Number</th>
+                            <th>Reason</th>
+
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let orderReturn of orderReturns | paginate
+            : {
+                itemsPerPage: itemsPerPage,
+                currentPage: currentPage,
+                totalItems: totalItems
+              };
+        let i = index">
+                            <td>
+                                <a href="">{{ orderReturn.id }}</a>
+                            </td>
+                            <td>
+                                <a href="">{{ orderReturn.order_number }}</a>
+                            </td>
+                            <td>
+                                <span class="status">{{ orderReturn.part_number }}</span>
+                            </td>
+                            <td>
+                                <a href="">{{ orderReturn.reason_for_rma }}</a>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm m-0 me-2" (click)="updateOrderReturn(orderReturn)">Update</button>
+                                <span class="relative-box"><button  [class.spinner]="deleteLoading === orderReturn.id"  class="btn btn-sm btn-danger m-0" (click)="deleteOrderReturn(orderReturn.id)">Delete</button></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="orderReturns?.length == 0">
+    <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="onPageChange($event)">
+        <div class="col-lg-12 text-center">
+            <ul class="pagination">
+                <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+
+                    <button>
+            <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="Prev Page" width="10" height="16">
+          </button>
+                </li>
+                <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                    <button *ngIf="!p.isFirstPage()">
+            <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="Prev Page" width="10" height="16">
+          </button>
+                </li>
+                <ng-container *rxFor="let page of p.pages">
+
+                    <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+                        <button class="a-link">{{
+              page.label
+              }}</button>
+
+                    </li>
+                    <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+                        <button class="a-link">{{ page.label }}</button>
+                    </li>
+                </ng-container>
+                <li [class.disabled]="p.isLastPage()">
+                    <button *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="Next Page" width="10" height="16"></button>
+                    <button *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="Next Page" width="10" height="16"></button>
+                </li>
+            </ul>
+        </div>
+    </pagination-template>
+</div>
+
+}

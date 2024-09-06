@@ -1,0 +1,134 @@
+
+
+.hero-ctn {
+  background-size: cover;
+  background-position: top center;
+  min-height: 600px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+
+.hero-ctn .content-part {
+  width: 100%;
+  text-align: left;
+}
+
+.hero-ctn2{
+  min-height: unset;
+  display: block;
+}
+.hero-ctn2 .content-part {
+  width: 40%;
+  text-align: left;
+  padding: 80px 0px;
+}
+
+.hero-ctn .content-part p {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.features-ctn {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.features-ctn .feature-box {
+  display: flex;
+  margin: 50px 0px;
+  margin-bottom: 80px;
+}
+
+.features-ctn .feature-box > * {
+  flex-basis: 50%;
+}
+.features-ctn .feature-box .text-area {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.features-ctn .feature-box .icon-area {
+  text-align: right;
+}
+.features-ctn .feature-box .icon-area img {
+  width: 100%;
+}
+
+.feature-box.reversed-box > .text-area {
+  order: 2;
+}
+.feature-box.reversed-box > .icon-area {
+  order: 1;
+}
+
+
+.icons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 80px;
+  padding-bottom: 50px;
+  gap: 40px;
+}
+.card-c{
+  text-align: center;
+  gap: 20px;
+  margin: 0;
+  flex-basis: 28%;
+  box-shadow: 2px 2px 9px 1px rgba(239,239,239,1);
+  padding: 1rem;
+  border-radius: 20px;
+
+}
+
+.card-c .img-tab img{
+  width: 30px;
+}
+
+.call-now a{
+  font-size: 24px;
+}
+
+.home-container{
+  text-align: center;
+}
+
+@media (min-width: 481px) {
+  .text-area {
+    padding-right: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-ctn .content-part {
+    width: 100%;
+  }
+
+  .features-ctn .feature-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .features-ctn .feature-box > * {
+    flex-basis: 100%;
+  }
+  .features-ctn .feature-box .icon-area {
+    margin-top: 30px;
+    text-align: left;
+  }
+  .features-ctn .feature-box .icon-area img {
+    width: 100%;
+  }
+
+  .feature-box.reversed-box > .text-area {
+    order: 1;
+  }
+  .feature-box.reversed-box > .icon-area {
+    order: 2;
+  }
+  .card-c{
+    flex-basis: 100%;
+  }
+}

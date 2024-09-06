@@ -1,0 +1,183 @@
+<div style="background-color:#fff; width:100%; padding:20px;" class="table-responsive">
+    <table id="topTable" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+        <tbody>
+            <tr>
+
+
+                <td style="text-align: right;">
+
+                    <button style="margin-right:10px;" class="btn mt-0" (click)="exportToPdf()">
+                        @if(loading == false){
+                            <img src="/assets/svg/download.svg" loading="lazy" alt="Download Icon" width="16" height="16"> Download
+                        } @else {
+                        <span class="animated"><img src="/assets/svg/downloading.svg" loading="lazy" alt="Downloading Icon" width="16" height="16"></span> Downloading
+                        }
+
+                    </button>
+                    <a [routerLink]="['/user/orders']" class="btn mt-0"><img src="/assets/svg/left-full-arrow.svg" loading="lazy" alt="Downloading Icon" width="20" height="19"> Back</a>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div #contentToConvert id="contentToConvert">
+        <div>
+            <table style="background-color: #fff;margin: 0 auto;font-family: 'Poppins', sans-serif;font-size: 14px;padding: 20px;" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td style="max-width: 150px; padding-bottom: 15px;">
+                                            <img src="/assets/svg/itech-logo-150.svg" alt="" width="150px">
+                                        </td>
+                                        <td style="text-align: right;">
+
+                                            <!--<button  class="btn mt-0" (click)="exportToPdf()">
+                              @if(loading == false){
+                              <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg> Download
+                              } @else {
+                                <span class="animated"><svg  xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M222.7 32.1c5 16.9-4.6 34.8-21.5 39.8C121.8 95.6 64 169.1 64 256c0 106 86 192 192 192s192-86 192-192c0-86.9-57.8-160.4-137.1-184.1c-16.9-5-26.6-22.9-21.5-39.8s22.9-26.6 39.8-21.5C434.9 42.1 512 140 512 256c0 141.4-114.6 256-256 256S0 397.4 0 256C0 140 77.1 42.1 182.9 10.6c16.9-5 34.8 4.6 39.8 21.5z"/></svg></span> Downloading
+                              }
+
+                               </button>-->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p style="margin-bottom: 10px;margin-top: 0;font-weight: 600;font-size: 16px;color: #000;">
+                                                Hello <span style="color:#244673;font-weight: 600;">{{order?.customer?.first_name}}
+                                                    {{order?.customer?.last_name}}</span>,
+                                            </p>
+                                            <p style="margin-bottom: 10px;margin-top: 0;">Thank you for your order from Itech Devices. Once your package ships we will send an email with a link to track your order. If you have questions about your order, you can email us at support{{'@'}}itechdevices.ae
+                                                or call us at +971-5-54255786. Our hours are 9am to 5pm.</p>
+                                            <h2 style="margin: 20px 0;font-size: 1.8rem;font-weight: 600;">Your Order #{{order?.order_id}} </h2>
+                                            <p style="margin-bottom: 0px;margin-top: 0;">Placed on {{order?.created_at | date:'M d,Y h:m:s a'}} </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="padding-top: 20px;padding-bottom: 20px;">
+                                                <tr>
+                                                    @for(address of order?.orderAddress; track address.id ){ @if(address?.address_type == 'billing') {
+                                                    <td style="padding: 20px 0;">
+                                                        <h4 style="margin-top: 0;font-size: 20px;font-weight: 600;">
+                                                            Billing Info</h4>
+                                                        <p style="margin-bottom: 0px;margin-top: 0;">
+                                                            {{address?.first_name}} {{address?.last_name}}<br> {{address?.street_address1}}, {{address?.city}}, {{address?.state}}, {{address?.country}}, {{address?.pincode}}
+                                                            <br> T: {{address.phone}}</p>
+                                                    </td>
+                                                    } } @for(address of order?.orderAddress; track address.id ){ @if(address?.address_type == 'shipping') {
+
+                                                    <td style="padding-bottom: 20px;">
+                                                        <h4 style="margin-top: 0;font-size: 20px;font-weight: 600;">
+                                                            Shippint Info</h4>
+                                                        <p style="margin-bottom: 0px;margin-top: 0;">
+                                                            {{address?.first_name}} {{address?.last_name}}<br> {{address?.street_address1}}, {{address?.city}}, {{address?.state}}, {{address?.country}}, {{address?.zip}}
+                                                            <br> T: {{address?.phone}}</p>
+                                                    </td>
+                                                    } }
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-bottom: 20px;">
+                                                        <h4 style="margin-top: 0;font-size: 20px;font-weight: 600;">
+                                                            Payment Method</h4>
+                                                        <p *ngIf="order?.payment_type === 'paytrace' && order?.status === 'notpaid'" style="margin-bottom: 0px;margin-top: 0;">Not Paid</p>
+                                                        <p *ngIf="order?.payment_type === 'cod' " style="margin-bottom: 0px;margin-top: 0;">Cash on Delivery
+                                                        </p>
+                                                        <p *ngIf="order?.payment_type === 'banktransfer' " style="margin-bottom: 0px;margin-top: 0;">Bank Transfer</p>
+                                                        @if(order?.payment_type === 'paytrace' && order?.status === 'notpaid'){
+                                                        <p style="margin-bottom: 0px;margin-top: 0;">Paid Via Credit Card
+                                                        </p>
+                                                        <p style="margin-bottom: 0px;margin-top: 0;"><span style="font-weight: 500;">Transaction Id: </span> {{order?.transaction_id}}
+                                                        </p>
+                                                        }
+
+
+
+                                                    </td>
+                                                    <td style="padding-bottom: 20px;">
+                                                        <h4 style="margin-top: 0;font-size: 20px;font-weight: 600;">
+                                                            Shipping Method</h4>
+                                                        <p style="margin-bottom: 0px;margin-top: 0;">
+                                                            {{order?.shipping_type}} - {{order?.free_code_1}}<br>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table id="products" width="100%" border="0" cellpadding="10" cellspacing="0" style="text-align: right;">
+                                <thead style="background-color: #eaeaea;">
+                                    <tr>
+                                        <th style="font-weight: 500;text-align: left;padding: 10px;">Items</th>
+                                        <th style="font-weight: 500;padding: 10px;">Qty</th>
+                                        <th style="font-weight: 500;padding: 10px;">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for(item of order?.orderItems; track item?.id){
+                                    <tr>
+                                        <td style="text-align: left;padding: 5px 10px;">{{item?.product_title}}
+                                            <br> SKU: {{item?.sku}}
+                                        </td>
+                                        <td style="padding: 5px 10px;">{{item?.qty_ordered}}</td>
+                                        <td style="padding: 5px 10px;">{{item.total_price | currency: 'AED '}}</td>
+                                    </tr>
+                                    }
+
+
+                                </tbody>
+                                <tfoot style="background-color: #eaeaea;font-weight: 500;">
+                                    <tr>
+                                        <th style="font-weight: 400;padding: 5px 10px;" colspan="2">Subtotal</th>
+                                        <th style="font-weight: 400;padding: 5px 10px;">{{order?.sub_total | currency: 'AED '}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-weight: 400;padding: 5px 10px;" colspan="2">Shipping and Handling
+                                        </th>
+                                        <th style="font-weight: 400;padding: 5px 10px;">{{order?.shipping_amount | currency: 'AED '}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-weight: 400;padding: 5px 10px;" colspan="2">Discount</th>
+                                        <th style="font-weight: 400;padding: 5px 10px;">-{{order?.discount_amount | currency: 'AED '}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-weight: 400;padding: 5px 10px;" colspan="2">Tax</th>
+                                        <th style="font-weight: 400;padding: 5px 10px;">{{order?.tax_amount | currency: 'AED '}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-weight: 600;text-align: right;padding: 10px;" colspan="2">Grand Total
+                                        </th>
+                                        <th style="font-weight: 400;text-align: right;padding: 10px;">
+                                            {{order?.grand_total | currency: 'AED '}}
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <p style="margin-top: 20px;margin-bottom: 0;">Thank you, <span style="font-weight: 500;">Itech Devices!</span></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1263 @@
+<div class="hide-on-print" *ngIf="!productLoading && isBrowser">
+    <ng-template #popContent>
+        <!--share box start-->
+        <div class="share-icons">
+            <div class="share-row">
+                <a class="share-btn">
+                    <span><img
+              loading="lazy"
+              src="/assets/icons/email.svg"
+              alt="Email icon"
+              class="share-icon"
+            /> </span
+          >Email
+        </a>
+        <a class="share-btn">
+          <span
+            ><img
+              loading="lazy"
+              src="/assets/icons/fb.svg"
+              alt="Facebook icon"
+              class="share-icon"
+            /> </span
+          >Facebook
+        </a>
+      </div>
+      <div class="share-row">
+        <a class="share-btn">
+          <span
+            ><img
+              loading="lazy"
+              src="/assets/icons/tw.svg"
+              alt="Twitter icon"
+              class="share-icon"
+            /> </span
+          >Twitter
+        </a>
+        <a class="share-btn"> Pinterest </a>
+      </div>
+    </div>
+    <!-- share box end-->
+  </ng-template>
+  <ng-template #popTitle><b>Share</b></ng-template>
+
+  <div class="product-container home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div class="custom-product-details">
+      <div class="custom-product-card" *ngIf="!productLoading">
+
+        <div class="product-card">
+          <div class="p-details">
+            <div class="p-gallery">
+              <ng-container *ngIf="!productLoading">
+                <div class="no-img" *ngIf="product?.images.length === 0">
+                  <img
+                    alt="{{ product?.title }}"
+                    data-aos-duration="1000"
+                    data-aos-easing="ease-in-out"
+                    data-aos-once="true"
+                    id="img_1"
+                    [src]="
+                      product.category_name
+                        ? env.catImagesPath +
+                          (product.category_name | trimCatImage) +
+                          '.webp'
+                        : 'assets/images/no-image.webp'
+                    "
+                    alt=""
+                  />
+                </div>
+                <ngx-slick-carousel
+                  id="sliderNav"
+                  data-aos-duration="1000"
+                  data-aos-easing="ease-in-out"
+                  data-aos="slide-right"
+                  data-aos-once="true"
+                  *ngIf="product?.images.length > 0"
+                  [config]="slideConfigNav"
+                  class="my-gallery product-thumbs-left slider-nav"
+                >
+                  <figure
+                    *rxFor="let item of product?.images; let i = index"
+                    ngxSlickItem
+                    itemprop="associatedMedia"
+                    itemscope
+                    itemtype="http://schema.org/ImageObject"
+                  >
+                    <img
+                      loading="lazy"
+                      alt="{{ product?.title }}"
+                      [lazyLoad]="item.image"
+                      itemprop="thumbnail"
+                      alt="Image description"
+                    />
+                  </figure>
+                </ngx-slick-carousel>
+                <ngx-slick-carousel
+                  *ngIf="product?.images.length > 0"
+                  class="my-gallery slider-main"
+                  id="slider"
+                  #slickModal="slick-carousel"
+                  [config]="slideConfig"
+                  style="margin: 0 !important"
+                >
+                  <figure
+                    *rxFor="let item of product?.images; let i = index"
+                    ngxSlickItem
+                    itemprop="associatedMedia"
+                    itemscope
+                    itemtype=""
+                  >
+                    <a
+                      (click)="openLightBox(i)"
+
+                    >
+                      <img
+                        *ngIf="i === 0"
+                        alt="{{ product?.title }}"
+                        class="slickImage"
+                        [src]="item.image"
+                        itemprop="thumbnail"
+                        alt="Image description"
+                      />
+                      <img
+                        *ngIf="i > 0"
+                        loading="lazy"
+                        alt="{{ product?.title }}"
+                        class="slickImage"
+                        [lazyLoad]="item.image"
+                        itemprop="thumbnail"
+                        alt="Image description"
+                      />
+                    </a>
+                    <figcaption itemprop="caption description"></figcaption>
+                  </figure>
+                </ngx-slick-carousel>
+                <p class="text-center not-exact">
+                  NOTE: Images may not be exact.
+                </p>
+              </ng-container>
+            </div>
+            <div class="p-meta">
+              <div class="print-share">
+                <div class="print-page">
+                  <a (click)="onPrint()"
+                    ><img
+                      loading="lazy"
+                      src="/assets/images/printer.png"
+                      alt="Printer Icon"
+                  /></a>
+                </div>
+                <!-- <div class="share-page">
+                  <button [ngbPopover]="popContent" [popoverTitle]="popTitle" placement="left"
+                    popoverClass="share-popover">
+                    <img loading="lazy" src="/assets/icons/share-icon.svg" alt="Share Icon" />SHARE
+                  </button>
+                </div> -->
+              </div>
+              <h2 class="p-title" *ngIf="product?.title !== null">
+                {{ product?.title }}
+              </h2>
+              <p class="p-short-desc" [innerHTML]="(product?.short_description && product?.short_description != null) ? product?.short_description : ''">
+
+              </p>
+              <div class="p-meta-field">
+                <table>
+                  <tr>
+                    <td>Manufacturer:</td>
+                    <td>
+                      <a
+                        [routerLink]="
+                          product?.brand_url != null
+                            ? '/brand/' + product?.brand_url
+                            : '/'
+                        "
+                        >{{ product?.brand_name }}</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Mfr. Part#:</td>
+                    <td>
+                      <span>{{ product?.sku }}</span>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>Availability:</td>
+                        <td>
+                            <span *ngIf="product?.is_in_stock" class="in-stock">In Stock</span
+                      >
+                      <span
+                        *ngIf="
+                          product?.is_in_stock === null ||
+                          product?.is_in_stock === false
+                        "
+                        class="in-stock"
+                        >Out of Stock</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Barcode:</td>
+                    <td>
+                      <ngx-barcode
+                        [bc-value]="product?.sku"
+                        [bc-display-value]="true"
+                      ></ngx-barcode>
+                    </td>
+                  </tr>
+                </table>
+                <div  class="brand-image">
+                  <img *ngIf="product?.brand_image !== null" [src]="imagespath  + 'Images/Brands/' +  product?.brand_image" alt="" />
+                </div>
+              </div>
+
+              <div class="custom-icons">
+                <p
+                  class="overviewra"
+                  placement="top"
+                  ngbTooltip="No hidden costs or huge markups. Always get the best prices on leading products"
+                >
+                  <img
+                    class="tooltip-images"
+                    src="/assets/images/p-icon-1.png"
+                  />
+                </p>
+                <p
+                  class="overviewra"
+                  placement="top"
+                  ngbTooltip="Express shipping is available. Get your product delivered in as fast as one day
+                "
+                >
+                  <img
+                    class="tooltip-images"
+                    src="/assets/images/p-icon-2.png"
+                  />
+                </p>
+                <p
+                  class="overviewra"
+                  placement="top"
+                  ngbTooltip="Have peace of mind knowing that *replacements/refunds are done promptly
+                "
+                >
+                  <img
+                    class="tooltip-images"
+                    src="/assets/images/p-icon-3.png"
+                  />
+                </p>
+                <p
+                  class="overviewra"
+                  placement="top"
+                  ngbTooltip="Have peace of mind knowing that *replacements/refunds are done promptly
+                "
+                >
+                  <img
+                    class="tooltip-images"
+                    src="/assets/images/p-icon-4.png"
+                  />
+                </p>
+                <p
+                  class="overviewra"
+                  placement="top"
+                  ngbTooltip="Have peace of mind knowing that *replacements/refunds are done promptly
+                "
+                >
+                  <img
+                    class="tooltip-images"
+                    src="/assets/images/p-icon-5.png"
+                  />
+                </p>
+              </div>
+
+              <img
+                loading="lazy"
+                *ngIf="warrantyImage !== null"
+                class="p-warranty"
+                [src]="warrantyImage"
+                alt=""
+              />
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-product-rfq" *ngIf="!productLoading">
+        <div class="cart-area">
+          <div class="add-to-cart">
+            <div *ngIf="product[condition] == null || product[condition] == 0">
+              <h2 class="cartprice-title">
+                <span>Free ground shipping within USA.</span>
+                            </h2>
+                            <div class="atc-pricing cfp">
+                                <div class="call-for-price">
+                                    <span>Call For Price:
+                    <span>
+                      <a href="tel:+971554255786">866-705-5346</a>
+                    </span>
+                                    </span>
+                                </div>
+
+                                <!-- <p>Limited Stock Left.</p>
+                <p class="herotext">
+                <span>Call for Price :</span>
+                <a href="tel:+971554255786">+971-5-54255786</a></p> -->
+                                <!-- <div class="cfbp-box">
+                  <div class="cntnt">
+                    <p>Click to Chat and get access to premium discounts, for the best price you'll find online</p>
+                  </div>
+                  <a class="cfbp" (click)="openchat()">Chat for Best Price</a>
+                </div> -->
+                                <!-- <div class="p-action-btns-cart">
+                <a (click)="addToCompare(product,condition)" [class.spinner]="compLoading"><img
+                    src="/assets/icons/checkbox-icon.svg" alt="Checkbox icon" />Add to compare</a>
+                </div> -->
+                            </div>
+            </div>
+            <ng-container *ngIf="product[condition] > 0">
+                <h2 class="cartprice-title">Free ground shipping within USA.</h2>
+                <div class="form-group d-flex justify-content-between">
+                    <div *ngIf="product?.new_price !== null" class="form-check">
+                        <input [(ngModel)]="condition" [value]="'new_price'" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                    New
+                  </label>
+                    </div>
+                    <div class="form-check">
+                        <input [(ngModel)]="condition" [value]="'refurbished_grade_a_price'" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                    Refurnished
+                  </label>
+                    </div>
+                </div>
+                <div class="atc-pricing">
+                    <!-- <p class="stock-level">
+                <span *ngIf="product?.is_in_stock" class="in-stock">In Stock</span>
+                <span *ngIf="product?.is_in_stock === null || product?.is_in_stock === false" class="in-stock">Out of
+                  Stock</span>
+              </p> -->
+
+                    <ng-container *ngIf="product?.discount === null || product?.discount === 0">
+                        <h2 class="atc-price">
+                            {{ product[condition] | currency: 'AED ' }}
+                        </h2>
+                    </ng-container>
+                    <ng-container *ngIf="product?.discount !== null && product?.discount !== 0">
+                        <div class="pricing">
+                            <h2 class="atc-price">
+                                {{ product[condition] | currency: 'AED ' }}
+                            </h2>
+                            <p class="atc-disc-price">
+                                {{ product | priceConversion : condition | currency: 'AED ' }}
+                            </p>
+                            <button class="q-icon" placement="top" ngbTooltip="The average price offered by Itech Devices for the item over the past 60 days.">
+                      <img
+                        loading="lazy"
+                        src="/assets/icons/question-icon.svg"
+                        alt=""
+                      />
+                    </button>
+                        </div>
+
+                        <p *ngIf="
+                      product?.discount !== null && product?.discount !== 0
+                    " class="saved-amount">
+                            Save: {{ (product | priceConversion : condition) - product[condition] | currency: 'AED ' }} Today's Deal 16% Off
+                        </p>
+                    </ng-container>
+
+                    <!-- <div class="d-flex align-items-center">
+                  <p class="dis-text">Upto 2% discount on checkout</p>
+                </div> -->
+                    <!-- <div class="p-condition">
+
+                  <ng-container *rxFor="let item of pricingObj |  keyvalue">
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" [(ngModel)]="condition" [value]="item.key">
+                    <label class="form-check-label">{{pricingValues[item?.key]}}</label>
+                  </div>
+                    <label style="color: black;"> <input  type="radio" > &nbsp; - {{ product[item.key]  | currency: 'AED ' }}</label><br/>
+                  </ng-container>
+
+
+                </div>-->
+                    <!-- <p *ngIf="product?.discount !== null  && product?.discount !== 0" class="saved-amount">You save
+                <span>{{((product| priceConversion: condition) - (product[condition])) | currency: 'AED ' }}</span>
+              </p> -->
+                    <!--<p class="stock-level-text">
+                Only 9 items available at this Special Price
+              </p>-->
+                </div>
+
+                <div class="atc-buttons">
+                    <div class="cart-qty">
+                        <label for="">Qty </label>
+                        <div class="control">
+                            <input class="form-control" type="number" [(ngModel)]="quantity" min="1" />
+                        </div>
+                        <!-- <div class="cart-qty-btns">
+                    <button class="increment" (click)="quantityUpdate(1)">+</button>
+                    <button class="decrement" (click)="quantityUpdate(-1)">-</button>
+                  </div> -->
+                    </div>
+                    <div class="atc-btn">
+                        <button [class.spinner]="cartLoading" [disabled]="cartLoading" (click)="addToCart(product, quantity, condition)">
+                    Add to Cart
+                  </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <div id="getAQuote" class="request-quote">
+            <ng-container *ngIf="formCreated">
+                <form [formGroup]="quoteForm" (submit)="submitQuoteForm(quoteForm)" class="popup-form">
+                    <div class="quote-form-header">
+                        <img src="/assets/images/agent.webp" alt="" />
+                        <div class="inner-text">
+                            <h2>We are online</h2>
+                            <div class="d-flex align-items-center">
+                                <a class="col" href="">Call</a>
+                                <a class="col" href="">Chat</a>
+                                <a class="col" href="">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="rfq-desc">
+                        Please call us at
+                        <a href="tel:+971554255786">+971-5-54255786</a> and one of our representative will be happy to assist you with part no
+                        <strong>ST4000NM0125.</strong>
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input id="name" formControlName="name" type="text" class="custom-input" placeholder="First name" />
+                        </div>
+                        <div class="col-md-6">
+                            <input id="name" formControlName="name" type="text" class="custom-input" placeholder="Last name" />
+                        </div>
+                        <div class="col-md-12">
+                            <div class="error-block" *ngIf="
+                        quoteForm.controls.name.invalid &&
+                        (quoteForm.controls.name.dirty ||
+                          quoteForm.controls.name.touched)
+                      ">
+                                <p class="error" *ngIf="quoteForm.controls.name.hasError('required')">
+                                    Please enter the your name
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input id="business-email" formControlName="email" type="email" class="custom-input" placeholder="Email Address" />
+                            <div class="error-block" *ngIf="
+                        quoteForm.controls.email.invalid &&
+                        (quoteForm.controls.email.dirty ||
+                          quoteForm.controls.email.touched)
+                      ">
+                                <p class="error" *ngIf="quoteForm.controls.email.hasError('required')">
+                                    Please enter the your email address
+                                </p>
+                                <p class="error" *ngIf="quoteForm.controls.email.hasError('email')">
+                                    Please enter a valid business email address
+                                </p>
+                                <p class="error" *ngIf="quoteForm.controls.email.hasError('pattern')">
+                                    Please enter a valid business email address
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="phone-number" class="custom-input" formControlName="phone" type="text" placeholder="Phone Number" />
+                            <div class="error-block" *ngIf="
+                        quoteForm.controls.phone.invalid &&
+                        (quoteForm.controls.phone.dirty ||
+                          quoteForm.controls.phone.touched)
+                      ">
+                                <p class="error" *ngIf="quoteForm.controls.phone.hasError('required')">
+                                    Please enter the your phone number
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input id="qty" class="custom-input" formControlName="quantity" type="text" placeholder="Quantity" />
+                        </div>
+                        <div class="col-md-12">
+                            <label for="delivery-time">How soon do you need it? </label>
+                            <select name="availability" id="delivery-time" class="custom-input">
+                      <option value="1">Today</option>
+                      <option value="2">This week</option>
+                      <option value="3">30Days+</option>
+                    </select>
+                        </div>
+                        <div class="col-md-12">
+                            <button [disabled]="quoteForm.invalid || quoteloading" type="submit" class="send-quote-btn">
+                      <ng-container *ngIf="!quoteloading">
+                        Submit
+                      </ng-container>
+                      <ng-container *ngIf="quoteloading">
+                        Sending...
+                      </ng-container>
+                    </button>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+</div>
+</div>
+<div class="custom-product-desc" *ngIf="!productLoading">
+    <div class="product-meta">
+        <div class="product-detail-tabs">
+            <div class="accordion" id="p-accordion">
+                <div *ngIf="product?.description != null" class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Detail
+                  </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#p-accordion">
+                        <div class="accordion-body" [innerHTML]="product?.description">
+
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="!attribLoading">
+                    <div class="accordion-item" *ngIf="
+              (groupHeaders == null || groupHeaders.length == 0) &&
+              product?.attributes.length > 0
+            ">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    General Information
+                  </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#p-accordion">
+                            <div class="accordion-body">
+
+
+                                <table *ngIf="
+                          (groupHeaders == null || groupHeaders.length == 0) &&
+                          product?.attributes.length > 0
+                        " class="table table-striped">
+                                    <tbody>
+                                        <tr *rxFor="
+                              let item of product?.attributes;
+                              let i = index
+                            " [hidden]="item.attribute_value === null">
+                                            <th scope="row">{{ item.attribute_title }}</th>
+                                            <td [innerHTML]="
+                                item.attribute_value +
+                                  ' ' +
+                                  (item.unit === null ? '' : item.unit)
+                                  | htmlSanitizer
+                              "></td>
+                                        </tr>
+                                        <tr *rxFor="
+                              let ite of product?.jattributes;
+                              let i = index
+                            ">
+                                            <th scope="row">{{ ite.name }}</th>
+                                            <td>
+                                                <ul class="m0 multiattribute" *ngIf="ite.attributes.length > 0">
+                                                    <ng-container>
+                                                        <li *rxFor="let atb of ite.attributes">
+                                                            <span *rxFor="let item of atb">
+                                      {{ item.SELECTED_VALUE || "" }}
+                                      {{
+                                        item.SELECTED_UNIT_DETAIL
+                                          ? item.SELECTED_UNIT_DETAIL.title
+                                          : ""
+                                      }}</span
+                                    >
+                                  </li>
+                                </ng-container>
+                              </ul>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="!attribLoading">
+              <ng-container *ngIf="groupHeaders != null && groupHeaders?.length > 0">
+                <ng-container *rxFor="let header of groupHeaders; index as indx">
+                <ng-container *ngIf="
+                  (product?.attributes &&
+                    product?.attributes.length > 0 &&
+                    checkHeader(
+                      product?.attributes,
+                      header?.attributes
+                    )) ||
+                  (product?.jattributes &&
+                    product?.jattributes.length > 0 &&
+                    checkHeaderJoint(
+                      product?.jattributes,
+                      header?.joint_attributes
+                    ))
+                ">
+
+              <div  class="accordion-item" >
+
+                <h2 class="accordion-header" [id]="'headingTwo' + indx">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapseTwo'  + indx"
+                    aria-expanded="false"
+                    [attr.aria-controls]="'collapseTwo'  + indx"
+                  >
+
+                    {{header.title}}
+
+                  </button>
+                </h2>
+                <div
+                  [id]="'collapseTwo' + indx"
+                  class="accordion-collapse collapse"
+                  [attr.aria-labelledby]="'headingTwo' + indx"
+                  data-bs-parent="#p-accordion"
+                >
+                  <div class="accordion-body">
+
+                        <table
+
+                        style="width: 100%"
+
+                      >
+                      <thead></thead>
+                        <tbody *ngIf="!attribLoading">
+                          <ng-container
+                            *rxFor="let i of product?.attributes; index as indx"
+                          >
+                            <tr
+                              *ngIf="
+                                checkArray(i.attribute_id, header.attributes) !=
+                                  -1 &&
+                                i.attribute_value != 'N/A' &&
+                                i.attribute_value != ''
+                              "
+                            >
+                              <td width="50%">
+                                <span class="attribute-title">{{
+                                  i.attribute_title
+                                }}</span>
+                                            </td>
+                                            <td width="50%">
+                                                <div class="attribute-value">
+                                                    <span *ngIf="!i.attribute_value">N/A</span>
+                                                    <span class="multiattribute" *ngIf="i.attribute_value" innerHTML="{{
+                                      i.attribute_value + ' ' + (i.unit || '')
+                                    }}"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </ng-container>
+                                        <ng-container *rxFor="let i of product?.jattributes; index as indx">
+                                            <tr *ngIf="
+                                checkArray(i.id, header.joint_attributes) != -1 &&
+                                i.attributes.length !== 0
+                              ">
+                                                <td width="50%">
+                                                    <span class="attribute-title">{{ i.name }}</span>
+                                                </td>
+                                                <td width="50%">
+                                                    <div class="attribute-value">
+                                                        <ng-container *ngIf="i.attributes.length === 0">N/A</ng-container>
+                                                        <ul class="m0 pl20 multiattribute" *ngIf="i.attributes.length > 0">
+                                                            <ng-container>
+                                                                <li *rxFor="let atb of i.attributes">
+                                                                    <span *rxFor="let item of atb">
+                                          {{ item.SELECTED_VALUE || "" }}
+                                          {{
+                                            item.SELECTED_UNIT_DETAIL
+                                              ? item.SELECTED_UNIT_DETAIL.title
+                                              : ""
+                                          }}</span
+                                        >
+                                      </li>
+                                    </ng-container>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+            </ng-container>
+              </ng-container>
+            </ng-container>
+              <div class="hide accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    Warranty
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#p-accordion"
+                >
+                  <div class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It
+                    is hidden by default, until the collapse plugin adds the
+                    appropriate classes that we use to style each element. These
+                    classes control the overall appearance, as well as the
+                    showing and hiding via CSS transitions. You can modify any
+                    of this with custom CSS or overriding our default variables.
+                    It's also worth noting that just about any HTML can go
+                    within the <code>.accordion-body</code>, though the
+                    transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+              <div class="hide accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                    aria-expanded="false"
+                    aria-controls="collapseFour"
+                  >
+                    Payment Method
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingFour"
+                  data-bs-parent="#p-accordion"
+                >
+                  <div class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It
+                    is hidden by default, until the collapse plugin adds the
+                    appropriate classes that we use to style each element. These
+                    classes control the overall appearance, as well as the
+                    showing and hiding via CSS transitions. You can modify any
+                    of this with custom CSS or overriding our default variables.
+                    It's also worth noting that just about any HTML can go
+                    within the <code>.accordion-body</code>, though the
+                    transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <ngb-accordion
+              #acc="ngbAccordion"
+              activeIds="overviewAcc"
+              class="quote-accordion"
+            >
+              <ngb-panel title="Specification" id="overviewAcc">
+                <ng-template ngbPanelContent>
+                  <h2 *ngIf="attribLoading">Loading....</h2>
+                  <h3 class="mb-4">Detail</h3>
+                  <div class="mb-4">
+                    <div
+                      style="color: black"
+                      *ngIf="product?.description != null"
+                      [innerHTML]="product?.description | htmlSanitizer"
+                    ></div>
+                  </div>
+
+                  <ng-container *ngIf="!attribLoading">
+                    <p>
+                      <strong>Manufacturer: </strong>{{ product?.brand_name }}
+                    </p>
+                    <p><strong>Part Number: </strong>{{ product?.sku }}</p>
+
+                    <h3
+                      *ngIf="
+                        (groupHeaders == null || groupHeaders.length == 0) &&
+                        product?.attributes.length > 0
+                      "
+                    >
+                      General Information
+                    </h3>
+
+                    <table
+                      *ngIf="
+                        (groupHeaders == null || groupHeaders.length == 0) &&
+                        product?.attributes.length > 0
+                      "
+                      class="table table-striped"
+                    >
+                      <tbody>
+                        <tr
+                          *rxFor="
+                            let item of product?.attributes;
+                            let i = index
+                          "
+                          [hidden]="item.attribute_value === null"
+                        >
+                          <th scope="row">{{ item.attribute_title }}</th>
+                          <td
+                            [innerHTML]="
+                              item.attribute_value +
+                                ' ' +
+                                (item.unit === null ? '' : item.unit)
+                                | htmlSanitizer
+                            "
+                          ></td>
+                        </tr>
+                        <tr
+                          *rxFor="
+                            let ite of product?.jattributes;
+                            let i = index
+                          "
+                        >
+                          <th scope="row">{{ ite.name }}</th>
+                          <td>
+                            <ul
+                              class="m0 multiattribute"
+                              *ngIf="ite.attributes.length > 0"
+                            >
+                              <ng-container>
+                                <li *rxFor="let atb of ite.attributes">
+                                  <span *rxFor="let item of atb">
+                                    {{ item.SELECTED_VALUE || "" }}
+                                    {{
+                                      item.SELECTED_UNIT_DETAIL
+                                        ? item.SELECTED_UNIT_DETAIL.title
+                                        : ""
+                                    }}</span
+                                  >
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+
+                  <div
+                    *ngIf="groupHeaders != null && groupHeaders?.length > 0"
+                    class="tab_body"
+                    style=""
+                  >
+                    <table
+                      class="_table table table-striped"
+                      style="width: 100%"
+                      *rxFor="let header of groupHeaders; index as indx"
+                    >
+                      <thead
+                        *ngIf="
+                          (product?.attributes &&
+                            product?.attributes.length > 0 &&
+                            checkHeader(
+                              product?.attributes,
+                              header?.attributes
+                            )) ||
+                          (product?.jattributes &&
+                            product?.jattributes.length > 0 &&
+                            checkHeaderJoint(
+                              product?.jattributes,
+                              header?.joint_attributes
+                            ))
+                        "
+                      >
+                        <th class="header-title" colspan="2">
+                          <h3>{{ header.title }}</h3>
+                        </th>
+                      </thead>
+                      <tbody *ngIf="!attribLoading">
+                        <ng-container
+                          *rxFor="let i of product?.attributes; index as indx"
+                        >
+                          <tr
+                            *ngIf="
+                              checkArray(i.attribute_id, header.attributes) !=
+                                -1 &&
+                              i.attribute_value != 'N/A' &&
+                              i.attribute_value != ''
+                            "
+                          >
+                            <td width="50%">
+                              <span class="attribute-title">{{
+                                i.attribute_title
+                              }}</span>
+                                                </td>
+                                                <td width="50%">
+                                                    <div class="attribute-value">
+                                                        <span *ngIf="!i.attribute_value">N/A</span>
+                                                        <span class="multiattribute" *ngIf="i.attribute_value" innerHTML="{{
+                                    i.attribute_value + ' ' + (i.unit || '')
+                                  }}"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </ng-container>
+                                            <ng-container *rxFor="let i of product?.jattributes; index as indx">
+                                                <tr *ngIf="
+                              checkArray(i.id, header.joint_attributes) != -1 &&
+                              i.attributes.length !== 0
+                            ">
+                                                    <td width="50%">
+                                                        <span class="attribute-title">{{ i.name }}</span>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <div class="attribute-value">
+                                                            <ng-container *ngIf="i.attributes.length === 0">N/A</ng-container>
+                                                            <ul class="m0 pl20 multiattribute" *ngIf="i.attributes.length > 0">
+                                                                <ng-container>
+                                                                    <li *rxFor="let atb of i.attributes">
+                                                                        <span *rxFor="let item of atb">
+                                        {{ item.SELECTED_VALUE || "" }}
+                                        {{
+                                          item.SELECTED_UNIT_DETAIL
+                                            ? item.SELECTED_UNIT_DETAIL.title
+                                            : ""
+                                        }}</span
+                                      >
+                                    </li>
+                                  </ng-container>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div
+                    class="tab_body"
+                    style=""
+                    *ngIf="
+                      product?.f1 != null ||
+                      product?.f2 != null ||
+                      product?.f3 != null
+                    "
+                  >
+                    <table
+                      class="_table table table-striped"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <th class="header-title" colspan="2">
+                          <h3>Technical Documents</h3>
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="product?.f1 != null">
+                          <td>
+                            <a
+                              style="text-decoration: underline"
+                              target="_blank"
+                              [attr.href]="
+                                pdfPath + product?.id + '/' + product?.f1
+                              "
+                              >{{
+                                product?.fn1 != null
+                                  ? product?.fn1
+                                  : product?.f1
+                              }}</a
+                            >
+                          </td>
+                        </tr>
+                        <tr *ngIf="product?.f2 != null">
+                          <td>
+                            <a
+                              style="text-decoration: underline"
+                              target="_blank"
+                              [attr.href]="
+                                pdfPath + product?.id + '/' + product?.f2
+                              "
+                              >{{
+                                product?.fn2 != null
+                                  ? product?.fn2
+                                  : product?.f2
+                              }}</a
+                            >
+                          </td>
+                        </tr>
+                        <tr *ngIf="product?.f3 != null">
+                          <td>
+                            <a
+                              style="text-decoration: underline"
+                              target="_blank"
+                              [attr.href]="
+                                pdfPath + product?.id + '/' + product?.f3
+                              "
+                              >{{
+                                product?.fn3 != null
+                                  ? product?.fn3
+                                  : product?.f3
+                              }}</a
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+              <!-- <ngb-panel  title="Accessories">
+              <ng-template ngbPanelContent>
+                <div class="product-accessories-container">
+                  <ng-container *rxFor="let accessory of product?.accessories | keyvalue">
+                    <ng-container *rxFor="let sproduct of accessory.value; let k = index">
+
+                      <app-product-accessories [product]="sproduct" [hideQuickOpen]="true"></app-product-accessories>
+                    </ng-container>
+                  </ng-container>
+
+                </div>
+                <div *ngIf="product?.accessories === null">
+                  No accessories available for this product.
+                </div>
+
+              </ng-template>
+            </ngb-panel> --
+            </ngb-accordion> -->
+
+            <!-- <ul ngbNav #nav="ngbNav" class="nav-tabs specs-nav">
+            <li ngbNavItem>
+              <a ngbNavLink>Basic Overview</a>
+              <ng-template ngbNavContent>
+                <div style="color: black" *ngIf="product?.description != null"
+                  [innerHTML]="product?.description | htmlSanitizer"></div>
+
+              </ng-template>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink>Specification</a>
+              <ng-template ngbNavContent>
+                <h2 *ngIf="attribLoading">Loading....</h2>
+                <ng-container *ngIf="!attribLoading">
+
+
+                  <h3 *ngIf=" (groupHeaders == null || groupHeaders.length == 0) && product?.attributes.length  >0 ">
+                    General Information</h3>
+
+                  <table *ngIf="  (groupHeaders == null || groupHeaders.length == 0) && product?.attributes.length  >0 "
+                    data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos="slide-left" data-aos-once="true"
+                    class="table table-striped">
+
+                    <tbody>
+                      <tr *rxFor="let item of product?.attributes; let i = index"
+                        [hidden]="item.attribute_value === null">
+                        <th scope="row">{{ item.attribute_title }}</th>
+                        <td
+                          [innerHTML]="(item.attribute_value + ' ' + ((item.unit===null)? '' : item.unit)) | htmlSanitizer">
+                        </td>
+                      </tr>
+                      <tr *rxFor="let ite of product?.jattributes; let i = index">
+                        <th scope="row">{{ ite.name }}</th>
+                        <td>
+
+                          <ul class="m0 pl20 multiattribute" *ngIf="ite.attributes.length > 0">
+
+                            <ng-container>
+                              <li *rxFor="let atb of ite.attributes">
+                                <span *rxFor="let item of atb"> {{ item.SELECTED_VALUE ||
+                                  ''}} {{ item.SELECTED_UNIT_DETAIL?item.SELECTED_UNIT_DETAIL.title : ''}}</span>
+                                                                    </li>
+                                                                </ng-container>
+                                                            </ul>
+                                                    </td>
+                                                </tr>
+
+                                    </tbody>
+                                </table>
+                                </ng-container>
+
+                                <div *ngIf="groupHeaders != null && groupHeaders?.length > 0" class="tab_body" style="">
+
+                                    <table class="_table table table-striped" style="width: 100%;" *rxFor="let header of groupHeaders; index as indx">
+                                        <thead *ngIf="(product?.attributes && product?.attributes.length > 0 && checkHeader(product?.attributes,header?.attributes)) || (product?.jattributes && product?.jattributes.length > 0 && checkHeaderJoint(product?.jattributes,header?.joint_attributes)) ">
+                                            <th class="header-title" colspan="2">
+                                                <h3>{{ header.title }}</h3>
+                                            </th>
+                                        </thead>
+                                        <tbody *ngIf="!attribLoading">
+                                            <ng-container *rxFor="let i of product?.attributes; index as indx">
+
+                                                <tr *ngIf="checkArray(i.attribute_id, header.attributes) != -1 && i.attribute_value != 'N/A' && i.attribute_value != ''">
+                                                    <td width="50%">
+                                                        <span class="attribute-title">{{i.attribute_title}}</span>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <div class="attribute-value">
+                                                            <span *ngIf="!i.attribute_value">N/A</span>
+                                                            <span class="multiattribute" *ngIf="i.attribute_value" innerHTML="{{i.attribute_value + ' ' + (i.unit || '')}}"></span>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                            <ng-container *rxFor="let i of product?.jattributes; index as indx">
+
+                                                <tr *ngIf="checkArray(i.id, header.joint_attributes) != -1 && i.attributes.length !== 0">
+                                                    <td width="50%">
+                                                        <span class="attribute-title">{{i.name}}</span>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <div class="attribute-value">
+                                                            <ng-container *ngIf="i.attributes.length === 0">N/A</ng-container>
+                                                            <ul class="m0 pl20 multiattribute" *ngIf="i.attributes.length > 0">
+
+                                                                <ng-container>
+                                                                    <li *rxFor="let atb of i.attributes">
+                                                                        <span *rxFor="let item of atb"> {{ item.SELECTED_VALUE ||
+                                      ''}} {{ item.SELECTED_UNIT_DETAIL?item.SELECTED_UNIT_DETAIL.title : ''}}</span>
+                                                                    </li>
+                                                                </ng-container>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="tab_body" style="" *ngIf="product?.f1 != null || product?.f2 != null || product?.f3 != null ">
+                                    <table class="_table table table-striped" style="width: 100%;">
+                                        <thead>
+                                            <th class="header-title" colspan="2">
+                                                <h3>Technical Documents</h3>
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngIf="product?.f1 != null">
+                                                <td>
+                                                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f1">{{(product?.fn1 != null)? product?.fn1
+                            : product?.f1 }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="product?.f2 != null">
+                                                <td>
+                                                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f2">{{(product?.fn2 != null)? product?.fn2
+                            : product?.f2 }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="product?.f3 != null">
+                                                <td>
+                                                    <a style="text-decoration: underline;" target="_blank" [attr.href]="pdfPath + product?.id + '/' + product?.f3">{{(product?.fn3 != null)? product?.fn3
+                            : product?.f3 }}</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                </ng-template>
+                                </li>
+                                <li ngbNavItem *ngIf="showAccessories">
+                                    <a ngbNavLink>Accessories</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="product-accessories-container">
+                                            <ng-container *rxFor="let accessory of product?.accessories | keyvalue">
+                                                <ng-container *rxFor="let sproduct of accessory.value; let k = index">
+
+                                                    <app-product-accessories [product]="sproduct" [hideQuickOpen]="true"></app-product-accessories>
+                                                </ng-container>
+                                            </ng-container>
+
+                                        </div>
+                                        <div *ngIf="!product?.accessories">
+                                            No accessories available for this product.
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                                </ul>
+                                <div [ngbNavOutlet]="nav"></div> -->
+                                </div>
+                                <!-- <div class="product-extra">
+
+          <div class="request-quote services-industry">
+            <div class="quote-label">Services by Industry</div>
+            <div class="services-container">
+              <div class="svc-img"></div>
+              <div class="svc-txt">
+                <div class="p-action-btns">
+                  <div>
+                    <p class="svc-heading">Enterprises</p>
+                    <div class="svc-list">
+                      <div><a href="#">Telecom</a></div>
+                      <div><a href="#">Healthcare</a></div>
+                      <div><a href="#">Aerospace</a></div>
+                      <div><a href="#">Industrial</a></div>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="svc-heading">Public Sector</p>
+                    <div class="svc-list">
+                      <div><a href="#">Education</a></div>
+                      <div><a href="#">Government</a></div>
+                      <div><a href="#">Defence</a></div>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="svc-heading">SMEs</p>
+                    <div class="svc-list">
+                      <div><a href="#">Startups</a></div>
+                      <div><a href="#">Integrators</a></div>
+                      <div><a href="#">Resellers</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-product-related" *ngIf="!productLoading">
+                        <ng-container *ngIf="!productLoading">
+                            <div [ngClass]="{ 'active show': product?.related_products !== null }">
+                                <!--<app-product-tabs [data]="product?.related_products"></app-product-tabs>-->
+                                <app-product-carousel *ngIf="!rloading && product?.related && product?.related.length > 0" [products]="product?.related"></app-product-carousel>
+                            </div>
+
+                            <div [ngClass]="{ 'active show': product?.alsobought !== null }">
+                                <!--<app-product-tabs [data]="product?.related_products"></app-product-tabs>-->
+                                <app-product-carousel title="YOU CAN ALSO BUY" *ngIf="
+            !uloading && product?.also_bought && product?.also_bought.length > 0
+          " [products]="product?.also_bought"></app-product-carousel>
+                            </div>
+                            <!--<app-product-related></app-product-related>-->
+                        </ng-container>
+                    </div>
+                    <div class="custom-product-rev" *ngIf="!productLoading">
+                        <!-- <app-product-industries></app-product-industries> -->
+                        <app-reviews-slider></app-reviews-slider>
+                        <!-- <app-brands-slider></app-brands-slider> -->
+                    </div>
+
+                    <app-shipping-calculator [product]="product" [modelId]="'myShipModal'"></app-shipping-calculator>
+                    <app-price-alert [product]="product" [modelId]="'myPriceAlert'"></app-price-alert>
+            </div>
+            <ng-container *ngIf="!productLoading && isBrowser">
+                <div *ngIf="!productLoading && !attribLoading" id="section-to-print">
+                    <app-product-print [product]="product" [groupHeaders]="groupHeaders"></app-product-print>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!productLoading">
+                <app-jsonld *ngIf="!productLoading && product?.attributes" [product]="product" [condition]="condition"></app-jsonld>
+            </ng-container>

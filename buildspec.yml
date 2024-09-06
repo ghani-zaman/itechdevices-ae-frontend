@@ -1,0 +1,31 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing Mocha...
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install -g @angular/cli@12.2.18
+      - npm install --unsafe-perm=true
+  build:
+    commands:
+      - echo Build started on `date`
+      - node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build --configuration production
+      - node  ./node_modules/@angular/cli/bin/ng run salsoftfront:server:production
+  post_build:
+    commands:
+      - echo Build completed on `date`
+# Include only the files required for your application to run.
+artifacts:
+  files:
+    - src/**/*
+    - dist/**/*
+    - server.js
+    - package.json
+    - package-lock.json
+    - node_modules/**/*

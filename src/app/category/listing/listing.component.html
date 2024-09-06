@@ -1,0 +1,88 @@
+<div class="home-container">
+  <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+  <div class="category-header" *ngIf="
+      (category?.id && (fixedParams?.category_description != '' || category?.category_description != ''))
+    ">
+    <h1 *ngIf="fixedParams.is_top_menu">
+
+      {{
+      fixedParams?.title && fixedParams?.title != null
+      ? fixedParams?.title
+      : (category?.title && category?.title != null ? category?.title : "")
+      }}
+    </h1>
+    <h1 *ngIf="!fixedParams.is_top_menu">
+      {{ category?.title && category?.title != null ? category?.title : "" }}
+    </h1>
+
+    <div *ngIf="fixedParams.is_top_menu" class="entry-text category-description" [innerHtml]="
+        (fixedParams?.category_description &&
+        fixedParams?.category_description != null
+          ? fixedParams?.category_description
+          : ((category?.category_description != null)?category?.category_description : '')
+        ) | htmlSanitizer
+      "></div>
+    <div *ngIf="!fixedParams.is_top_menu && category?.category_description != null"
+      class="entry-text category-description" [innerHtml]="category?.category_description | htmlSanitizer"></div>
+  </div>
+</div>
+
+<div class="home-container category-container">
+  <div class="filters-tab">
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="filternavbar" aria-labelledby="filternavbarLabel">
+
+      <!-- <h2 class="tab-heading">Refine Your Results</h2> -->
+
+      <app-filters *ngIf="!filterLoading" [filtersArray]="filters" [currentFilters]="queryFilters"
+        (finalData)="filtersChanged($event)" [allCats]="children" [type]="'category'"
+        [typeid]="category?.id"></app-filters>
+
+    </div>
+  </div>
+  <div class="main-tab">
+    <!-- <h2 class="tab-heading">
+      <ng-container *ngIf="fixedParams.is_top_menu">
+        {{fixedParams?.title}}
+      </ng-container>
+      <ng-container *ngIf="!fixedParams.is_top_menu">
+        {{ category?.title }}
+      </ng-container> Sub Categories
+    </h2>
+
+    <app-top-categories [category]="category" [subcategories]="subcategories"> </app-top-categories> -->
+
+    <h2 class="tab-heading">All Products</h2>
+    <app-block-loader [hidden]="!productLoading"></app-block-loader>
+
+    <app-product-list (changeOrderEvent)="changeOrder($event)" (pageChangeEvent)="changePage($event)"
+      [products]="products" [total]="totalProducts" [cpage]="currentPage" [limit]="defaultPageSize"
+      [loading]="productLoading"  [sortOrder]="sortOrder">
+    </app-product-list>
+
+
+    <!-- <h2 class="tab-heading">
+      <ng-container *ngIf="fixedParams.is_top_menu">
+        {{fixedParams.title}}
+      </ng-container>
+      <ng-container *ngIf="!fixedParams.is_top_menu">
+        {{ category?.title }}
+      </ng-container> Brands
+    </h2> -->
+    <!-- <app-top-brands></app-top-brands> -->
+  </div>
+</div>
+@if( !fixedParams.is_top_menu && category?.id !== null){
+
+<div class="category-faq-box">
+  <app-category-faq [categoryId]="category?.id" [is_top_menu]="false"></app-category-faq>
+</div>
+}
+
+@if(category?.id !== null && fixedParams.is_top_menu && fixedParams !== null){
+
+<div class="category-faq-box">
+  <app-category-faq [categoryId]="fixedParams" [is_top_menu]="true"></app-category-faq>
+</div>
+}
+
+<div class="structured-data" [innerHTML]="jsonld"></div>

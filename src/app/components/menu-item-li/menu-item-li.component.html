@@ -1,0 +1,51 @@
+<!-- <div class="flyout-right">
+  <div class="flyout-inner">
+    <div class="inner-categs">
+      <ul>
+        <ng-container *ngIf="data !== null && data.childrens && data.childrens.length > 0">
+
+          <ng-container *rxFor="let item of data.childrens">
+            <li>
+              <ng-container *ngIf="item.urlsource && item.urlsource.url !== null">
+                <a [routerLink]="['/categories/' + item.urlsource.url]">{{item?.name}} &nbsp;
+                  <span *ngIf="item !== null && item.childrens && item.childrens.length > 0"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span></a>
+              </ng-container>
+              <ng-container *ngIf="!item.urlsource">
+                <a href="#">{{item?.name}} &nbsp;
+                  <span *ngIf="item !== null && item.childrens && item.childrens.length > 0"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span></a>
+              </ng-container>
+              <div app-menu-item-li class="flyout-inner" [data]="item" [ngClass]="item.childrens ? 'parent' :'child'">
+              </div>
+            </li>
+
+          </ng-container>
+        </ng-container>
+
+      </ul>
+
+    </div>
+  </div>
+</div> -->
+
+
+<ul>
+  <ng-container *ngIf="data !== null && data.childrens && data.childrens.length > 0">
+    <li class="catTitle">{{data?.name}}</li>
+    <ng-container *rxFor="let item of data.childrens">
+      <li>
+        <ng-container *ngIf="item.urlsource && item.urlsource.url !== null">
+          <a [routerLink]="['/categories/' + item.urlsource.url]" [ngClass]="item.childrens && item.childrens.length > 0 ? 'mc-parent' :'mc-child'" class="link">{{item?.name}} &nbsp;
+            <img *ngIf="item !== null && item.childrens && item.childrens.length > 0" src="/assets/svg/arrow-right.svg" loading="lazy" alt="Level two Cat" width="7" height="10"></a>
+        </ng-container>
+        <ng-container *ngIf="!item.urlsource">
+          <a href="#" [ngClass]="item.childrens && item.childrens.length > 0 ? 'mc-parent' :'mc-child'" class="link">{{item?.name}} &nbsp;
+            <img *ngIf="item !== null && item.childrens && item.childrens.length > 0" src="/assets/svg/arrow-right.svg" loading="lazy" alt="Level two Cat" width="7" height="10"></a>
+        </ng-container>
+        <div app-menu-item-li class="flyout-inner" [data]="item" [ngClass]="item.childrens && item.childrens.length > 0 ? 'mc-parent' :'mc-child'">
+        </div>
+      </li>
+
+    </ng-container>
+  </ng-container>
+
+</ul>

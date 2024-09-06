@@ -1,0 +1,80 @@
+<div class="featured-products home-container">
+  <h2 class="section-title">Featured Products</h2>
+
+  <div>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs mt-0 mb-md-2">
+      @for(item of (data | async); let i = $index; track item){
+      <li [ngbNavItem]="i">
+        <a ngbNavLink>{{item?.name}}</a>
+        <ng-template ngbNavContent>
+          @if(item?.products && item?.products.length > 0){
+
+          <div class="all-prod">
+            @for(product of item?.products; let i = $index; track product){
+            @if(i>=0 && i<10){ <a [routerLink]="['/' , (product.url != null) ? product?.url : product?.id]"
+              class=" p-card-parent">
+              <div class="p-card">
+                <div class="p-img">
+                  <img loading="lazy" alt="{{product?.title}}"
+                    [lazyLoad]="(product?.images.thumbnail  && product?.images.thumbnail != '' && product?.images.thumbnail!= null ) ? product?.images.thumbnail : '/assets/images/no-image.webp'  "
+                    alt="" srcset="" width="153px" height="100px">
+                </div>
+                <p class="p-title">
+                  {{product.title | cuttext:100}}
+                </p>
+                <div class="p-details">
+                  @if(product?.refurbished_grade_a_price > 0){
+                  <div class="p-pricing" >
+                    @if(product?.discount !== null && product?.discount !== 0){
+
+                    <p class="p-price incTax ">{{ (product?.refurbished_grade_a_price +
+                      (product?.refurbished_grade_a_price * env.taxPercent)) | currency }} <span
+                        class="includingTax">Inc. Vat</span></p>
+                    <p class="p-price">{{ product?.refurbished_grade_a_price | currency }} <span
+                        class="excludingTax">Excl. Vat</span></p>
+                    <!-- <p class="disc-price">
+                      {{ ((product | priceConversion : "refurbished_grade_a_price") + ((product | priceConversion :
+                      "refurbished_grade_a_price") * env.taxPercent)) | currency }}
+                    </p> -->
+
+                    }@else{
+
+                    <p class="p-price incTax ">{{ (product?.refurbished_grade_a_price +
+                      (product?.refurbished_grade_a_price * env.taxPercent)) | currency }} <span
+                        class="includingTax">Inc. Vat</span></p>
+                    <p class="p-price">{{ product?.refurbished_grade_a_price | currency }} <span
+                        class="excludingTax">Excl. Vat</span></p>
+
+                    }
+                  </div>
+                }
+                </div>
+                @if(product?.refurbished_grade_a_price == null || product?.refurbished_grade_a_price== 0) {
+                <div class="herotext">
+                    <div class="num" (click)="makeCall"><span class="inc">Call for Price:</span>{{'+971-5-54255786'}}</div>
+                    <!--<a href="tel:+971554255786"><span class="inc">Call for Price:</span>+971-5-54255786</a>-->
+                </div>
+                <div class="btn learn-more">Get Quote</div>
+              }@else{
+                <div class="btn learn-more">Learn More</div>
+              }
+
+              </div>
+
+              </a>
+
+              }
+
+              }
+          </div>
+
+          }
+        </ng-template>
+      </li>
+      }
+
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+  </div>
+
+</div>

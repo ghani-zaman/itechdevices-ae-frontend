@@ -1,0 +1,111 @@
+<div class="product-single-card">
+  <div class="p-img">
+    <a (click)="recordSelectEvent()" [routerLink]="['/' , (product.url != null) ? product?.url : product?.id]">
+      <img loading="lazy" *ngIf="product?.images" alt="{{product?.name}}" [lazyLoad]="product?.images.thumbnail"
+        srcset="" width="150px" height="150px">
+      <img loading="lazy" *ngIf="!product?.images && product?.assignedImages && product?.assignedImages.length > 0"
+        alt="{{product?.name}}" [lazyLoad]="product?.assignedImages[0].image_url" srcset="" width="150px"
+        height="150px">
+      <img loading="lazy" *ngIf="!product?.images && (!product?.assignedImages || product?.assignedImages.length === 0)"
+        alt="{{product?.name}}"
+        [src]="(product.category.name)? (env.catImagesPath + (product.category.name | trimCatImage) + '.webp') : 'assets/images/no-image.webp'"
+        srcset="" width="150px" height="150px">
+    </a>
+  </div>
+  <div class="p-details">
+    <a class="p-title" (click)="recordSelectEvent()"
+      [routerLink]="['/' , (product.url != null) ? product?.url : product?.id]" aria-label="Product Detail Link"
+      role="link">
+      Mfr. Part#: {{product?.sku}}
+      <!-- {{product?.name | cuttext:100}} -->
+    </a>
+    @if(product?.short_description && product?.short_description!= null) {
+    <p class="p-desc-list">{{product?.short_description}}</p>
+    }
+    <table>
+      <tr>
+        <td>Manufacturer:</td>
+        <td>{{product?.brand.name}}</td>
+      </tr>
+      <!-- <tr>
+        <td></td>
+        <td><span></span></td>
+      </tr>
+      <tr class="d-none">
+        <td>Availability:</td>
+        <td><span class="in-stock">
+            <span *ngIf="product?.is_in_stock" class="in-stock">In Stock</span>
+            <span *ngIf="product?.is_in_stock === null || product?.is_in_stock === false" class="in-stock">Out of
+              Stock</span>
+          </span></td>
+      </tr>
+      <tr class="d-none">
+        <td>Condition:</td>
+        <td><span>Used</span></td>
+      </tr> -->
+    </table>
+  </div>
+  @if(product?.price > 0) {
+  <div class="p-pricing">
+    <!--<div class="p-pric" *ngIf="product?.discount !== null && product?.discount !== 0">
+
+      <p class="p-price">{{product?.price | currency}}</p>
+      <div class="old_prices">
+        <span class="old-price">
+          <span>Price:</span>
+          <span>$135.00</span>
+        </span>
+        <span class="saving-price">
+          <span>Savings:</span>
+          <span>$22.50</span>
+        </span>
+      </div>
+    </div>
+    <div class="p-pric" *ngIf="product?.discount === null ||  product?.discount === 0">
+      <p class="stock-text">In Stock</p>
+      <p class="p-price">{{product?.price | currency}}</p>
+    </div>-->
+    <div class="p-pric">
+      @if(product?.discount !== null && product?.discount !== 0){
+
+        <p class="p-price incTax ">{{ (product?.price + (product?.price * env.taxPercent)) | currency }} <span
+          class="includingTax">Inc. Vat</span></p>
+      <p class="p-price">{{ product?.price | currency }} <span class="excludingTax">Excl. Vat</span></p>
+
+      }@else{
+
+        <p class="p-price incTax ">{{ (product?.price + (product?.price * env.taxPercent)) | currency }} <span
+          class="includingTax">Inc. Vat</span></p>
+      <p class="p-price">{{ product?.price | currency }} <span class="excludingTax">Excl. Vat</span></p>
+
+      }
+    </div>
+    <!-- <div class="p-qty d-flex align-items-center">
+      <label for="">Qty: </label>
+      <div class="p-qty-group input-group">
+        <button class="decrement input-group-text" (click)="decrementCart()">-</button>
+        <input class="form-control" type="number" value="{{ cartQty }}" min="1" />
+        <button class="increment input-group-text" (click)="incrementCart()">+</button>
+      </div>
+    </div> -->
+    <div class="p-atc">
+      <button class="btn" (click)="addToCart(product, cartQty, 'price')">Add to Cart</button>
+    </div>
+    <!-- <span class="relative-box">
+    <p class="p-label compare-list" [class.spinner]="compLoading" (click)="addToCompare(product, 'price')">+ Add to Comparelist</p></span> -->
+  </div>
+  } @else {
+  <div class="p-pricing d-flex flex-column justify-content-end">
+    <p class="herotext ">
+      <span>Call for Price:</span>
+      <a href="tel:+971554255786">+971-5-54255786</a>
+    </p>
+    <div class="p-atc call-price">
+      <a class="btn w-100 m-0" [routerLink]="['/' , (product.url != null) ? product?.url : product?.id]">Request for
+        Quote</a>
+    </div>
+  </div>
+  }
+
+
+</div>

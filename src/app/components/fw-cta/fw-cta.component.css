@@ -1,0 +1,6 @@
+:host h3,h1 {margin: 0;color: white;}
+:host .ctn {background: url("/assets/images/dealback.webp") no-repeat center;background-size: cover;padding: 80px 0px;}
+.ctn-inside h3 {
+  max-width: 1200px;
+  margin: 20px auto 40px;
+}

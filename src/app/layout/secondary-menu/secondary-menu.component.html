@@ -1,0 +1,113 @@
+<div class="header-secondary-menu home-container">
+  <div class="bottom-menu">
+    <ul class="custom-nav" [ngClass]="menuOpen ? 'display' : ''">
+      <ng-container *ngIf="menu?.length > 0">
+
+        <ng-container *rxFor="let item of menu; let j = index;">
+          <li class="menu-item">
+            <ng-container *ngIf="item.category_id === null && item.url === null">
+              <a (click)="toggleMenu(j)" href="#">{{item?.title}} &nbsp; <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+            </ng-container>
+            <ng-container *ngIf="item.category_id !== null || item.url !== null">
+              <a (click)="toggleMenu(j)" *ngIf="item.category_id === null" href="{{ item.url }}">{{item?.title}} &nbsp;
+                <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+              <a (click)="toggleMenu(j)" *ngIf="item.category_id !== null">{{item?.title}} &nbsp;
+                <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+            </ng-container>
+
+          </li>
+
+        </ng-container>
+      </ng-container>
+
+    </ul>
+    <div id="menu-overlay-close" *ngIf="menuOpen != -1" (click)="menuOpen = -1"> </div>
+    <ng-container *rxFor="let item of menu; let j = index;">
+
+
+      <div class="menu-container FLEX" *ngIf="menuOpen == j">
+        <ng-container *rxFor="let item2 of item.children; let i = index">
+          <div class="child-categ">
+            <p class="categ-heading">{{item2?.title}}</p>
+            <ul class="categ-list">
+              <ng-container *rxFor="let item3 of item2.children">
+                <li>
+                  <ng-container *ngIf="item3.category_id === null && item3.url === null">
+                    <a (click)="menuOpen = -1">{{item3?.title}}</a>
+                  </ng-container>
+                  <ng-container *ngIf="item3.category_id !== null || item3.url !== null">
+                    <a *ngIf="item3.category_id === null" [routerLink]="[item3.url]" (click)="navigateTo(item3.url)">{{item3?.title}}</a>
+                    <a *ngIf="item3.category_id !== null" [routerLink]="['/categories/' + item3.url]"
+                      (click)="navigateTo('/categories/' + item3.url)">{{item3?.title}}</a>
+                  </ng-container>
+                </li>
+              </ng-container>
+
+            </ul>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+  </div>
+
+</div>
+
+
+
+
+
+<!-- <div class="header-secondary-menu home-container">
+  <div class="bottom-menu">
+    <ul class="custom-nav" [ngClass]="menuOpen ? 'display' : ''">
+      <ng-container *ngIf="menu?.length > 0">
+
+        <ng-container *rxFor="let item of menu; let j = index;">
+          <li class="menu-item">
+            <ng-container *ngIf="item.category_id === null && item.url === null">
+              <a (click)="toggleMenu(j)" href="#">{{item?.title}} &nbsp; <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+            </ng-container>
+            <ng-container *ngIf="item.category_id !== null || item.url !== null">
+              <a (click)="toggleMenu(j)" *ngIf="item.category_id === null" href="{{ item.url }}">{{item?.title}} &nbsp;
+                <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+              <a (click)="toggleMenu(j)" *ngIf="item.category_id !== null">{{item?.title}} &nbsp;
+                <img src="/assets/svg/down-arrow.svg" loading="lazy" alt="Arrow down" width="14" height="16"></a>
+            </ng-container>
+
+          </li>
+
+        </ng-container>
+      </ng-container>
+
+    </ul>
+    <div id="menu-overlay-close" *ngIf="menuOpen != -1" (click)="menuOpen = -1"> </div>
+    <ng-container *rxFor="let item of menu; let j = index;">
+
+
+      <div class="menu-container" *ngIf="menuOpen == j">
+        <ng-container *rxFor="let item2 of item.children; let i = index">
+          <div class="child-categ">
+            <p class="categ-heading">{{item2?.title}}</p>
+            <ul class="categ-list">
+              <ng-container *rxFor="let item3 of item2.children">
+                <li>
+                  <ng-container *ngIf="item3.category_id === null && item3.url === null">
+                    <a (click)="menuOpen = -1">{{item3?.title}}</a>
+                  </ng-container>
+                  <ng-container *ngIf="item3.category_id !== null || item3.url !== null">
+                    <a *ngIf="item3.category_id === null" (click)="navigateTo(item3.url)">{{item3?.title}}</a>
+                    <a *ngIf="item3.category_id !== null"
+                      (click)="navigateTo('/categories/' + item3.url)">{{item3?.title}}</a>
+                  </ng-container>
+                </li>
+              </ng-container>
+
+            </ul>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-container>
+  </div>
+
+</div> -->

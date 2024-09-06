@@ -1,0 +1,53 @@
+/* .account-ctn {background: url("/assets/images/accbackg.webp") no-repeat center;background-size: cover;padding-top: 40px;padding-bottom: 40px;}
+.account-ctn .account-ctn-inner .account-left h2 {color: white;}
+.account-ctn .account-ctn-inner .account-left ul {list-style: none;padding: 0px;color: white;}
+.account-ctn .account-ctn-inner .account-left ul li {margin-top: 0.5rem;}
+.account-ctn .account-ctn-inner .account-left ul li::before {content: ">";margin-right: 5px;}
+.account-ctn .account-ctn-inner .account-right a{margin-bottom: 20px;} */
+
+.contact-form {
+    background-color: #00182E;
+    padding: 30px 0;
+}
+
+.contact-form h2,
+.contact-form p {
+    color: var(--white);
+}
+
+.contact-form .btn {
+    margin: 0;
+    padding: 5px 40px;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+
+.contact-form .hide-arrow::-webkit-outer-spin-button,
+.contact-form .hide-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+.contact-form .hide-arrow[type=number] {
+    -moz-appearance: textfield;
+}
+
+.contact-form .form-control {
+    min-height: calc(1.5em + 1rem + calc(var(--bs-border-width)* 2));
+    padding: .5rem 1rem;
+}
+
+.contact-form .btn {
+    border: 2px solid transparent !important;
+}
+
+.contact-form .btn:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+

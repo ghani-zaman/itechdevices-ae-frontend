@@ -1,0 +1,13 @@
+.prodimg{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.product-images{
+  display: inline;
+}
+.product-images img{
+  height: 250px;
+  display: inline;
+}

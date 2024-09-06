@@ -1,0 +1,172 @@
+<div class="product-list">
+  @if(loading == false){
+  @if(products?.length > 0) {
+  <div  class="query-summary">
+    <div class="items-summary">
+      <p>Items {{((cpage-1) * 12) + 1}}-{{cpage*12}} of {{total}}</p>
+    </div>
+    <div class="sortby-container">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text">Sort by: </label>
+        </div>
+        <select (change)="changeOrder($event)"  [(ngModel)]="sortOrder"  class="custom-select form-select">
+          <option [value]="'p.id DESC'">Sort by <b>latest +</b></option>
+          <option [value]="'p.id ASC'">Sort by <b>oldest +</b></option>
+          <option [value]="'wp.refurbished_grade_a_price ASC'">Price Low-High</option>
+          <option [value]="'wp.refurbished_grade_a_price DESC'">Price High-Low</option>
+          <option [value]="'p.name ASC'">Name A-Z</option>
+          <option [value]="'p.name DESC'">Name Z-A</option>
+
+
+        </select>
+      </div>
+    </div>
+    <div class="product-view">
+      <button class="toggle-button" (click)="toggleList()">List <img loading="lazy" src="/assets/icons/list.svg"></button>
+      <button class="toggle-button ms-2" (click)="toggleGrid()">Grid <img loading="lazy" src="/assets/icons/grid.svg"></button>
+    </div>
+    <button class="filter-btn simple-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#filternavbar" aria-controls="filternavbar"><img width="20" loading="lazy" src="/assets/svg/filter.svg"> Filter</button>
+  </div>
+  <div class="row" [hidden]="products?.length == 0">
+    <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+      <div class="col-lg-12 text-center">
+        <ul class="pagination">
+          <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+
+            <button>
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+            <button *ngIf="!p.isFirstPage()">
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <ng-container *rxFor="let page of p.pages">
+
+            <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+              <button class="a-link">{{
+                page.label
+                }}</button>
+
+            </li>
+            <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+              <button class="a-link">{{ page.label }}</button>
+            </li>
+          </ng-container>
+          <li [class.disabled]="p.isLastPage()">
+            <button *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16"></button>
+            <button *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16"></button>
+          </li>
+        </ul>
+      </div>
+    </pagination-template>
+  </div>
+  <div class="product-cards" *ngIf="grid==true">
+    <ng-container *rxFor="let item of products | paginate
+    : {
+        itemsPerPage: limit,
+        currentPage: cpage,
+        totalItems: total
+      };
+let i = index">
+      <div app-product-card [product]="item"></div>
+    </ng-container>
+
+
+  </div>
+
+
+
+  <div class="product-list" *ngIf="grid==false">
+    <ng-container *rxFor="let item of products | paginate
+    : {
+        itemsPerPage: limit,
+        currentPage: cpage,
+        totalItems: total
+      };
+let i = index">
+      <app-product-accessories [product]="item"></app-product-accessories>
+    </ng-container>
+
+
+
+    <!--<div class="row" [hidden]="products?.length == 0">
+      <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+        <div class="col-lg-12 text-center">
+          <ul class="pagination">
+            <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+
+              <a>
+                <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+              </a>
+            </li>
+            <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+              <a *ngIf="!p.isFirstPage()">
+                <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+              </a>
+            </li>
+            <ng-container *rxFor="let page of p.pages">
+
+              <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+                <a class="a-link">{{
+                  page.label
+                  }}</a>
+
+              </li>
+              <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+                <a class="a-link">{{ page.label }}</a>
+              </li>
+            </ng-container>
+            <li [class.disabled]="p.isLastPage()">
+              <a *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10px" height="16px"></a>
+              <a *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10px" height="16px"></a>
+            </li>
+          </ul>
+        </div>
+      </pagination-template>
+    </div>-->
+  </div>
+
+  <div class="row" [hidden]="products?.length == 0">
+    <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+      <div class="col-lg-12 text-center">
+        <ul class="pagination">
+          <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+            <button>
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+            <button *ngIf="!p.isFirstPage()">
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <ng-container *rxFor="let page of p.pages">
+
+            <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+              <button class="a-link">{{
+                page.label
+                }}</button>
+
+            </li>
+            <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+              <a class="a-link">{{ page.label }}</a>
+            </li>
+          </ng-container>
+          <li [class.disabled]="p.isLastPage()">
+            <a *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16px"></a>
+            <a *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16px"></a>
+          </li>
+        </ul>
+      </div>
+    </pagination-template>
+  </div>
+} @else {
+
+  <h1>No Product Found for this Criteria</h1>
+
+}
+  }
+</div>

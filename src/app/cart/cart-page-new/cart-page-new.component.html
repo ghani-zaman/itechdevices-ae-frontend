@@ -1,0 +1,231 @@
+<div class="home-container cart-page">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <h2 class="">My Cart Detail</h2>
+    <div class="cartSec">
+        <!-- <app-block-loader [hidden]="!cartload"></app-block-loader> -->
+        <div class="row" *ngIf="cart != null && cart?.products.length > 0">
+            <div class="col-lg-9">
+                <div class="card-wrapper">
+                    <table class="cart-details">
+                        <thead>
+                            <tr>
+                                <th class="product-name">Product Name</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-qty">Quantity</th>
+                                <th class="product-subtotal">Subtotal</th>
+                                <th class="product-remove"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ng-container *rxFor="let item of cart?.products; let i = index">
+
+                                <tr class="cart-product">
+                                    <td class="product-name" data-column="Product Name">
+                                        <div class="product-name-inner">
+                                            <div class="product-thumb">
+                                                <a *ngIf="item?.images && item?.images.length > 0" [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]"><img class="cart-image" [lazyLoad]="item?.images[0].image" alt="{{item?.title}}" width="" height="" /></a>
+                                                <a *ngIf="!item?.images || item?.images.length == 0" [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]"><img class="cart-image" [lazyLoad]="'/assets/images/no-image.webp'" alt="{{item?.title}}" width="" height="" /></a>
+                                            </div>
+                                            <div class="product-inner-text">
+                                                <span title="{{ item?.title }}">
+                          <a [routerLink]="['/' , (item.url != null) ? item?.url : item?.id]">{{item?.title}}</a>
+                        </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-price" data-column="Price">
+                                        {{ item[item.condition] | currency: 'AED ' }}
+                                    </td>
+                                    <td class="product-qty" data-column="Quantity">
+                                        <span class="qtyBox">
+                      <button type="button" class="decreaseVal" (click)="updateQuantity(-1,i)">
+                        -
+                      </button>
+                      <input type="number" [(ngModel)]="item.qty" min="1" max="22" class="val" />
+                      <button type="button" class="increaseVal" (click)="updateQuantity(1,i)">
+                        +
+                      </button>
+                    </span>
+                                    </td>
+                                    <td class="product-subtotal" data-column="Subtotal">
+                                        {{ item[item.condition] * item.qty | currency: 'AED ' }}
+                                    </td>
+                                    <td class="product-remove" data-column="Remove">
+                                        <button type="button" (click)="removeProduct(i)">
+                      <img src="/assets/svg/delete.svg" loading="lazy" alt="Delete Product" width="13px" height="16px">
+                    </button>
+                                    </td>
+                                </tr>
+
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <table class="cart-buttons">
+                        <tbody>
+                            <!-- coupon code area -->
+                            <tr>
+                                <!-- <td colspan="2" class="product-coupon">
+                <form class="d-flex">
+                  <input class="form-control" type="search" placeholder="Enter Discount Code" aria-label="search" />
+                  <button class="cta-btn" type="submit">
+                    Apply Coupon
+                  </button>
+                </form>
+              </td> -->
+                                <td colspan="4" class="product-updatecart">
+                                    <button [class.spinner]="deleting" [disabled]="deleting" class="btn clr" (click)="emptyCart()" type="submit">
+                    Clear All
+                  </button>
+                                    <button [class.spinner]="updating" [disabled]="updating" class="btn updt" (click)="updateCart()" type="submit">
+                    Update Cart
+                  </button>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card-wrapper">
+                    <table class="cart-details cart-totals">
+                        <thead>
+                            <tr>
+                                <th class="product-name">Cart Totals</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hidden">
+                                <td colspan="2">
+                                    <div style="margin-top:10px;">
+                                        <!--<label for="">Country*</label>-->
+                                        <ng-select placeholder="Select Country" [(ngModel)]="country">
+                                            <ng-option *rxFor="let item of contryList" [value]="item?.Code">{{ item?.Name }}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="input-group zipcode">
+                                        <!-- <label for="">Calculate Shipping:</label> -->
+
+                                        <input class="form-control" (keydown)="onKeyPress($event)" [(ngModel)]="zipCode" type="text" placeholder="Enter Zip Code">
+
+                                        <button (click)="calculateShipping()" class="input-group-text" type="button">
+                      @if(loadshipping) {
+                        Loading...
+                      } @else {
+                        Calculate Shipping
+                      }
+                    </button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="shipping-calu">
+                                        @if(!loadshipping && shippingMethods?.length > 0){
+                                        <select class="form-select" (change)="selectMethod($event)" aria-label="Default select example">
+
+                      <option selected>Select Shipping Options</option>
+
+                      @for(method of shippingMethods; track  method){
+                        <option [value]="method.cost">{{method.serviceName}} - {{method.cost | currency}}</option>
+                      }
+
+                    </select> }
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="frt">
+                                <td class="cart-heading ">
+                                    Subtotal:
+                                </td>
+                                <!--<td>{{ cart?.sub_total | currency: 'AED ' }}</td>-->
+                                <td>{{ cart?.sub_total | currency: 'AED ' }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="cart-heading">Shipping:</td>
+                                <td class="cart-heading" colspan="2">
+                                    @if(!shiploading){ @if(selectedShippingMethod != null) { {{selectedShippingMethod | currency}} }@else { {{0.00 | currency}} } }
+                                </td>
+                            </tr>
+                            <tr>
+                              <td class="cart-heading">Tax:</td>
+                              <td class="cart-heading  right" colspan="2"> {{(cart?.sub_total * taxPer) | currency}}</td>
+                            </tr>
+                            <tr>
+                                <td class="cart-heading">Discount:</td>
+                                <td class="cart-heading" colspan="2">- {{(cart?.discount) | currency: 'AED '}}</td>
+                            </tr>
+                            <!-- <tr>
+                <td colspan="2" class="note">*Shipping & Tax will be calculated on checkout.</td>
+
+              </tr> -->
+                            <tr>
+                                <td class="cart-heading ortotal">
+                                    Order Total Incl. Tax:
+                                </td>
+                                <td>
+                                  @if(!shiploading){
+                                    @if(selectedShippingMethod != null){
+                                    {{ (+(cart?.total_amount) + (+selectedShippingMethod)) + (cart?.sub_total * taxPer) |currency }}
+                                    }@else{
+                                    {{ (cart?.total_amount + (cart?.sub_total * taxPer)) |currency }}
+                                    }
+                                    }
+                                </td>
+                            </tr>
+                            <!-- If user Login -->
+                            <!--<tr>
+                                <td colspan="2" class="text-center" style="border-top: 1px solid #dadada;">
+                                    <button (click)="gotoCheckout()" type="button" class="btn pross-checkout" style="margin-top: 10px !important;font-weight: 700 !important;">Proceed to Checkout</button>
+                                </td>
+                            </tr>-->
+                            <!-- If user Login -->
+
+
+                            @if (user()?.id) {
+                            <tr>
+                                <td colspan="2" class="text-center" style="border-top: 1px solid #dadada;">
+                                    <button (click)="gotoCheckout()" type="button" class="btn pross-checkout" style="margin-top: 10px !important;font-weight: 700 !important;">Proceed to Checkout</button>
+                                </td>
+                            </tr>
+                            } @else{
+                            <tr>
+                                <td colspan="2" class="text-center" style="border-top: 1px solid #dadada;">
+                                    <button (click)="gotoCheckout()" type="button" class="btn pross-checkout" style="margin-top: 10px !important;font-weight: 700 !important;">Checkout as Guest<img width="12"
+                                      height="12" style="display: inline-block;vertical-align: baseline;margin-left: 5px;"
+                                      src="/assets/svg/lock-solid.svg" alt=""></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <a class="cts" style="font-size: 12px;padding-bottom: 0;font-weight: 600;color: var(--primary);margin: 6px 0 5px;" [routerLink]="['/user/login']">HAVE AN ACCOUNT? LOGIN AND CHECKOUT NOW</a>
+                                </td>
+                            </tr>
+                            }
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <a class="cts" [routerLink]="['/']">Continue Shopping</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!cartload && (cart == null || cart?.products.length == 0)">
+        <div class="col-sm-9">
+            <div class="card-wrapper">
+                <h1 class="text-center">No items in cart</h1>
+            </div>
+        </div>
+    </div>
+
+</div>

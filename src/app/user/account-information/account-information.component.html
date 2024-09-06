@@ -1,0 +1,211 @@
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <h1>Account Information</h1>
+        <p>Control, protect, and secure your account.</p>
+    </div>
+    <div class="account-info col-md-12">
+        <app-block-loader *ngIf="loading"></app-block-loader>
+        <div *ngIf="!loading && user !=  null" class="table-responsive">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" valign="top">
+                <tr>
+                    <td>Account Information</td>
+                    <td>
+                        <span class="name capitalize">{{user?.first_name}} {{user?.last_name}}</span>
+                        <span>{{user?.email}}</span>
+
+                    </td>
+                    <td>
+                        <button type="button" (click)="openModal('nameEdit')" class="btn">Edit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Company Name (optional)</td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mobile Number</td>
+
+                    <td *ngIf="user?.phone != null && user?.phone != '';  else noMobile">
+                        {{user?.phone}}
+                    </td>
+                    <ng-template #noMobile>
+                        <td>
+                            To enhance your account security, add your mobile number.
+                        </td>
+                    </ng-template>
+
+                    <td>
+                        <button type="button" (click)="openModal('phoneEdit')" class="btn">Add/Edit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>********</td>
+                    <td>
+                        <button type="button" (click)="openModal('passwordEdit')" class="btn">Edit</button>
+                    </td>
+                </tr>
+                <tr [hidden]="true">
+                    <td>2-Step Verification</td>
+                    <td>Enable 2-Step Verification for enhanced account security.</td>
+                    <td>
+                        <button type="button" class="btn">Enable</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p class="small">Itech Devices is the sole owner of the information collected on this site. We will not sell, share, or rent this information to any outside parties, except as outlined in the privacy policy.</p>
+    </div>
+</div>
+<ng-container *ngIf="user != null && formsCreated">
+    <ngx-smart-modal [refocus]="false" identifier="nameEdit">
+
+        <form [formGroup]="emailForm" (submit)="submitEmailForm(emailForm)">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Information</h2>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group mb-3 mt-3">
+                    <input type="text" formControlName="first_name" class="form-control" placeholder="First Name*">
+                    <div class="error-block" *ngIf="emailForm.controls.first_name.invalid && (emailForm.controls.first_name.dirty || emailForm.controls.first_name.touched)">
+                        <p class="error" *ngIf="emailForm.controls.first_name.hasError('required') ">
+                            Please enter your first name
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group mb-3 mt-3">
+                    <input type="text" formControlName="last_name" class="form-control" placeholder="Last Name*">
+                    <div class="error-block" *ngIf="emailForm.controls.last_name.invalid && (emailForm.controls.last_name.dirty || emailForm.controls.last_name.touched)">
+                        <p class="error" *ngIf="emailForm.controls.last_name.hasError('required') ">
+                            Please enter your last name
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group mb-3">
+                    <input type="email" formControlName="email" class="form-control" placeholder="Email*">
+                    <div class="error-block" *ngIf="emailForm.controls.email.invalid && (emailForm.controls.email.dirty || emailForm.controls.email.touched)">
+                        <p class="error" *ngIf="emailForm.controls.email.hasError('required') ">
+                            Please enter the your email address
+                        </p>
+                        <p class="error" *ngIf="emailForm.controls.email.hasError('email') ">
+                            Please enter a valid email address
+                        </p>
+                        <p class="error" *ngIf="emailForm.controls.email.hasError('uniqueValidator') ">
+                            Email address already taken
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="relative-box"><button [class.spinner]="eloading" [disabled]="eloading || emailForm.invalid"
+            type="submit" class="btn btn-primary me-2">Submit</button></span>
+                <button type="button" (click)="closeModal('nameEdit')" class="btn">Cancel</button>
+            </div>
+        </form>
+    </ngx-smart-modal>
+
+    <ngx-smart-modal [refocus]="false" identifier="phoneEdit">
+        <form [formGroup]="phoneForm" (submit)="submitPhoneForm(phoneForm)">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Phone</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3 mt-3">
+                    <input formControlName="phone" type="text" class="form-control" placeholder="Phone*">
+                    <div class="error-block" *ngIf="phoneForm.controls.phone.invalid && (phoneForm.controls.phone.dirty || phoneForm.controls.phone.touched)">
+                        <p class="error" *ngIf="phoneForm.controls.phone.hasError('required') ">
+                            Please enter your phone
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <span class="relative-box"><button [class.spinner]="phloading" [disabled]="phloading || phoneForm.invalid"
+            type="submit" class="btn btn-primary me-2">Submit</button></span>
+                <button type="button" (click)="closeModal('phoneEdit')" class="btn">Cancel</button>
+            </div>
+        </form>
+    </ngx-smart-modal>
+    <ngx-smart-modal [refocus]="false" identifier="passwordEdit">
+        <form [formGroup]="passwordForm" (submit)="submitPasswordForm(passwordForm)">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Password</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3 mt-3">
+                    <div class="password-container">
+                        <input type="{{(showPassword)? 'text' : 'password'}}" formControlName="oldpassword" class="form-control" placeholder="Old Password">
+                        <span class="toggle-password">
+              @if(!showPassword){
+              <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password"
+                  width="20" height="16"></span> } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password"
+                  width="20" height="16"></span> }
+                        </span>
+                    </div>
+                    <div class="error-block" *ngIf="passwordForm.controls.oldpassword.invalid && (passwordForm.controls.oldpassword.dirty || passwordForm.controls.oldpassword.touched)">
+                        <p class="error" *ngIf="passwordForm.controls.oldpassword.hasError('required') ">
+                            Please enter your password
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group mb-3 mt-3">
+                    <div class="password-container">
+                        <input type="{{(showPassword)? 'text' : 'password'}}" formControlName="newpassword" class="form-control" placeholder="New Password">
+                        <span class="toggle-password">
+              @if(!showPassword){
+              <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password"
+                  width="20" height="16"></span> } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password"
+                  width="20" height="16"></span> }
+                        </span>
+                    </div>
+                    <div class="error-block" *ngIf="passwordForm.controls.newpassword.invalid && (passwordForm.controls.newpassword.dirty || passwordForm.controls.newpassword.touched)">
+                        <p class="error" *ngIf="passwordForm.controls.newpassword.hasError('required') ">
+                            Please enter your new password
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group mb-3 mt-3">
+                    <div class="password-container">
+                        <input type="{{(showPassword)? 'text' : 'password'}}" formControlName="confirmpassword" class="form-control" placeholder="Confirm Password">
+                        <span class="toggle-password">
+              @if(!showPassword){
+              <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password"
+                  width="20" height="16"></span> } @else{
+                        <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password"
+                  width="20" height="16"></span> }
+                        </span>
+                    </div>
+                    <div class="error-block" *ngIf="passwordForm.controls.confirmpassword.invalid && (passwordForm.controls.confirmpassword.dirty || passwordForm.controls.confirmpassword.touched)">
+                        <p class="error" *ngIf="passwordForm.controls.confirmpassword.hasError('required') ">
+                            Please enter your password again
+                        </p>
+                        <p class="error" *ngIf="passwordForm.controls.confirmpassword.hasError('confirmedValidator') ">
+                            Passwords do not match.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <span class="relative-box"><button [class.spinner]="ploading" [disabled]="ploading || passwordForm.invalid"
+            type="submit" class="btn btn-primary me-2">Submit</button></span>
+                <button type="button" (click)="closeModal('passwordEdit')" class="btn">Cancel</button>
+            </div>
+        </form>
+    </ngx-smart-modal>
+</ng-container>

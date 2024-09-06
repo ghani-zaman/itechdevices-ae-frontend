@@ -1,0 +1,25 @@
+<ng-container *rxFor="let item of data | keyvalue">
+
+  <h2>
+      {{item.key}}
+      <!--<span>Viewing Results: 1 - 10 Of 11</span>
+  <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>-->
+  </h2>
+
+  <div class="">
+      <div class="product-listing-container row">
+
+
+          <div *rxFor="
+        let sproduct of item.value;
+        let i = index
+      " app-product-card [product]="sproduct" class="row margin-0 drive-detail-box grid-view"></div>
+      </div>
+  </div>
+</ng-container>

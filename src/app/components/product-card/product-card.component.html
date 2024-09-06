@@ -1,0 +1,172 @@
+<div class="product-single-card">
+  <div class="p-img">
+    <a
+      (click)="recordSelectEvent()"
+      [routerLink]="['/', product.url != null ? product?.url : product?.id]"
+    >
+      <img
+        loading="lazy"
+        *ngIf="product?.assignedImages.length > 0"
+        alt="{{ product?.name }}"
+        [lazyLoad]="product?.assignedImages[0].image_url"
+        srcset=""
+      />
+      <img
+        loading="lazy"
+        *ngIf="product?.assignedImages.length === 0"
+        alt="{{ product?.name }}"
+        [src]="
+          product.category.name
+            ? env.catImagesPath +
+              (product.category.name | trimCatImage) +
+              '.webp'
+            : 'assets/images/no-image.webp'
+        "
+        srcset=""
+      />
+    </a>
+  </div>
+  <h2 class="p-title">
+    <a
+      (click)="recordSelectEvent()"
+      class="p-title-a"
+      [routerLink]="['/', product.url != null ? product?.url : product?.id]"
+      >{{ product?.name | cuttext : 100 }}
+    </a>
+  </h2>
+
+
+    @if(product?.price > 0){
+        @if(product?.discount !== null && product?.discount !== 0){
+          <div
+          class="p-pricing">
+          <p class="p-price incTax ">{{ (product?.price + (product?.price * env.taxPercent)) | currency }} <span
+            class="includingTax">Inc. Vat</span></p>
+        <p class="p-price">{{ product?.price | currency }} <span class="excludingTax">Excl. Vat</span></p>
+
+        </div>
+        }@else{
+          <div
+          class="p-pricing">
+          <p class="p-price incTax ">{{ (product?.price + (product?.price * env.taxPercent)) | currency }} <span
+            class="includingTax">Inc. Vat</span></p>
+        <p class="p-price">{{ product?.price | currency }} <span class="excludingTax">Excl. Vat</span></p>
+        </div>
+        }
+    }
+
+  <ng-container *ngIf="product?.price > 0">
+    <div class="p-card-bottom">
+      <!-- <div class="p-qty d-flex align-items-center justify-content-center mb-2">
+        <label for="">Qty: </label>
+        <div class="p-qty-group input-group">
+          <button class="decrement input-group-text" (click)="decrementCart()">
+            -
+          </button>
+          <input
+            class="form-control"
+            type="number"
+            value="{{ cartQty }}"
+            min="1"
+          />
+          <button class="increment input-group-text" (click)="incrementCart()">
+            +
+          </button>
+        </div>
+      </div> -->
+      <button class="btn m-0" (click)="addToCart(product, cartQty, 'price')">
+        Add to Cart
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="product?.price == null || product?.price == 0">
+    <div class="herotext">
+      <a href="tel:+971554255786"><span class="inc">Call for Price:</span>+971-5-54255786</a>
+    </div>
+    <div class="p-card-bottom">
+    <a class="btn m-0" [routerLink]="['/', product.url != null ? product?.url : product?.id]" >Request for Quote</a>
+  </div>
+  </ng-container>
+
+</div>
+
+<ng-template #prodContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="product-title" style="margin-right: 20px">
+      {{ product?.name | cuttext : 100 }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body p-modal">
+    <div class="p-area">
+      <div class="p-img p-modal-image">
+        <img
+          loading="lazy"
+          *ngIf="product?.assignedImages.length > 0"
+          alt="{{ product?.name }}"
+          [lazyLoad]="product?.assignedImages[0].image_url"
+          srcset=""
+        />
+        <img
+          loading="lazy"
+          *ngIf="product?.assignedImages.length === 0"
+          alt="{{ product?.name }}"
+          [src]="'assets/images/no-image.webp'"
+          srcset=""
+        />
+      </div>
+      <div class="p-details">
+        <p class="p-price-c p-meta-field">Price:</p>
+        <div
+          class="p-pricing"
+          *ngIf="product?.discount !== null && product?.discount !== 0"
+        >
+          <p class="p-price incTax ">{{ product?.price | currency }} <span
+            class="includingTax">Inc. Vat</span></p>
+          <p class="p-price">{{ product | priceConversion : "price" | currency }} <span class="excludingTax">Excl. Vat</span></p>
+        </div>
+        <div
+          class="p-pricing"
+          *ngIf="product?.discount === null || product?.discount === 0"
+        >
+          <p class="p-price">{{ product?.price | currency }}</p>
+        </div>
+        <p class="p-manufacturer p-meta-field">
+          Manufacturer:
+          <span
+            ><img loading="lazy" src="/assets/images/hp-logo.png" alt="" />
+            HP</span
+          >
+        </p>
+        <p class="p-manufacturer p-meta-field">
+          Mfr. Part#: <span>BX806733104</span>
+        </p>
+        <p class="p-manufacturer p-meta-field">
+          Estimated Ship: <span>24-48 hrs</span>
+        </p>
+        <div class="p-qv">
+          <a
+            [routerLink]="[
+              '/',
+              product.url != null ? product?.url : product?.id
+            ]"
+            class="btn"
+            >Details</a
+          >
+        </div>
+      </div>
+    </div>
+    <p class="p-desc">
+      {{ product?.description }}
+    </p>
+  </div>
+  <div class="modal-footer"></div>
+</ng-template>
+
+

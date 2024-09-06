@@ -1,0 +1,80 @@
+<div class="top-history">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Order Details</h1>
+    </div>
+    <div class="col-md-6 text-end">
+      <a class="btn col-auto m-0 px-5" [routerLink]="['/user/orders']"> <img src="/assets/svg/left-balck-full-arrow.svg" loading="lazy" alt="Right tick" width="14" height="19"> Back</a>
+    </div>
+    <hr>
+  </div>
+  <app-block-loader [hidden]="!orderloading"></app-block-loader>
+  <div class="row">
+    <div class="col-auto"><strong>Order ID:</strong> {{order?.order_id}}</div>
+    <div class="col-auto"><strong>Total:</strong> {{order?.grand_total | currency: 'AED ' }}</div>
+    <div class="col-auto"><strong>Order Status:</strong> {{order?.status}}</div>
+  </div>
+
+  <div *ngIf="!orderloading" class="row grey-bg-order mt-4">
+    <div class="col-md-12">
+      <table width="100%" class="order-listing">
+        <tr *rxFor="let item of order?.orderItems; let i = index;">
+          <td class="text-center">{{i+1}}.</td>
+          <td><span class="product-thumb"><img class="" loading="lazy" alt="{{item.productInfo.title}}" [lazyLoad]="item.productInfo.images[0].image" /></span>
+            {{item.productInfo.title | cuttext:'100'}} </td>
+          <td><span class="fw-bold me-3">QTY:</span> {{item?.qty_ordered}}</td>
+          <td class="order-price-td ">
+            <ng-container *ngIf="item.total_discount_amount > 0">
+              <span>{{(item.total_price + item.total_discount_amount) | currency: 'AED ' }}</span> {{item.total_price |
+              currency: 'AED ' }}
+            </ng-container>
+            <ng-container>
+              {{item.total_price | currency: 'AED ' }}
+            </ng-container>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+
+
+  <div *ngIf="!orderloading" class="row order-Address-box mt-4">
+    <div class="col-md-6 left-address">
+      <ng-container *rxFor="let address of order.orderAddress">
+        <div *ngIf="address.address_type === 'shipping'" class="box">
+          <h5 class="fw-bold">Shipping Address</h5>
+          <p>{{address.first_name}} {{address.last_name}}, {{address.street_address1}}, {{address.city}},
+            {{address.state}}, {{address.country}} - {{address.zip}}</p>
+        </div>
+      </ng-container>
+
+      <ng-container *rxFor="let address of order.orderAddress">
+        <div *ngIf="address.address_type === 'billing'" class="box">
+          <h5 class="fw-bold">Billing Address</h5>
+          <p>{{address.first_name}} {{address.last_name}}, {{address.street_address1}}, {{address.city}},
+            {{address.state}}, {{address.country}} - {{address.zip}}</p>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <div class="col-md-6 right-total">
+
+      <h5 class="fw-bold">Total Summary</h5>
+      <p><span class="fw-bold me-3">Subtotal:</span><span>{{order.sub_total | currency: 'AED ' }}</span></p>
+      <p><span class="fw-bold me-3">Shipping Fee:</span><span>{{order.shipping_amount | currency: 'AED ' }}</span></p>
+      <p><span class="fw-bold me-3">Platform Promtion:</span><span>{{order.discount_amount | currency: 'AED ' }}</span></p>
+      <hr />
+      <p><span class="fw-bold me-3">Total:</span><span><b>{{order.grand_total | currency: 'AED ' }}</b></span></p>
+      <br />
+      <p *ngIf="order?.payment_type === 'paytrace' && order?.status === 'notpaid'">Not Paid <span><a
+            [routerLink]="['/checkout/payment/' + order?.id]">Click Here</a> To Pay</span></p>
+      <p *ngIf="order?.payment_type === 'cod'">Paid by cash on delivery</p>
+      <p *ngIf="order?.payment_type === 'banktransfer'">Paid by Bank Transfer</p>
+      <p *ngIf="order?.payment_type === 'paytrace' && order?.status !== 'notpaid'">Paid by Paytrace <span>Transaction
+          ID: {{order?.transaction_id}}</span></p>
+    </div>
+
+  </div>
+</div>

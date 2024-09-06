@@ -1,0 +1,4 @@
+<li><a href=""><img src="/assets/svg/user-alt.svg" loading="lazy" alt="croxx" width="14" height="16"></a> </li>
+<li *ngIf="!isLoggedIn"><a [routerLink]="['/user/login']">Login</a> </li>
+<li *ngIf="!isLoggedIn"><a [routerLink]="['/user/sign-up']">Register</a> </li>
+<li *ngIf="isLoggedIn"><a [class.spinner]="loggingOut" (click)="logout()">LogOut</a> </li>

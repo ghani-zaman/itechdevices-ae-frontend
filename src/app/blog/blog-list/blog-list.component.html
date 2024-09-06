@@ -1,0 +1,41 @@
+<div class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div class="blog-single">
+        <div class="title-area">
+
+        </div>
+        <div class="content-tab">
+            <h1>{{singlePost?.title}}</h1>
+            <img loading="lazy" src="{{imageurl + singlePost?.blog_image}}" alt="" class="featured-image" width="" height="">
+            <div class="blog-share-link">
+                <h5>Share this post</h5>
+                <ul>
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{blogurl + singlePost?.url}}" target="_blank">
+                            <img loading="lazy" src="/assets/svg/facebook.svg" alt="Facebook" width="30px" height="30px">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&source=Hard+Disk+Direct&url={{blogurl + singlePost?.url}}-" target="_blank">
+                            <img loading="lazy" src="/assets/svg/linked.svg" alt="Linked In" width="30px" height="30px">
+                        </a>
+                    </li>
+                    <!-- <li>
+                <a href="https://www.instagram.com/itechdevicesglobal/"
+                  target="_blank">
+                  <img loading="lazy" src="/assets/svg/instagram.svg" alt="Instagram" width="30px" height="30px">
+                </a>
+              </li> -->
+                    <li>
+                        <a href="https://twitter.com/intent/tweet?url={{blogurl + singlePost?.url}}" target="_blank">
+                            <img loading="lazy" src="/assets/svg/twitter.svg" alt="Twitter" width="30px" height="30px">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <h4>{{singlePost?.title}}</h4> -->
+            <div class="post-content" [innerHTML]="singlePost?.blog_description | htmlSanitizer"></div>
+        </div>
+    </div>
+</div>
+<app-blog-section [postCount]="5"></app-blog-section>

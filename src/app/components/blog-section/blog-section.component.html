@@ -1,0 +1,68 @@
+<div class="blogs" *ngIf="blogPosts?.data?.length > 0" >
+  <div class="blogs-ctn home-container">
+    <h2 *ngIf="postCount<=5" >Related Blogs</h2>
+
+    <div class="blogs-ctn-inside">
+      <div class="blog-single-parent" *ngFor="let post of blogPosts?.data | paginate : {
+        itemsPerPage: postCount,
+        currentPage: cpage,
+        totalItems: total
+      };, trackBy: trackByMethod">
+        <a [routerLink]="['/blog', post?.url]">
+          <div class="blog-single">
+            <img loading="lazy" src='{{imageurl + post?.blog_image}}' alt=""/>
+            <h4 class="blog-title">{{post?.title}}</h4>
+            @if(post?.excerpt != null){
+            <p class="blog-excerpt" [innerHTML]="post?.excerpt | htmlSanitizer">
+
+            </p>
+          }
+            <p class="blog-meta " style="display: none;">12/03/2022</p>
+          </div>
+        </a>
+      </div>
+
+
+    </div>
+
+  <div class="row" style="margin-top:10px;" >
+    <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+
+      <div class="col-lg-12 text-center">
+        <ul class="pagination">
+          <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+
+            <button>
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+            <button *ngIf="!p.isFirstPage()">
+              <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="left arrow" width="10" height="16">
+            </button>
+          </li>
+          <ng-container *rxFor="let page of p.pages">
+
+            <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+              <button class="a-link">{{
+                page.label
+                }}</button>
+
+            </li>
+            <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+              <button class="a-link">{{ page.label }}</button>
+            </li>
+          </ng-container>
+          <li [class.disabled]="p.isLastPage()">
+            <button *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16"></button>
+            <button *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="right arrow" width="10" height="16"></button>
+          </li>
+        </ul>
+      </div>
+    </pagination-template>
+  </div>
+    <div class="text-center mt-3" *ngIf="postCount<=5">
+      <a [routerLink]="'/blog'" class="btn">View More</a>
+    </div>
+  </div>
+</div>

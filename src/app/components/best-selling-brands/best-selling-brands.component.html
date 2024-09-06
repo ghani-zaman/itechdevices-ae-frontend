@@ -1,0 +1,75 @@
+<!-- Featured Products-->
+<div data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos="slide-right" data-aos-once="true" class="container-fluid featured-box grey-bg jag-featured-tabs">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h4 class="repeate-heading">FEATURED BRANDS</h4>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <ul class="featured-heading">
+                    <ng-container *rxFor="let item of data; let i = index">
+                        <li [class.active]="activeTab ===   i" (click)="selectTab(i)">{{item?.name}}</li>
+                    </ng-container>
+
+
+                </ul>
+            </div>
+
+        </div>
+        <tabset #staticTabs>
+            <ng-container *rxFor="let item of data">
+                <tab heading="{{item?.name}}">
+
+                    <div class="row featured-products">
+
+                        <!--<div *ngIf="item?.banner != null && item.banner != '' " class="col-lg-3 ">
+            <a *ngIf="item?.bannerUrl != null && item.bannerUrl != ''" href="{{item?.bannerUrl}}">
+                <img loading="lazy" src="{{item.banner}}"  border="0" width="" height="">
+            </a>
+
+            <a *ngIf="item?.bannerUrl == null || item.bannerUrl == ''" href="#">
+                <img loading="lazy"  src="{{item.banner}}" border="0" width="" height="">
+            </a>
+            <div class="product-box">
+                <div class="product-img">
+                    <img loading="lazy" src="assets/images/thumb-ram.png" width="" height="">
+                </div>
+                <p class="welcome-row-subtitle  text-left">1Dell 6.4GB 5400RPM ATA-66 512KB Cache 3.5-inch Hard Drive</p>
+                <p class="price yellow-text">$599.00 <span class="strike-price p-r-10">$485.02</span></p>
+
+                <ul class="stars-list">
+                    <li><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></i></li>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></i></li>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></i></li>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></i></li>
+                    <li><svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></i></li>
+                </ul>
+
+                <p class="product-btn">
+                    <a class="product-detail-btn" href="#">See Details</a>
+                    <span class="timing">
+                        <b>07</b><b>45</b><b>59</b>
+                    </span>
+                </p>
+                <p class="white text-left">
+                    Limited Stock*
+                </p>
+            </div>
+
+        </div>-->
+                        <div  class=" col-lg-12 featured-product-row">
+                            <app-product-carousel [products]="item.products" [lineItems]="lineItems"></app-product-carousel>
+
+                        </div>
+
+                    </div>
+                </tab>
+            </ng-container>
+        </tabset>
+    </div>
+</div>
+<!-- Featured Products End-->

@@ -1,0 +1,48 @@
+#acc-tab .nav-link {
+  background-color: #f5f4f4;
+  border-radius: 0;
+  color: #000;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  border-left: 4px solid transparent;
+}
+
+#acc-tab .nav-link.active {
+  border-color: #0099ff;
+  font-weight: 600;
+}
+
+#acc-tabContent .tab-pane .accordion-item {
+
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 0;
+}
+
+#acc-tabContent .tab-pane .accordion-header button {
+  box-shadow: none;
+  font-weight: 500;
+  font-size: 18px;
+  color: #000;
+}
+
+#acc-tabContent .tab-pane .accordion-header button:before {
+  display: none;
+}
+
+.accordion-button.collapse,
+.accordion-button.collapsed {
+  background: #f5f4f4 !important;
+}
+
+.accordion-collapse,
+.accordion-button {
+  background: #cccccc !important;
+}
+@media (max-width: 575px) {
+  #acc-tab .nav-link {
+   margin-right: 10px;
+  }
+}

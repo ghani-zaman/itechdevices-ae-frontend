@@ -1,0 +1,17 @@
+li.catTitle {
+    font-size: 1rem;
+    padding-left: 10px;
+    color: var(--primary);
+    font-weight: 700;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1199px) {
+    li.catTitle {
+        line-height: 24px;
+        font-size: 1rem;
+    }
+}

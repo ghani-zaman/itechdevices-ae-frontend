@@ -1,0 +1,159 @@
+<div class="home-container">
+    <div class="row">
+        <div class="col-md-8 ">
+            <h2>Let's Connect</h2>
+            <p>We'd love to help you start achieving your IT hardware goals.</p>
+            <!-- Form Integration
+         <iframe src="" frameborder="0">Home form here</iframe>
+        <iframe width="100%" style="min-height: 700px;" src="/assets/contact.html"
+          frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe>
+        Form Integration Ends -->
+
+            <ng-container class="contactform" *ngIf="formCreated">
+                <form [formGroup]="form" (submit)="submitForm(form)">
+                    <div class="row">
+
+                        <!-- <div class="col-md-6 mb-3">
+                            <input formControlName="firstName" class="form-control" type="text" placeholder="Enter Your Name" />
+                            <div *ngIf="
+                form.controls.firstName.invalid &&
+                form.controls.firstName.errors &&
+                (form.controls.firstName.dirty || form.controls.firstName.touched)
+              ">
+                                <small class="text-danger" *ngIf="form.controls.firstName.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div> -->
+                        <div class="col-md-6 mb-3">
+                            <input formControlName="lastName" class="form-control" type="text" placeholder="Enter Full Name" />
+                            <div *ngIf="
+                form.controls.lastName.invalid &&
+                form.controls.lastName.errors &&
+                (form.controls.lastName.dirty || form.controls.lastName.touched)
+              ">
+                                <small class="text-danger" *ngIf="form.controls.lastName.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input formControlName="email" class="form-control" type="text" placeholder="Enter Email" />
+
+                            <div *ngIf="
+                form.controls.email.invalid &&
+                form.controls.email.errors &&
+                (form.controls.email.dirty || form.controls.email.touched)
+              ">
+                                <small class="text-danger" *ngIf="form.controls.email.hasError('required')">
+                  This field is required.
+                </small>
+                                <small class="text-danger" *ngIf="form.controls.email.hasError('email')">
+                  Enter a valid email address.
+                </small>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input formControlName="phone" class="form-control" type="text" placeholder="Please Enter Your Phone Number" />
+                            <div *ngIf="
+                form.controls.phone.invalid &&
+                form.controls.phone.errors &&
+                (form.controls.phone.dirty || form.controls.phone.touched)
+              ">
+                                <small class="text-danger" *ngIf="form.controls.phone.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input formControlName="company" class="form-control" type="text" placeholder="Enter Your Company Name" />
+                        </div>
+                        <!-- <div class="col-md-6 mb-3">
+                            <input formControlName="natureOfBusiness" class="form-control" type="text" placeholder="Add Nature Of Business" />
+                        </div> -->
+                        <div class="col-md-6 mb-3">
+                            <input class="form-control" formControlName="part_number" type="text" placeholder="Part number">
+                            <div *ngIf="
+              form.controls.part_number.invalid &&
+              form.controls.part_number.errors &&
+              (form.controls.part_number.dirty || form.controls.part_number.touched)
+            ">
+                                <small class="text-danger" *ngIf="form.controls.part_number.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input class="form-control" formControlName="quantity" type="number" placeholder="Required Qty">
+                            <div *ngIf="
+              form.controls.quantity.invalid &&
+              form.controls.quantity.errors &&
+              (form.controls.quantity.dirty || form.controls.quantity.touched)
+            ">
+                                <small class="text-danger" *ngIf="form.controls.quantity.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6 mb-3">
+                            <input class="form-control hide-arrow" formControlName="price" type="number" placeholder="Target Price">
+                            <div *ngIf="
+              form.controls.price.invalid &&
+              form.controls.price.errors &&
+              (form.controls.price.dirty || form.controls.price.touched)
+            ">
+                                <small class="text-danger" *ngIf="form.controls.price.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 mb-3">
+                            <textarea class="form-control" formControlName="message" style="height: 150px;"></textarea>
+                            <div *ngIf="
+              form.controls.message.invalid &&
+              form.controls.message.errors &&
+              (form.controls.message.dirty || form.controls.message.touched)
+            ">
+                                <small class="text-danger" *ngIf="form.controls.message.hasError('required')">
+                  This field is required.
+                </small>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="consent">
+                                <label class="form-check-label" for="consent" style="font-size: 14px;">
+                  I consent to receive SMS messages regarding updates, promotions, and other information from "Itech Devices
+                  ". Reply STOP to unsubscribe. View our <a style="font-size: 14px;" href="https://itechdevices.ae/privacy-policy">privacy policy</a> for more details.
+                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group captcha">
+
+                                <re-captcha (resolved)="submitNow(form)" size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <span class="relative-box"><button [class.spinner]="loading" [disabled]=" loading" type="submit"
+                  class="btn">
+                  Submit
+                </button></span>
+                        </div>
+
+
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+
+        <div class="col-md-4">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7221.084838270194!2d55.276903!3d25.184924!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f68319169f881%3A0x69266793dd38e629!2sThe%20Metropolis%20Tower%20-%20Business%20Bay%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sus!4v1724772255686!5m2!1sen!2sus"
+                width="100%" height="640" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</div>

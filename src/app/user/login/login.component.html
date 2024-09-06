@@ -1,0 +1,89 @@
+<!-- login Page start-->
+<div class="checkOut Login">
+
+    <div class="home-container">
+        <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+        <div class="row g-0 login-box new-form">
+            <div class="col-md-6">
+                <div class="login-form">
+                    <form [formGroup]="loginForm" (submit)="submitForm(loginForm)">
+                        <!-- <h1>Please login</h1> -->
+                        <h2><span>Welcome back to </span>iTech Devices<br></h2>
+
+                        <p class="form-text text-muted">If you have an account sign in with your email address.</p>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email Address*</label>
+                            <input formControlName="email" type="email" class="form-control" placeholder='Enter your email' id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <div class="error-block" *ngIf="loginForm.controls.email.invalid && (loginForm.controls.email.dirty || loginForm.controls.email.touched)">
+                                <p class="error" *ngIf="loginForm.controls.email.hasError('required') ">
+                                    Please enter the your email address
+                                </p>
+                                <p class="error" *ngIf="loginForm.controls.email.hasError('email') ">
+                                    Please enter a valid email address
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Password*</label>
+                            <div class="password-container">
+                                <input formControlName="password" type="{{(showPassword)? 'text' : 'password'}}" class="form-control password-input" placeholder='Enter password' id="exampleInputEmail1" aria-describedby="emailHelp">
+
+                                <span class="toggle-password">
+                  @if(!showPassword){
+                  <span (click)="showPassword=true"><img src="/assets/svg/close-eye.svg" loading="lazy" alt="Show Password" width="20" height="16"></span> } @else{
+                                <span (click)="showPassword=false"><img src="/assets/svg/eye.svg" loading="lazy" alt="Hide Password" width="20" height="16"></span> }
+                                </span>
+                            </div>
+                            <div class="error-block" *ngIf="loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
+                                <p class="error" *ngIf="loginForm.controls.password.hasError('required') ">
+                                    Please enter your password
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group captcha">
+
+                                <re-captcha (resolved)="submitNow(loginForm)" size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                            </div>
+                        </div>
+
+                        <div [hidden]="true" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="showpassword">
+                            <label class="form-check-label" for="showpassword">
+                Show Password
+              </label>
+                        </div>
+                        <div class="form-group d-flex flex-wrap justify-content-between">
+                            <a [routerLink]="['/user/resend-email-confirmation']" class='forget-pass'>Verify Your Account</a>
+                            <a [routerLink]="['/user/forget-password']" class='forget-pass'>Forgot Your Password?</a>
+                        </div>
+                        <button type="submit" [class.spinner]="loginLoading" [disabled]="loginLoading " class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="login-right-box d-flex align-items-start justify-content-center flex-column">
+                    <h1>New Customer</h1>
+                    <p class="form-text">Creating an account has many benefits: check out faster, keep more than oneaddress, track orders and more.
+                    </p>
+                    <ul>
+                        <li>Leverage our Account Executive expertise</li>
+                        <li>View order history and manage returns</li>
+                        <li>Join our Rewards Loyalty Program</li>
+                        <li>Create and manage custom "To-Buy" lists</li>
+
+                    </ul>
+                    <div class="flex-wrap" role="group">
+                        <a class="btn w-auto me-3" [routerLink]="['/user/sign-up']">Create an Account</a>
+                        <a class="btn w-auto" [routerLink]="['/user/sign-up/business']">Create a business account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- login Page End-->

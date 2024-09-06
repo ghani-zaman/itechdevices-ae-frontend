@@ -1,0 +1,30 @@
+<div class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    <div class="not-found">
+        <div class="row align-items-center justify-content-between border-after">
+            <div class="col-md-5 text-center">
+                <h1>404</h1>
+                <h2>Oops!</h2>
+                <p class="para">The page you are looking for might have been remoed had its name changed or is temporarily unavailable.
+                </p>
+                <a [routerLink]="['/']" class="btn">Go to Homepage</a>
+            </div>
+            <div class="col-md-5 mt-4 mt-md-0 border-top pt-4">
+                <h4 class="mb-3">Possible reasons for this issue may include:</h4>
+                <ul class="mb-5">
+                    <li>The product is no longer available on Itech Devices</li>
+                    <li>The provided link or URL is incorrect</li>
+                    <li>The page containing the product has been removed</li>
+                </ul>
+                <h4 class="mb-3">Contact customer service for assistance:</h4>
+                <p>Please contact customer service to report a problem or obtain assistance.</p>
+                <a [routerLink]="'/contact-us'" class="btn mx-auto mx-md-0">Contact Us</a>
+            </div>
+        </div>
+    </div>
+    <!-- <ng-container *ngFor="let item of data | async">
+    <ng-container *ngIf="item?.products && item?.products.length > 0">
+      <app-product-carousel [products]="item?.products" [title]="item?.name"></app-product-carousel>
+    </ng-container>
+  </ng-container> -->
+</div>

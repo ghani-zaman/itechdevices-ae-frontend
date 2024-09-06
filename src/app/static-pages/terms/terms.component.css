@@ -1,0 +1,13 @@
+.terms-container{
+  padding: 20px;
+  background-color: #fff;
+}
+
+.page-title-wrapper h1{
+  font-size: 26px;
+  color: #494949;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.terms-container h2{font-size: 18px;font-weight: 600;color: #494949;}
+.terms-container p{margin-bottom: 0;}

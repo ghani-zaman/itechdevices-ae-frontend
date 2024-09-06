@@ -1,0 +1,32 @@
+.top-bar-contacts{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.top-bar-contacts a{
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.top-bar-contacts a svg{
+  margin-right: 10px;
+}
+
+@media (max-width: 767px) {
+  .top-bar-contacts{
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .top-bar-contacts .mail{
+    flex-basis: 100%;
+    margin-bottom: 5px;
+  }
+  .top-bar-contacts .cs, .top-bar-contacts .lc{
+    flex-basis: 50%;
+  }
+
+}

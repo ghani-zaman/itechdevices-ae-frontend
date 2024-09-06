@@ -1,0 +1,23 @@
+
+    <!--middle banner start-->
+    <div *ngIf="finalBanner!=null"  data-aos-easing="ease-in" data-aos="flip-left" data-aos-once="true" data-aos-duration="1000"  class="container-fluid full-banner" [ngStyle]="{'background-image': 'url(' + path + finalBanner.image + ')'}">
+      <div  class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="row">
+                      <div class="col-sm-8">
+                          <h2>{{finalBanner.title}}</h2>
+                          <p>{{finalBanner.subtitle}}</p>
+                          <p class="m-t-30"><a class="yellow-link" href="{{finalBanner.btnUrl}}">{{finalBanner.btnText}}</a></p>
+                      </div>
+                      <div class="col-sm-4 img-box">
+                          <!--<img loading="lazy" class="off-add" src='assets/images/20off.png' />
+                          <img loading="lazy" src="assets/images/middle-banner-product.png" />-->
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--middle banner end-->

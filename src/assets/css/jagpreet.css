@@ -1,0 +1,49 @@
+.jag-featured-tabs .nav-tabs {
+  display:none !important;
+}
+.owl-nav>button {
+  margin-top: -26px;
+  position: absolute;
+  top: 50%;
+  color: #cdcbcd;
+}
+
+.owl-nav svg {
+  font-size: 52px;
+}
+
+.owl-nav .owl-prev {
+  left: -30px;
+}
+
+.owl-nav .owl-next {
+  right: -30px;
+}
+
+.cart-clear{
+  margin-right: 10px;
+}
+
+.navbar-nav{
+  width:100%;
+}
+.pr-name{
+  text-align: left !important;
+}
+
+.top-sticky{
+  z-index: 100 !important;
+}
+.novisibility{
+  visibility: hidden !important;
+}
+
+.error-block p.error {
+  padding-left: 0px;
+  color: #ff0000;
+}
+.featured-product-row{
+  width:100%;
+}
+
+

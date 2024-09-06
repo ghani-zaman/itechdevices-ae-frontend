@@ -1,0 +1,46 @@
+/* .top-brands .entry-text {
+  margin: 20px 0px;
+}
+
+.top-brands .brands-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.top-brands .brands-box .single-brand {
+  flex-basis: 15%;
+  text-align: center;
+  margin-bottom: 10px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.top-brands .brands-box .single-brand  img {
+  width: 80%;
+} */
+
+:host{
+  margin: 20px 0;
+  margin-bottom: 30px;
+}
+.features-brand-slider{margin-bottom: 10px;}
+.features-brand-slider
+  swiper
+  .swiper-wrapper
+  .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features-brand-slider swiper-slide {
+  text-align: center;
+  border: 1px solid #e9e9e9;
+}
+.features-brand-slider swiper-slide:hover{filter: none;}
+
+.features-brand-slider .brand-logo{
+  max-width: 70%;
+}

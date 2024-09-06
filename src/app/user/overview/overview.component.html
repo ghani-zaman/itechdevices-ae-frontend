@@ -1,0 +1,64 @@
+
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <h1>Overview</h1>
+    </div>
+    <div class="col-md-12 mb-4">
+        <div class="ordertable box">
+            <h1><img src="/assets/images/order-icon.png" alt=""> Order History</h1>
+            <p>This group's 5 most recent orders.</p>
+            <div class="table-responsive">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <thead>
+                        <tr>
+                          <th>Order No</th>
+                          <th>Order Date</th>
+                          <th>Status</th>
+                          <th>Total</th>
+                          <th>Ordered By</th>
+                          <th>Shipped To</th>
+                          <th>Download Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *rxFor="let order of orders?.data | paginate
+                      : {
+                          itemsPerPage: 5,
+                          currentPage: 1,
+                          totalItems: orders?.total
+                        };
+                        let i = index" >
+                              <td><a [routerLink]="['/user/orders', order.order_id]">{{order.order_id}}</a></td>
+                              <td>{{order?.created_at | date:'d-M-yyyy'}}</td>
+                              <td class="green-text">{{order?.status}}</td>
+                              <td>{{order?.qty_ordered}}</td>
+                              <td>{{order.customer.first_name}} {{order.customer.last_name}}</td>
+                              <td>{{order.orderAddress[0].first_name}} {{order.orderAddress[0].last_name}},
+                                  {{order.orderAddress[0].street_address1}}, {{order.orderAddress[0].city}},
+                                  {{order.orderAddress[0].state}}, {{order.orderAddress[0].country}} -
+                                  {{order.orderAddress[0].zip}}</td>
+                              <td><a style="cursor:pointer" [routerLink]="['/user/invoice', order.order_id]">
+                                <img src="/assets/svg/download-black.svg" loading="lazy" alt="Dowload Invoice" width="16" height="16"></a></td>
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="wishlist box">
+            <h1><img width="20" src="/assets/svg/wishlist.svg" alt=""> Wishlist</h1>
+            <p><strong>Wish - <span>Saved({{(whishlist?.products) ? whishlist?.products?.length: 0}})</span></strong></p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="quickorder box">
+            <h1><img src="/assets/images/search-icon.png" alt=""> Quick Order Status</h1>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search by product, Order # or invoice" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <button class="btn m-0 input-group-text" id="basic-addon2">Search Order</button>
+              </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,130 @@
+<!-- login Page start-->
+<style>
+    .acct-box {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px 0 50px;
+    }
+
+    .acct-form {
+        padding: 30px;
+        background-color: #f3f3f3;
+    }
+
+    .acct-box h1 {
+        text-transform: uppercase;
+        color: #494949;
+        font-weight: 700;
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .acct-box h2 {
+        text-transform: uppercase;
+        color: #494949;
+        font-weight: 700;
+        font-size: 26px;
+    }
+
+    .acct-box h2 span {
+        font-size: 18px;
+        font-weight: 700;
+        display: block;
+        line-height: 18px;
+    }
+
+    .form-text {
+        font-size: 18px;
+        color: #494949;
+    }
+
+    .acct-form label {
+        color: #6a6a6a;
+        margin-bottom: 5px;
+    }
+
+    .acct-form input {
+        box-shadow: none;
+        background-color: white;
+        border-radius: 0;
+        border: 1px solid #cecece;
+    }
+
+    .acct-form a,
+    .cancel-grey {
+        color: var(--primary);
+        border: none;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    .acct-form .btn {
+        min-width: 150px;
+        margin-top: 10px;
+        color: #fff;
+        border: none;
+        margin-top:0 !important ;
+    }
+
+    .acct-form .btn:hover {
+        background-color: #f3ab1d;
+        color: #000;
+    }
+</style>
+<div class="checkOut Login">
+    <div class="home-container">
+        <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+    </div>
+    <div class="container">
+        <div class="row acct-box new-form">
+            <div class="col-md-12">
+                <div *ngIf="formcreated" class="acct-form">
+                    <h1>Send Verification Email?</h1>
+
+                    <form [formGroup]="emailForm" (submit)="submitForm(emailForm)" class="padding-box">
+                        <div class='row address-form-row'>
+                            <div class="col-md-12">
+                                <p class="form-text">Please enter your email address below to receive a account confirmation link.</p>
+                                <div class="form-group">
+
+                                    <label for="exampleInputEmail1">Email Address*</label>
+                                    <div class="input-group">
+                                    <input formControlName="email" type="email" class="form-control"
+                                        placeholder='joe.donly@123.com' id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                        <button type="submit" [class.spinner]="loading"
+                                    [disabled]="loading"
+                                    class="btn m-0 input-group-text">Send Email</button>
+                                </div>
+                                    <div class="error-block"
+                                        *ngIf="emailForm.controls.email.invalid && (emailForm.controls.email.dirty || emailForm.controls.email.touched)">
+                                        <p class="error" *ngIf="emailForm.controls.email.hasError('required') ">
+                                            Please enter the your email address
+                                        </p>
+                                        <p class="error" *ngIf="emailForm.controls.email.hasError('email') ">
+                                            Please enter a valid email address
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                                  <div class="col-sm-12">
+                                    <div class="form-group captcha"  >
+
+                                      <re-captcha (resolved)="submitNow(emailForm)" size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{siteKey}}"></re-captcha>
+                                    </div>
+                                  </div>
+
+                            </div>
+
+                            <div class="col-md-12 mt-3 d-flex justify-content-between">
+                                <button (click)="submitForm(emailForm)" class="cancel-grey m-0 m-l-20">Resend</button>
+                                <a [routerLink]="['/user/login']" class='forget-pass goback-forget'>Go Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,769 @@
+<main class="privacy-container">
+  <div class="columns">
+    <div class="column main home-container" [hidden]="orderPaid === true && orderid !== null && orderNumber !== null">
+      <ng-container *ngIf="formcreated">
+        <form [formGroup]="checkoutForm" (submit)="submitForm(checkoutForm)">
+          <div class="row onepage">
+            <div class="col-md-12">
+              <div class="header">
+                <h1>Secure Checkout</h1>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="left">
+                <div class="shipping mb-4">
+                  <h2 class="wdg-title">
+                    <img src="assets/images/shipping.webp" alt="" /> Shipping &
+                    Billing Info
+                  </h2>
+                  <div action="" class="form row g-2">
+                    <div *ngIf="isGuest" class="col-md-4">
+                      <input formControlName="email" type="email" class="form-control" placeholder="Email address*" />
+                    </div>
+                    <div *ngIf="!isGuest && shippingAddresses?.length > 0" class="col-md-4">
+                      <select (change)="selectShippingAddress($event)" id="addressid" class="form-control"
+                        formControlName="addressid">
+                        <option [value]="'novalue'">--select address--</option>
+                        <option *rxFor="let item of shippingAddresses; let i = index" [value]="i">
+                          {{ item.first_name }} {{ item.last_name }},
+                          {{ item.street_address1 }}, {{ item.city }},
+                          {{ item.state }}, {{ item.country }} - {{ item.zip }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="First Name*" formControlName="first_name" type="text" class="form-control"
+                        id="" />
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.first_name.invalid &&
+                          (checkoutForm.controls.first_name.dirty ||
+                            checkoutForm.controls.first_name.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.first_name.hasError(
+                              'required'
+                            )
+                          ">
+                          Please enter first name
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="Last Name*" formControlName="last_name" type="text" class="form-control"
+                        id="" />
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.last_name.invalid &&
+                          (checkoutForm.controls.last_name.dirty ||
+                            checkoutForm.controls.last_name.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.last_name.hasError('required')
+                          ">
+                          Please enter last name
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="Phone Number*" formControlName="phone" type="text" class="form-control"
+                        id="" />
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.phone.invalid &&
+                          (checkoutForm.controls.phone.dirty ||
+                            checkoutForm.controls.phone.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.phone.hasError('required')
+                          ">
+                          Please enter phone number
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control" formControlName="company_name" placeholder="Company name*" />
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="Street address*" formControlName="street_address1" type="text"
+                        class="form-control" id="" />
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.street_address1.invalid &&
+                          (checkoutForm.controls.street_address1.dirty ||
+                            checkoutForm.controls.street_address1.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.street_address1.hasError(
+                              'required'
+                            )
+                          ">
+                          Please enter street address
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <ng-select placeholder="Select Country*" formControlName="country"
+                        (change)="calculateTaxShip($event);calculateShipping(); getShipStates($event); getPaymentMethods();">
+                        <ng-option *rxFor="let item of countriesList" [value]="item?.iso2">{{
+                          item?.name }}</ng-option>
+                      </ng-select>
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.country.invalid &&
+                          (checkoutForm.controls.country.dirty ||
+                            checkoutForm.controls.country.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.country.hasError('required')
+                          ">
+                          Please select your country
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4" [class.hide]="checkoutForm?.controls['country']?.value != 'US' && checkoutForm?.controls['country']?.value != 'CA'">
+                      <ng-select placeholder="Select State/Province*" formControlName="state"
+                        (change)="getShipCities($event); calculateTax()">
+                        <ng-option *rxFor="let item of shipStateList" [value]="item?.name">{{ item?.name
+                          }}</ng-option>
+                      </ng-select>
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.state.invalid &&
+                          (checkoutForm.controls.state.dirty ||
+                            checkoutForm.controls.state.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.state.hasError('required')
+                          ">
+                          Please enter state/province
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="City" *ngIf="
+                          !shipCityList ||
+                          shipCityList == null ||
+                          shipCityList?.length === 0 ||
+                          checkoutForm.controls.citymanual.value == true
+                        " formControlName="city" type="text" class="form-control" id="" />
+                      <ng-select placeholder="Select City*" *ngIf="
+                          shipCityList &&
+                          shipCityList?.length > 0 &&
+                          checkoutForm.controls.citymanual.value == false
+                        " placeholder="Select City*" formControlName="city">
+                        <ng-option *rxFor="let item of shipCityList" [value]="item?.city_name">{{ item?.city_name
+                          }}</ng-option>
+                      </ng-select>
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.city.invalid &&
+                          (checkoutForm.controls.city.dirty ||
+                            checkoutForm.controls.city.touched)
+                        ">
+                        <p class="error" *ngIf="
+                            checkoutForm.controls.city.hasError('required')
+                          ">
+                          Please enter city
+                        </p>
+                      </div>
+                      <label class="adman hidden" for="">City: <input formControlName="citymanual" type="checkbox" />Add Manually</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input placeholder="Zip Code*" formControlName="zip" type="text" class="form-control" id=""
+                        (change)="calculateShipping()" />
+                      <div class="error-block" *ngIf="
+                          checkoutForm.controls.zip.invalid &&
+                          (checkoutForm.controls.zip.dirty ||
+                            checkoutForm.controls.zip.touched)
+                        ">
+                        <p class="error" *ngIf="checkoutForm.controls.zip.hasError('required')">
+                          Please enter zip code
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="billing mb-4">
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" formControlName="use_shipping_as_billing" type="checkbox"
+                      (change)="changeBillShip($event); getPaymentMethods(); billingEvent();" checked />
+                    <label class="form-check-label" for="flexCheckDefault">
+                      My billing address is the same as shipping
+                    </label>
+                  </div>
+
+                  <ng-container *ngIf="
+                      !checkoutForm.controls.use_shipping_as_billing.value &&
+                      !loadbillform
+                    ">
+                    <div class="form row g-2">
+                      <div *ngIf="isGuest" class="col-md-4">
+                        <input placeholder="Email*" type="email" (focus)="billingEvent()" class="form-control" id="exampleInputEmail1"
+                          aria-describedby="emailHelp" formControlName="bemail" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bemail.invalid &&
+                            (checkoutForm.controls.bemail.dirty ||
+                              checkoutForm.controls.bemail.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bemail.hasError('required')
+                            ">
+                            Please enter the your email address
+                          </p>
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bemail.hasError('email')
+                            ">
+                            Please enter a valid email address
+                          </p>
+                        </div>
+                      </div>
+                      <div *ngIf="!isGuest && shippingAddresses?.length > 0" class="col-md-4">
+                        <select (change)="selectBillingAddress($event)" id="baddressid" class="form-control"
+                          formControlName="baddressid">
+                          <option [value]="'novalue'">
+                            --select address--
+                          </option>
+                          <option *rxFor="let item of billingAddresses; let i = index" [value]="i">
+                            {{ item.first_name }} {{ item.last_name }},
+                            {{ item.street_address1 }}, {{ item.city }},
+                            {{ item.state }}, {{ item.country }} -
+                            {{ item.zip }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <input placeholder="First Name*" formControlName="bfirst_name" type="text" class="form-control"
+                          id="" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bfirst_name.invalid &&
+                            (checkoutForm.controls.bfirst_name.dirty ||
+                              checkoutForm.controls.bfirst_name.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bfirst_name.hasError(
+                                'required'
+                              )
+                            ">
+                            Please enter first name
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <input placeholder="Last Name*" formControlName="blast_name" type="text" class="form-control"
+                          id="" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.blast_name.invalid &&
+                            (checkoutForm.controls.blast_name.dirty ||
+                              checkoutForm.controls.blast_name.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.blast_name.hasError(
+                                'required'
+                              )
+                            ">
+                            Please enter last name
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input placeholder="Phone Number*" formControlName="bphone" type="text" class="form-control"
+                          id="" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bphone.invalid &&
+                            (checkoutForm.controls.bphone.dirty ||
+                              checkoutForm.controls.bphone.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bphone.hasError('required')
+                            ">
+                            Please enter phone number
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" formControlName="bcompany_name" placeholder="Company name*" />
+                      </div>
+                      <div class="col-md-4">
+                        <input placeholder="Street address*" formControlName="bstreet_address1" type="text"
+                          class="form-control" id="" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bstreet_address1.invalid &&
+                            (checkoutForm.controls.bstreet_address1.dirty ||
+                              checkoutForm.controls.bstreet_address1.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bstreet_address1.hasError(
+                                'required'
+                              )
+                            ">
+                            Please enter street address
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <ng-select placeholder="Select Country*" formControlName="bcountry"
+                          (change)="getBillStates($event); getPaymentMethods()">
+                          <ng-option *rxFor="let item of countriesList" [value]="item?.iso2">{{
+                            item?.name }}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bcountry.invalid &&
+                            (checkoutForm.controls.bcountry.dirty ||
+                              checkoutForm.controls.bcountry.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bcountry.hasError(
+                                'required'
+                              )
+                            ">
+                            Please select your country
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-4" [class.hide]="checkoutForm?.controls['bcountry']?.value != 'US' && checkoutForm?.controls['bcountry']?.value != 'CA'">
+                        <ng-select placeholder="Select State/Province*" formControlName="bstate"
+                          (change)="getBillCities($event)">
+                          <ng-option *rxFor="let item of billStateList" [value]="item?.name">{{ item?.name
+                            }}</ng-option>
+                        </ng-select>
+
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bstate.invalid &&
+                            (checkoutForm.controls.bstate.dirty ||
+                              checkoutForm.controls.bstate.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bstate.hasError('required')
+                            ">
+                            Please enter state/province
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <input *ngIf="
+                            !billCityList ||
+                            billCityList == null ||
+                            billCityList?.length === 0 ||
+                            checkoutForm.controls.bcitymanual.value == true
+                          " formControlName="bcity" type="text" class="form-control" id="" placeholder="City*" />
+                        <ng-select *ngIf="
+                            billCityList &&
+                            billCityList?.length > 0 &&
+                            checkoutForm.controls.bcitymanual.value == false
+                          " placeholder="Select City" formControlName="bcity">
+                          <ng-option *rxFor="let item of billCityList" [value]="item?.city_name">{{ item?.city_name
+                            }}</ng-option>
+                        </ng-select>
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bcity.invalid &&
+                            (checkoutForm.controls.bcity.dirty ||
+                              checkoutForm.controls.bcity.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bcity.hasError('required')
+                            ">
+                            Please enter city
+                          </p>
+                        </div>
+                        <label class="adman hidden" for="">City: <input formControlName="bcitymanual" type="checkbox" />Add Manually</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input placeholder="Zip Code*" formControlName="bzip" type="text" class="form-control" id="" />
+                        <div class="error-block" *ngIf="
+                            checkoutForm.controls.bzip.invalid &&
+                            (checkoutForm.controls.bzip.dirty ||
+                              checkoutForm.controls.bzip.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.bzip.hasError('required')
+                            ">
+                            Please enter zip code
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+                <hr />
+                <div class="payment-table">
+                  <h2 class="wdg-title">
+                    <img src="assets/images/shipment.webp" alt="" /> Shipment
+                    Method
+                  </h2>
+                  <p>Select your preferred delivery method</p>
+                  <div class="error-block" *ngIf="
+                            checkoutForm.controls.shipping_method.invalid &&
+                            (checkoutForm.controls.shipping_method.dirty ||
+                              checkoutForm.controls.shipping_method.touched)
+                          ">
+                          <p class="error" *ngIf="
+                              checkoutForm.controls.shipping_method.hasError('required')
+                            ">
+                            Please select your shipping method
+                          </p>
+                        </div>
+                  <app-block-loader [hidden]="!loadshipping"></app-block-loader>
+                  <div *ngIf="!loadshipping && shippingMethods.length === 0" class="row">
+                    <div class="col-sm-12">
+                      <h4>
+                        No shipping method available for selected address.
+                      </h4>
+                    </div>
+                  </div>
+                  <table *ngIf="!loadshipping && shippingMethods.length > 0" class="shipTable" width="100%" border="0"
+                    cellpadding="8px" cellspacing="0">
+                    <thead>
+                      <th></th>
+                      <th>Cost</th>
+                      <th>Delivery Timelines</th>
+                      <th class="text-end">Service Name</th>
+                    </thead>
+                    <tbody>
+                      <tr *rxFor="let item of shippingMethods; let i = index">
+                        <td>
+                          <input class="form-check-input" type="radio" [value]="i" formControlName="shipping_method"
+                            (change)="selectShippingMethod(i)" />
+                        </td>
+                        <td>{{ item?.cost | currency: 'AED ' }}</td>
+                        <td>
+                          <label class="form-check-label" for="exampleRadios1">
+                            {{
+                            item?.deliveryDate != null
+                            ? isDate(item?.deliveryDate)
+                            ? (item?.deliveryDate | date : "dd-MMM-YYYY")
+                            : item?.deliveryDate
+                            : ""
+                            }}
+                          </label>
+                        </td>
+                        <td>
+                          <p class="text-end">{{ item?.serviceName }}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <input formControlName="shipping_date" type="hidden" class="form-control" id="" />
+                  <input formControlName="shipping_amount" type="hidden" class="form-control" id="" />
+                </div>
+                <!--<div class="shipment mb-4">
+
+                          <div   class="row align-item-center">
+                              <div class="col-md-4">
+                                  <select formControlName="shipping_method" (change)="selectShippingMethod($event)" class="form-select" aria-label="Default select example">
+
+                                      <option [value]="'novalue'">--Select Shipping Method--</option>
+                    <option *rxFor="let item of shippingMethods; let i = index" [value]="i">
+                      {{item.serviceName}}
+                    </option>
+                                  </select>
+                              </div>
+                              <div class="col-md-4">
+                                  <table>
+                                      <tr>
+                                          <td>Est. Delivery Date:</td>
+                                          <td><strong>{{checkoutForm.controls['shipping_date'].value | date: 'd-M-YYYY'}}</strong></td>
+                                          <input  formControlName="shipping_date" type="hidden" class="form-control" id="" />
+                                      </tr>
+                                      <tr>
+                                          <td>Shipping Charges:</td>
+                                          <td><strong>{{checkoutForm.controls['shipping_amount'].value | currency: 'AED '}}</strong></td>
+                                          <input formControlName="shipping_amount" type="hidden" class="form-control" id="" />
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <hr>
+                      <div *ngIf="false" class="payment mb-4">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <h2 class="wdg-title"><img src="assets/images/payment.webp" alt=""> Payment Method</h2>
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                          id="flexRadioDefault1">
+                                      <label class="form-check-label" for="flexRadioDefault1">
+                                          Pay via Bank Transfer
+                                      </label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                          id="flexRadioDefault2" checked>
+                                      <label class="form-check-label" for="flexRadioDefault2">
+                                          Pay via Credit Card
+                                      </label>
+                                  </div>
+                                  <img class="mt-3" src="/assets/images/onepagecards.png" alt="">
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="discode">
+                                      <p>Apply Discount Code</p>
+                                      <div class="input-group mb-3">
+                                          <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                          <button class="btn" type="button" id="button-addon2">Apply Discount</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="text-end mt-3">
+                              <button type="button" class="btn process">Save & Review Order</button>
+                          </div>
+                      </div>-->
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="right">
+                <app-block-loader [hidden]="!cartloading"></app-block-loader>
+                <div class="order-summary" *ngIf="!cartloading">
+                  <h2 class="wdg-title">Order Summary</h2>
+                  <table>
+                    <tr>
+                      <td>Product Subtotal:</td>
+                      <td>{{ cart?.sub_total | currency: 'AED ' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Shipping & Handling:</td>
+                      <td *ngIf="
+                          checkoutForm.controls.shipping_amount.value != null
+                        ">
+                        {{
+                        checkoutForm.controls.shipping_amount.value
+                        | currency: 'AED '
+                        }}
+                      </td>
+                      <td *ngIf="
+                          checkoutForm.controls.shipping_amount.value == null
+                        ">
+                        {{ 0 | currency: 'AED ' }}
+                      </td>
+                    </tr>
+                    <tr class="subtotal-row">
+                      <td class="cart-title">Discount:</td>
+                      <td class="cart-price">
+                        -{{
+                        (cart?.discount)
+                        | currency: 'AED '
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Tax:</td>
+                      <td>
+                        {{
+                        checkoutForm.controls.taxAmount.value | currency: 'AED '
+                        }}
+                      </td>
+                    </tr>
+                    <tr class="total-row">
+                      <td>Cart Total:</td>
+                      <td *ngIf="
+                          checkoutForm.controls.shipping_amount.value != null
+                        " class="cart-price">
+                        {{
+                        cart?.total_amount +
+                        checkoutForm.controls.shipping_amount.value +
+                        checkoutForm.controls.taxAmount.value -
+                        checkoutForm.controls.discount_amount.value
+                        | currency: 'AED '
+                        }}
+                      </td>
+
+                      <td *ngIf="
+                          checkoutForm.controls.shipping_amount.value == null
+                        " class="cart-price">
+                        {{
+                        cart?.total_amount +
+                        checkoutForm.controls.taxAmount.value -
+                        checkoutForm.controls.discount_amount.value
+                        | currency: 'AED '
+                        }}
+                      </td>
+                    </tr>
+                  </table>
+                  <h6>
+                    <span>{{ cart?.products?.length }}</span> item(s) in Cart
+                  </h6>
+                  <div class="minicart-items-wrapper">
+                    <ul class="minicart-items">
+                      <ng-container *rxFor="let item of cart?.products">
+                        <li class="product-item">
+                          <div class="product">
+                            <!--<div class="delete"></div>-->
+                            <div class="product-image-container">
+                              <img [src]="item?.images[0]?.image" alt="" />
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-inner">
+                                <div class="product-item-name-block">
+                                  <h6 class="product-item-name">
+                                    {{ item?.title | cuttext : "50" }}
+                                  </h6>
+                                  <div class="details-qty">
+                                    <span class="label">Qty:</span>
+                                    <span class="value">{{ item?.qty }}</span>
+                                  </div>
+                                </div>
+                                <div class="subtotal">
+                                  <span class="price">{{
+                                    item[item.condition] * item.qty
+                                    | currency: 'AED '
+                                    }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="cartSec">
+                  @if(paymentloading) {
+                    <div class="loader-wrap"><span class="loader"></span></div>
+                  } @else {
+                    <div>
+                      <div class="container p-0">
+                        <div class="row">
+                          <h2 class="wdg-title">
+                            <img src="assets/images/payment.webp" alt="" /> Payment
+                            Method
+                          </h2>
+                        </div>
+                        <div *ngIf="paymentMethods?.bank_transfer" class="d-flex form-check">
+                          <input type="radio" class="form-check-input me-2" id="exampleCheck112a"
+                            formControlName="payment_method" [value]="'banktransfer'" (change)="addCardValidators()" />
+                          <label class="form-check-label" for="exampleCheck112a">Bank Transfer</label>
+                        </div>
+                        <div *ngIf="paymentMethods?.cash_on_delivery" class="d-flex form-check">
+                          <input type="radio" class="form-check-input me-2" id="exampleCheck112b"
+                            formControlName="payment_method" [value]="'cod'" (change)="addCardValidators()" />
+                          <label class="form-check-label" for="exampleCheck112b">Cash On Delivery</label>
+                        </div>
+                        <div *ngIf="paymentMethods?.paytrace" class="d-flex form-check">
+                          <input type="radio" class="form-check-input me-2" id="exampleCheck112c"
+                            formControlName="payment_method" [value]="'paytrace'" (change)="addCardValidators()" />
+                          <label class="form-check-label" for="exampleCheck112c">Credit Card</label>
+                        </div>
+                        <div
+                        *ngIf="paymentMethods?.stripe"
+                        class="d-flex form-check"
+                      >
+                        <input
+                          type="radio"
+                          class="form-check-input me-2"
+                          id="exampleCheck112c"
+                          formControlName="payment_method"
+                          [value]="'stripe'"
+                          (change)="addCardValidators()"
+                        />
+                        <label class="form-check-label" for="exampleCheck112c"
+                          >Credit Card</label
+                        >
+                      </div>
+
+                        <!-- P ayment Method Static Html -->
+                        <div *ngIf="paymentMethods?.paytrace" class="row"
+                          [class.payhide]="checkoutForm?.controls['payment_method'].value != 'paytrace'"
+                          id="payment-form">
+                          <div class="col-md-12 text-end">
+                            <img class="img-fluid" loading="lazy" alt="online payments" title="payment methods"
+                              src="/assets/images/payment_icons.webp" width="200" height="auto" />
+                          </div>
+                          <div class="col-md-12 mb-2">
+                            <label for="card-number">CC Number</label>
+                            <input class="form-control" type="text" id="card-number" formControlName="cardNumber"
+                              placeholder="**** **** **** ****" />
+                          </div>
+                          <div class="col-md-8 mb-2">
+                            <label for="expiration-date">Expiration Date</label>
+                            <input class="form-control" type="text" id="expiration-date" formControlName="cardExpiry"
+                              placeholder="MM/YYYY" pattern="\d{2}/\d{4}" (keyup)="formatMonthYear()" maxlength="7" />
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="cvv">CVV</label>
+                            <input class="form-control" type="text" id="cvv" formControlName="cardCvc"
+                              placeholder="***" />
+                          </div>
+                        </div>
+
+                        <div
+                        *ngIf="paymentMethods?.stripe"
+                        [class.payhide]="
+                          checkoutForm?.controls['payment_method'].value !=
+                          'stripe'
+                        "
+                      >
+                        <div class="row" ngxStripeCardGroup
+                          [elementsOptions]="elementsOptions"
+                        >
+                        <div class="col-md-12 text-end">
+                          <img class="img-fluid" loading="lazy" alt="online payments" title="payment methods"
+                            src="/assets/images/payment_icons.webp" width="200" height="auto" />
+                        </div>
+                          <div class="col-md-12 mb-2">
+                            <label for="card-number">CC Number</label>
+                            <ngx-stripe-card-number
+                              class="form-control"
+                              [options]="cardOptions"
+                            ></ngx-stripe-card-number>
+                          </div>
+                          <div class="col-md-8 mb-2">
+                            <label for="expiration-date">Expiration Date</label>
+                            <ngx-stripe-card-expiry
+                              class="form-control"
+                              [options]="cardOptions"
+                            ></ngx-stripe-card-expiry>
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label for="cvv">CVV</label>
+                            <ngx-stripe-card-cvc
+                              class="form-control"
+                              [options]="cardOptions"
+                            ></ngx-stripe-card-cvc>
+                          </div>
+                        </div>
+                      </div>
+
+                        <!-- Payment Method Static Html -->
+                      </div>
+                    </div>
+                  }
+
+
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group captcha">
+                    <re-captcha (resolved)="submitNow(checkoutForm)" size="invisible" #captchaRef="reCaptcha"
+                      formControlName="recaptchaReactive" siteKey="{{ siteKey }}"></re-captcha>
+                  </div>
+                </div>
+
+                <div class="order-place relative-box text-center">
+                  <button [class.spinner]="placingorder" [disabled]="placingorder || orderid != null"
+                    class="btn place-order" type="submit" id="OrderPlace">
+                    Place Order
+                  </button>
+
+                  <div class="assistance">
+                    <h5>Need Assistance?</h5>
+                    <a href="tel:+971554255786">+971-5-54255786</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+
+    <div *ngIf="orderid !== null && orderPaid === true && orderNumber !== null">
+      <div class="thank-area text-center home-container">
+        <img style="margin-top: 50px" loading="lazy" src="/assets/icons/thank-you.svg" alt="thankyou" srcset="" width=""
+          height="" />
+        <h1 class="my-5">THANK YOU FOR YOUR ORDER.</h1>
+        <h2>YOUR ORDER ID: #{{ orderNumber }}</h2>
+        <p>
+          If you’d like to speak with a sales consultant at a preferred time,
+          please <a [routerLink]="['/contact-us']">contact us!</a>
+        </p>
+        <a [routerLink]="['/']">Continue Shopping</a>
+      </div>
+      <app-buy-now-cta></app-buy-now-cta>
+    </div>
+  </div>
+</main>

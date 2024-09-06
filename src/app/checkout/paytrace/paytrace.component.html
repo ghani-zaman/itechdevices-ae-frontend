@@ -1,0 +1,76 @@
+<style>
+    h2.wdg-title {
+        font-size: 20px;
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .wdg-title img {
+        margin-right: 10px;
+        vertical-align: text-top;
+    }
+    
+    iframe#hpf_casper,
+    iframe#hpf_casper body {
+        background: none !important;
+    }
+</style>
+<div *ngIf="!paymentsuccess" class="cartSec">
+    <app-block-loader [hidden]="!loadingform"></app-block-loader>
+    <div class="container p-0" [hidden]="loadingform">
+        <div class="row">
+            <!-- <h2 class="wdg-title"><img src="assets/images/payment.webp" alt=""> Payment Method</h2> -->
+            <div *ngIf="paymentMethods?.cash_on_delivery" class="col-sm-12">
+                <div class="form-group form-check">
+                    <input type="radio" class="form-check-input" id="exampleCheck112" [(ngModel)]="payment_method" [value]="'cod'" />
+                    <label class="form-check-label" for="exampleCheck112">Cash On Delivery</label>
+                </div>
+            </div>
+            <div *ngIf="paymentMethods?.bank_transfer" class="col-sm-12">
+                <div class="form-group form-check">
+                    <input type="radio" class="form-check-input" id="exampleCheck112" [(ngModel)]="payment_method" [value]="'banktransfer'" />
+                    <label class="form-check-label" for="exampleCheck112">Bank Transfer</label>
+                </div>
+            </div>
+            <div *ngIf="paymentMethods?.paypal" class="col-sm-12">
+                <div class="form-group form-check">
+                    <input type="radio" class="form-check-input" id="exampleCheck112" [(ngModel)]="payment_method" [value]="'paytrace'" />
+                    <label class="form-check-label" for="exampleCheck112">Credit Card</label>
+                </div>
+
+            </div>
+            <div [hidden]="payment_method !== 'paytrace' " class="col-sm-12">
+                <form id="ProtectForm">
+                    <img class="mt-2 mx-auto" loading="lazy" alt="online payments" title="payment methods" src="/assets/images/payment_icons.webp" width="auto" height="auto">
+                    <div id="pt_hpf_form" [hidden]="paymentloading"></div>
+                    <button [class.spinner]="paymentloading" [disabled]="paymentloading" class="btn place-order" type="submit">Place Order</button>
+                </form>
+
+            </div>
+
+
+            <div [hidden]="payment_method === 'paytrace' " class="col-sm-12">
+                <div class="form-group">
+                    <button (click)="submitPaymentForm(true)" [class.spinner]="paymentloading" [disabled]="paymentloading" class=" btn place-order" type="button">Place Order</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div *ngIf="paymentsuccess && transaction != null" class="thnk-area">
+    <img loading="lazy" src="images/check.webp" alt="thankyou" srcset="" width="" height="" />
+    <h1>Thankyou for your order.</h1>
+    <h3>Your order id is {{ orderId }}</h3>
+    <h3>Your paytrace transaction id is {{ transaction }}</h3>
+    <p>
+        If you’d like to speak with a sales consultant at a preferred time, please <a [routerLink]="['/']">CLICK HERE</a> to contact us.
+    </p>
+    <a [routerLink]="['/']">Continue Shopping</a>
+</div>

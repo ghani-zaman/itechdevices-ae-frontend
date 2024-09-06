@@ -1,0 +1,62 @@
+<!-- login Page start-->
+<style>
+    .acct-box {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px 0 50px;
+    }
+
+    .acct-form {
+        padding: 30px;
+        background-color: #f3f3f3;
+    }
+    .acct-box h1 {
+        text-transform: uppercase;
+        color: #494949;
+        font-weight: 700;
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .acct-box h2 {
+        text-transform: uppercase;
+        color: #494949;
+        font-weight: 700;
+        font-size: 26px;
+    }
+
+    .acct-box h2 span {
+        font-size: 18px;
+        font-weight: 700;
+        display: block;
+        line-height: 18px;
+    }
+
+</style>
+<app-block-loader [hidden]="!loading"></app-block-loader>
+<div class="checkOut Login">
+    <div class="container">
+        <div class="row acct-box new-form">
+                <div *ngIf="success === true" class="col-md-12 acct-form text-center">
+                    <div class="">
+                        <img class="mb-3" loading="lazy" alt="success" src='assets/images/verified.png' />
+                        <h4>Verified!</h4>
+                        <p class="mb-0">Your have Successfully verified account</p>
+                        <a [routerLink]="[ '/user/login']"><button type="submit"
+                                class="btn">ok</button></a>
+                    </div>
+                </div>
+
+                <div *ngIf="success === false" class="col-md-12 acct-form text-center">
+                    <div class="">
+                        <img class="mb-3" loading="lazy" alt="success" src='assets/images/verified-cancel.png' />
+                        <h4>Sorry, <br /> Verification Failed</h4>
+                        <p class="mb-0">Please request a new verification link!</p>
+                        <a [routerLink]="[ '/user/resend-email-confirmation']"><button type="submit"
+                                class="btn">Resend</button></a>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>

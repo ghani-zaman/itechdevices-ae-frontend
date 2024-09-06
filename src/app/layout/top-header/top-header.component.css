@@ -1,0 +1,144 @@
+header {
+    position: relative;
+    background-color: #fff;
+}
+
+.header .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 0;
+}
+
+.badge {
+    position: absolute;
+    bottom: -60px;
+    right: 0;
+    display: none;
+}
+
+.checkout-header {
+    background-color: var(--primary);
+    padding: 15px 0;
+}
+
+.checkout-header h4 {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.checkout-header .btn:hover {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+.top-bar {
+    padding: 8px 0;
+    background-color: var(--primary);
+}
+
+.top-bar * {
+    margin: 0;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.cart-icons {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.cart-icons .topright {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-box .dropdown-menu li {
+    line-height: normal;
+}
+
+.icon-box .dropdown-menu li a {
+    color: #494949 !important;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.icon-box .dropdown-menu li .btn {
+    color: #fff !important;
+    padding: 5px 8px !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: normal !important;
+}
+
+.icon-box>a img,
+.icon-box button img {
+    margin-right: 10px;
+    vertical-align: baseline;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+}
+
+ul a {
+    text-decoration: none;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+    .logo-row {
+        flex-wrap: wrap;
+    }
+    .logo-row .logo {
+        order: 1;
+    }
+    .logo-row .search-container {
+        order: 3;
+        flex: 1 0 100%;
+        width: 100%;
+        margin: 15px 0 0;
+    }
+    .logo-row .action-container {
+        order: 2;
+        margin-left: auto;
+    }
+    .header .logo-row {
+        padding: 15px 20px !important;
+    }
+    .header {
+        min-height: 129px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        margin-bottom: 10px;
+        min-height: auto;
+    }
+    .logo-row {
+        flex-wrap: wrap;
+    }
+    .logo-row .logo {
+        flex-basis: auto;
+        order: 1;
+    }
+    .top-bar .cart-icons {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 575px) {
+    .header .logo-row .logo img {
+        width: 150px;
+    }
+}

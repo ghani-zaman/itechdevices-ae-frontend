@@ -1,0 +1,43 @@
+<div class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+</div>
+
+<div class="home-container">
+    <div class="rma-wrapper">
+        <h1 class="heading">RMA Request Form</h1>
+        <div class="inner-form">
+            <form class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label for="onumber">Order Number</label>
+                    <input formControlName="onumber" class="form-control" type="text" />
+                    <div><small class="text-danger" hidden>This field is required.</small></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="fname">Full Name</label>
+                    <input formControlName="fname" class="form-control" type="text" />
+                    <div><small class="text-danger" hidden>This field is required.</small></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="eaddress">Email Address </label>
+                    <input formControlName="eaddress" class="form-control" type="email" />
+                    <div><small class="text-danger" hidden>This field is required.</small></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="pnumber">Phone Number</label>
+                    <input formControlName="pnumber" class="form-control" type="tel" />
+                    <div><small class="text-danger" hidden>This field is required.</small></div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="reason">Reason of Return Request </label>
+                    <textarea name="reason" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col-md-12 text-center">
+                    <span class="relative-box"><button type="submit" class="btn">Submit</button></span>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>

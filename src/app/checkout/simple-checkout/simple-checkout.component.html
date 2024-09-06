@@ -1,0 +1,1030 @@
+<div class="checkOut">
+    <div *ngIf="orderid === null" class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Product Detail
+                </li>
+            </ol>
+        </nav>
+
+        <h1 class="csi">
+            Checkout<a *ngIf="isGuest" class="white" (click)="gotoLogin()">Sign In</a>
+        </h1>
+        <ng-container *ngIf="formcreated">
+            <form [formGroup]="checkoutForm" (submit)="submitForm(checkoutForm)">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <section>
+                            <div class="row">
+                                <h2>Shipping Address</h2>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-7">
+                                    <div *ngIf="isGuest" class="form-group">
+                                        <label for="exampleInputEmail1">Email Address*</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email" />
+                                        <div class="error-block" *ngIf="checkoutForm.controls.email.invalid && (checkoutForm.controls.email.dirty || checkoutForm.controls.email.touched)">
+                                            <p class="error" *ngIf="checkoutForm.controls.email.hasError('required') ">
+                                                Please enter the your email address
+                                            </p>
+                                            <p class="error" *ngIf="checkoutForm.controls.email.hasError('email') ">
+                                                Please enter a valid email address
+                                            </p>
+
+                                        </div>
+                                        <small id="emailHelp" class="form-text text-muted">You can create account after checkout.</small
+                    >
+                  </div>
+                  <div *ngIf="!isGuest" class="form-group">
+                    <label for="addressid">Select Address</label>
+                    <select
+                      (change)="selectShippingAddress($event)"
+
+                      id="addressid"
+                      class="form-control"
+                      formControlName="addressid"
+                    >
+                      <option [value]="'novalue'">--select address--</option>
+                      <option
+                        *rxFor="let item of shippingAddresses; let i = index"
+                        [value]="i"
+                      >
+                        {{ item.first_name }} {{ item.last_name }},
+                        {{ item.street_address1 }}, {{ item.city }},
+                        {{ item.state }}, {{ item.country }} - {{ item.zip }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-5"></div>
+
+                <div class="col-sm-6">
+                  <label for="">First Name*</label>
+                  <input
+                    formControlName="first_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.first_name.invalid &&
+                      (checkoutForm.controls.first_name.dirty ||
+                      checkoutForm.controls.first_name.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.first_name.hasError('required')
+                      "
+                    >
+                      Please enter  first name
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Last Name*</label>
+                  <input
+                    formControlName="last_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.last_name.invalid &&
+                      (checkoutForm.controls.last_name.dirty ||
+                      checkoutForm.controls.last_name.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.last_name.hasError('required')
+                      "
+                    >
+                      Please enter  last name
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">Phone Number*</label>
+                  <input
+                    formControlName="phone"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.phone.invalid &&
+                      (checkoutForm.controls.phone.dirty ||
+                      checkoutForm.controls.phone.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.phone.hasError('required')
+                      "
+                    >
+                      Please enter phone number
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Company Name</label>
+                  <input
+                    formControlName="company_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="">Street Address*</label>
+                  <input
+                    formControlName="street_address1"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.street_address1.invalid &&
+                      (checkoutForm.controls.street_address1.dirty ||
+                      checkoutForm.controls.street_address1.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.street_address1.hasError('required')
+                      "
+                    >
+                      Please enter street address
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">City*</label>
+                  <input
+                    formControlName="city"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.city.invalid &&
+                      (checkoutForm.controls.city.dirty ||
+                      checkoutForm.controls.city.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.city.hasError('required')
+                      "
+                    >
+                      Please enter city
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">State/Province*</label>
+                  <input
+                    formControlName="state"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.state.invalid &&
+                      (checkoutForm.controls.state.dirty ||
+                      checkoutForm.controls.state.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.state.hasError('required')
+                      "
+                    >
+                      Please enter state
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">Zip/Postal Code*</label>
+                  <input
+                    formControlName="zip"
+                    type="text"
+                    class="form-control"
+                    id=""
+                    (change)="calculateShipping()"
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.zip.invalid &&
+                      (checkoutForm.controls.zip.dirty ||
+                      checkoutForm.controls.zip.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.zip.hasError('required')
+                      "
+                    >
+                      Please enter zip code
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Country*</label>
+                  <ng-select
+                    placeholder="Select Country"
+                    formControlName="country"
+                    (change) = "calculateShipping()"
+                  >
+                    <ng-option
+                      *rxFor="let item of countriesList"
+                      [value]="item?.Code"
+                      >{{ item?.Name }}</ng-option
+                    >
+                  </ng-select>
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.country.invalid &&
+                      (checkoutForm.controls.country.dirty ||
+                      checkoutForm.controls.country.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.country.hasError('required')
+                      "
+                    >
+                      Please select your country
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section>
+              <h2>Shipping Method</h2>
+              <app-block-loader [hidden]="!loadshipping"></app-block-loader>
+              <div *ngIf="!loadshipping"  class="row">
+                <div class="col-sm-6">
+                  <label for="">Select Shipping Method:</label>
+                  <select (change)="selectShippingMethod($event)" class="form-control" formControlName="shipping_method">
+                    <option [value]="'novalue'">--Select Shipping Method--</option>
+                    <option *rxFor="let item of shippingMethods; let i = index" [value]="i">
+                      {{item.serviceName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Estimated Delivery Date:</label>
+                  <input formControlName="shipping_date" type="text" class="form-control" id="" />
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Shipping Charges:</label>
+                  <input formControlName="shipping_amount" type="text" class="form-control" id="" />
+                </div>
+              </div>
+            </section>
+
+            <div class="row">
+              <div class="col-md-12">
+                <label class="blue-label"
+                  >Use billing information same as shipping address?</label
+                >
+
+                <label class="switch">
+                  <input
+                    formControlName="use_shipping_as_billing"
+                    type="checkbox"
+                    (change)="changeBillShip($event)"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+
+            <section
+              *ngIf="!checkoutForm.controls.use_shipping_as_billing.value && !loadbillform"
+              action="#"
+            >
+              <div class="row">
+                <h2>Billing Address</h2>
+                <div class="clearfix"></div>
+                <div class="col-sm-7">
+                  <div *ngIf="isGuest" class="form-group">
+                    <label for="exampleInputEmail1">Email Address*</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      formControlName="bemail"
+                    />
+                    <div class="error-block" *ngIf="checkoutForm.controls.bemail.invalid && (checkoutForm.controls.bemail.dirty || checkoutForm.controls.bemail.touched)">
+                      <p class="error" *ngIf="checkoutForm.controls.bemail.hasError('required') ">
+                          Please enter the your email address
+                      </p>
+                      <p class="error" *ngIf="checkoutForm.controls.bemail.hasError('email') ">
+                          Please enter a valid  email address
+                      </p>
+
+                  </div>
+                    <small id="emailHelp" class="form-text text-muted"
+                      >You can create account after checkout.</small
+                    >
+                  </div>
+                  <div *ngIf="!isGuest" class="form-group">
+                    <label for="baddressid">Select Address</label>
+                    <select
+                      (change)="selectBillingAddress($event)"
+                      id="baddressid"
+                      class="form-control"
+                      formControlName="baddressid"
+                    >
+                      <option [value]="'novalue'">--select address--</option>
+                      <option
+                        *rxFor="let item of billingAddresses; let i = index"
+                        [value]="i"
+                      >
+                        {{ item.first_name }} {{ item.last_name }},
+                        {{ item.street_address1 }}, {{ item.city }},
+                        {{ item.state }}, {{ item.country }} - {{ item.zip }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-5"></div>
+
+                <div class="col-sm-6">
+                  <label for="">First Name*</label>
+                  <input
+                    formControlName="bfirst_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bfirst_name.invalid &&
+                      (checkoutForm.controls.bfirst_name.dirty ||
+                      checkoutForm.controls.bfirst_name.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bfirst_name.hasError('required')
+                      "
+                    >
+                      Please enter  first name
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Last Name*</label>
+                  <input
+                    formControlName="blast_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                  class="error-block"
+                  *ngIf="
+                    checkoutForm.controls.blast_name.invalid &&
+                    (checkoutForm.controls.blast_name.dirty ||
+                    checkoutForm.controls.blast_name.touched)
+                  "
+                >
+                  <p
+                    class="error"
+                    *ngIf="
+                    checkoutForm.controls.blast_name.hasError('required')
+                    "
+                  >
+                    Please enter  last name
+                  </p>
+                </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">Phone Number*</label>
+                  <input
+                    formControlName="bphone"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bphone.invalid &&
+                      (checkoutForm.controls.bphone.dirty ||
+                      checkoutForm.controls.bphone.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bphone.hasError('required')
+                      "
+                    >
+                      Please enter phone number
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Company Name</label>
+                  <input
+                    formControlName="bcompany_name"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="">Street Address*</label>
+                  <input
+                    formControlName="bstreet_address1"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bstreet_address1.invalid &&
+                      (checkoutForm.controls.bstreet_address1.dirty ||
+                      checkoutForm.controls.bstreet_address1.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bstreet_address1.hasError('required')
+                      "
+                    >
+                      Please enter street address
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">City*</label>
+                  <input
+                    formControlName="bcity"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                  class="error-block"
+                  *ngIf="
+                    checkoutForm.controls.bcity.invalid &&
+                    (checkoutForm.controls.bcity.dirty ||
+                    checkoutForm.controls.bcity.touched)
+                  "
+                >
+                  <p
+                    class="error"
+                    *ngIf="
+                    checkoutForm.controls.bcity.hasError('required')
+                    "
+                  >
+                    Please enter city
+                  </p>
+                </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">State/Province*</label>
+                  <input
+                    formControlName="bstate"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bstate.invalid &&
+                      (checkoutForm.controls.bstate.dirty ||
+                      checkoutForm.controls.bstate.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bstate.hasError('required')
+                      "
+                    >
+                      Please enter state
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="">Zip/Postal Code*</label>
+                  <input
+                    formControlName="bzip"
+                    type="text"
+                    class="form-control"
+                    id=""
+                  />
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bzip.invalid &&
+                      (checkoutForm.controls.bzip.dirty ||
+                      checkoutForm.controls.bzip.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bzip.hasError('required')
+                      "
+                    >
+                      Please enter zip code
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Country*</label>
+                  <ng-select
+                    placeholder="Select Country"
+                    formControlName="bcountry"
+                  >
+                    <ng-option
+                      *rxFor="let item of countriesList"
+                      [value]="item?.Code"
+                      >{{ item?.Name }}</ng-option
+                    >
+                  </ng-select>
+                  <div
+                    class="error-block"
+                    *ngIf="
+                      checkoutForm.controls.bcountry.invalid &&
+                      (checkoutForm.controls.bcountry.dirty ||
+                      checkoutForm.controls.bcountry.touched)
+                    "
+                  >
+                    <p
+                      class="error"
+                      *ngIf="
+                      checkoutForm.controls.bcountry.hasError('required')
+                      "
+                    >
+                      Please select your country
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="col-sm-4">
+            <div class="orderbox">
+              <app-block-loader [hidden]="!cartloading"></app-block-loader>
+              <ng-container *ngIf="!cartloading">
+                <h2>Order Summary</h2>
+                <h3 class="p-headings">Product <span class="p-stotal">Subtotal</span> <span class="p-qty">Qty</span></h3>
+                <hr />
+                <ng-container *rxFor="let item of cart?.products">
+                  <div class="order-product-box">
+                    <span class="p-name">{{
+                      item?.title | cuttext: "50"
+                    }}</span>
+
+                    <span class="p-qty-val">
+                      {{ item.qty }}
+                    </span>
+                    <span class="p-price"
+                      >{{
+                        item[item.condition] * item.qty | currency: 'AED '
+                      }}</span
+                    >
+                  </div>
+                  <hr />
+                </ng-container>
+
+                <p>
+                  Subtotal <span>{{ cart?.sub_total | currency: 'AED ' }}</span>
+                </p>
+
+                <hr />
+                <p *ngIf="checkoutForm.controls.shipping_amount.value != null" >
+                  Shipping Cost <span>{{checkoutForm.controls.shipping_amount.value | currency: 'AED '}}</span>
+                </p>
+                <hr *ngIf="checkoutForm.controls.shipping_amount.value != null" />
+                <h3 *ngIf="checkoutForm.controls.shipping_amount.value != null">
+                  Grand Total
+                  <span>{{ (cart?.total_amount + checkoutForm.controls.shipping_amount.value) | currency: 'AED ' }}</span>
+                </h3>
+                <h3 *ngIf="checkoutForm.controls.shipping_amount.value === null">
+                  Grand Total
+                  <span>{{ cart?.total_amount | currency: 'AED ' }}</span>
+                </h3>
+                <hr />
+              </ng-container>
+              <h2>Payment Method</h2>
+              <!--<h4>Billing Information</h4>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1"
+                  >My billing and shipping address are the same 45300 Industrial
+                  Place, Suite 16, Fremont, CA 94538</label
+                >
+              </div>
+              <hr />
+              <div class="form-group form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck11"
+            />
+            <label class="form-check-label" for="exampleCheck11"
+              >Credit Card</label
+            >
+            <img loading="lazy" src="images/checkout-card.png" alt="" srcset="" width="" height=""/>
+          </div>-->
+              <div class="row">
+                <!--<div class="col-sm-12">
+              <label for="">Credit Card Number*</label>
+              <input
+                type="text"
+                placeholder="1234 5678 1011"
+                class="form-control"
+                id=""
+              />
+            </div>
+
+            <div class="col-sm-6">
+              <label for="">Expiration Date*</label>
+              <input type="text" class="form-control" id="" />
+            </div>
+            <div class="col-sm-6">
+              <label for="" style="opacity: 0">CVC</label>
+              <input type="text" class="form-control" id="" />
+            </div>
+            <p class="col-sm-12">
+              Your card details are protected using PCI DSS v3.2 security
+              standards.
+            </p>
+                <hr />-->
+                <div class="col-sm-12">
+                  <div class="form-group form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="exampleCheck112"
+                      formControlName="payment_method"
+                      [value]="'paytrace'"
+                    />
+                    <label class="form-check-label" for="exampleCheck112"
+                      >Credit Card (Paytrace)</label
+                    >
+                  </div>
+                  <div class="form-group form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="exampleCheck112"
+                      formControlName="payment_method"
+                      [value]="'banktransfer'"
+                    />
+                    <label class="form-check-label" for="exampleCheck112"
+                      >Bank Transfer Payment</label
+                    >
+                  </div>
+                </div>
+
+                <hr />
+                <div class="col-sm-12">
+                  <div class="form-group form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="exampleCheck112"
+                    />
+                    <label class="form-check-label" for="exampleCheck112"
+                      >Subscribe Our Newsletter</label
+                    >
+                  </div>
+                </div>
+                <button
+                  [class.spinner]="placingorder"
+                  [disabled]="checkoutForm.invalid || placingorder"
+                  type="submit"
+                  id="OrderPlace"
+                >
+                  Place Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div *ngIf="orderid !== null" class="container">
+    <div class="thnk-area">
+      <img loading="lazy"   src="images/check.webp" alt="thankyou" srcset="" width="" height=""/>
+      <h1>Thankyou for your order.</h1>
+      <h3>Your order id is {{ orderid }}</h3>
+      <p>
+        If you’d like to speak with a sales consultant at a preferred time,
+        please <a [routerLink]="['/']">CLICK HERE</a> to contact us.
+      </p>
+      <a [routerLink]="['/']">Continue Shopping</a>
+    </div>
+  </div>
+</div>
+
+<!--New guest Checkout Page Start--
+
+<div class="checkOut">
+  <div class="container">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                  <a href="#">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
+          </ol>
+      </nav>
+
+
+      <h1 class="csi">Checkout <a href="#" class="signout-top">Sign Out</a></h1>
+
+      <div class="row margin-top-20">
+          <div class="col-sm-8">
+            <form>
+              <section action="#">
+                  <div class="row">
+                      <h2>Shipping Address</h2>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-7">
+                          <div class="form-group">
+                          <label for="exampleInputEmail1">Email Address*</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <small id="emailHelp" class="form-text text-muted">You can create account after checkout.</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Create Account</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">First Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Last Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">Phone Number*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Company Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="">Street Address*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">City*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">State/Province*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    <label for="">Zip/Postal Code*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Country*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                            </div>
+                        </section>
+
+                        <section>
+                            <h2>Shipping Method</h2>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Estimated Delivery Date:</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Select Shipping Method:</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Shipping Charges:</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="blue-label">Use billing information same as shipping address?</label>
+
+                                <label class="switch">
+                     <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <section action="#">
+                            <div class="row">
+                                <h2>Billing Address</h2>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email Address*</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <small id="emailHelp" class="form-text text-muted">You can create account after checkout.</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Create Account</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">First Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Last Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">Phone Number*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Company Name*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label for="">Street Address*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">City*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">State/Province*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    <label for="">Zip/Postal Code*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Country*</label>
+                                    <input type="text" class="form-control" id="">
+                                </div>
+
+                            </div>
+                        </section>
+
+
+            </form>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="orderbox">
+                    <h2>Order Summary</h2>
+                    <h3>Product <span>Subtotal</span></h3>
+                    <hr>
+                    <div class="order-product-box"><span class="p-name">D17W2-Dell 1GB Lan Card for PowerEdge D17W2-Dell 1GB Lan Card for PowerEdgeD17W2-Dell 1GB Lan Card for PowerEdge </span>
+                        <span class="p-price">$158.99</span> </div>
+                    <hr>
+                    <p>Subtotal <span>$208.99</span> </p>
+                    <hr>
+                    <p>Shipping (Flat Rate - Fixed) <span>$183.99</span></p>
+                    <hr>
+                    <h3>Order Total <span>$183.99</span></h3>
+                    <hr>
+                    <h2>Payment Method</h2>
+                    <h4>Billing Information</h4>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">My billing and shipping address are the same 45300 Industrial Place, Suite 16, Fremont, CA 94538</label>
+                    </div>
+                    <hr>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck11">
+                        <label class="form-check-label" for="exampleCheck11">Credit Card</label>
+                        <img loading="lazy" src="images/checkout-card.png" alt="" srcset="" width="" height="">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="">Credit Card Number*</label>
+                            <input type="text" placeholder="1234 5678 1011" class="form-control" id="">
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="">Expiration Date*</label>
+                            <input type="text" class="form-control" id="">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="" style="opacity: 0;">CVC</label>
+                            <input type="text" class="form-control" id="">
+                        </div>
+                        <p class="col-sm-12">Your card details are protected using PCI DSS v3.2 security standards.</p>
+                        <hr>
+                        <div class="col-sm-6">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck112">
+                                <label class="form-check-label" for="exampleCheck112">Bank Transfer Payment</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                Abdul Abbas, NY UK, 3333345697
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck112">
+                                <label class="form-check-label" for="exampleCheck112">Subscribe Our Newsletter</label>
+                            </div>
+                        </div>
+                        <button id="OrderPlace">Place Order</button>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+    </div>
+</div>
+
+<!--New guest Checkout Page End-->

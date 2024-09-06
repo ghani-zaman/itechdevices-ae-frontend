@@ -1,0 +1,41 @@
+.rfq-form-section {
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+    padding: 0;
+}
+
+.rfq-form-section h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.rfq-form-section .input-group-text {
+    border-radius: 0;
+    color: #6e6d6d;
+    border-color: #6e6d6d;
+}
+
+.rfq-form-section .btn {
+    font-size: 18px !important;
+    padding: 10px 30px !important;
+    text-transform: uppercase;
+    ;
+    margin: 0 0 20px !important;
+}
+p.error{margin-bottom: 0;}
+
+.rfq-form-section .note {
+    font-size: 14px;
+    color: #636161;
+}
+.rfq-form-section .form-control{color: #000;border-color: #6e6d6d;}
+.rfq-form-section .form-control:focus,
+.rfq-form-section .form-control:focus-visible{outline: none;box-shadow: none;}
+.rfq-form-section .form-control::placeholder {color: #6e6d6d;}
+.rfq-form-section .form-control:-ms-input-placeholder {color: #6e6d6d;}
+.rfq-form-section .form-control::-ms-input-placeholder {color: #6e6d6d;}
+
+.rfq-form-section .error-block{
+  text-align: left !important;
+}

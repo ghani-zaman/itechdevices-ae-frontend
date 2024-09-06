@@ -1,0 +1,67 @@
+<!-- <div class="home-banner d-none">
+    <div class="container-fluid p-0">
+        <swiper-container navigation="true" slides-per-view="1" speed="500" loop="false" pagination="true" css-mode="true" class="featured-swiper home-slider" id="home-slider">
+            <ng-container *rxFor="let item of (banners | async)?.data?.value; let i = index; trackBy: trackByMethod">
+                <swiper-slide *ngIf="item.type == 'main_slider_hero_banner' ">
+                    <div>
+                        <a target="_self" href="{{item.btnUrl}}">
+                            <div class="container-fluid p-0">
+                                <img *ngIf="i === 0 " class="" src="{{path + item?.image}}" style="object-fit: cover; aspect-ratio: 64/15; width: 100%;" />
+                                <img *ngIf="i > 0 " loading="lazy" class="" src="{{path + item?.image}}" style="object-fit: cover; aspect-ratio: 64/15; width: 100%;" />
+
+
+                            </div>
+                        </a>
+                    </div>
+                </swiper-slide>
+            </ng-container>
+        </swiper-container>
+    </div>
+</div>
+<div class="home-banner d-none">
+    <div class="container-fluid p-0">
+        <swiper-container slides-per-view="1" speed="500" loop="true" css-mode="true" class="featured-swiper home-slider" id="home-slider2">
+            <ng-container *rxFor="let item of (banners | async)?.data?.value; let i = index; ">
+                <swiper-slide *ngIf="item.type == 'mobile_image_banner' ">
+                    <div>
+                        <a target="_self" href="{{item.btnUrl}}">
+                            <div class="container  slide-container">
+                                <img *ngIf="i === 0 " class="" src="{{path + item?.image}}" style="object-fit: cover; aspect-ratio: 206/317; width: 100%;" />
+
+                                <img *ngIf="i > 0 " loading="lazy" class="" src="{{path + item?.image}}" style="object-fit: cover; aspect-ratio: 206/317; width: 100%;" />
+
+                            </div>
+                        </a>
+                    </div>
+                </swiper-slide>
+            </ng-container>
+
+        </swiper-container>
+    </div>
+</div> -->
+
+<div class="hero-slider">
+    <img class="bg-img" [ngSrc]="siteUrl + '/assets/images/itech-banner-bg.webp'" priority fill alt="background image" disableOptimizedSrcset>
+    <div class="home-container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1>Lead with Performance:<br> Premier Mellanox Selections</h1>
+                <p>Step into superior network efficiency and speed with our best-selling Mellanox Switches, Network Cards, and Cables.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- <div class="hero-slider independant" style="background: rgb(15,67,131);background: radial-gradient(circle, rgba(15,67,131,1) 0%, rgba(10,49,97,1) 100%);">
+    <div class="home-container">
+        <div class="row align-items-center">
+            <div class="col-sm-12">
+                <h1>Independence Day Savings</h1>
+                <h2>Get Upto <span style="color: #F2AB1E;font-weight: 900;">15% off</span> ON YOUR ENTIRE TECH PURCHASE</h2>
+            </div>
+        </div>
+    </div>
+</div> -->

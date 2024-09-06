@@ -1,0 +1,38 @@
+<div *ngIf="products?.length > 0" class="featured-wrap home-container">
+<h2 >{{ title }}</h2>
+<div class="featured-products product-page-slider">
+  <button class="simple-button swiper-button-prevy"></button>
+  <button class="simple-button swiper-button-nexty"></button>
+  <swiper-container
+    navigation-prev-el=".swiper-button-prevy"
+    navigation-next-el=".swiper-button-nexty"
+    [breakpoints]="config"
+    auto-height="false"
+    space-between="10"
+    speed="500"
+    navigation="true"
+    slides-per-group="5"
+    [pagination]="false"
+    class="featured-swiper"
+  >
+    <ng-container *ngFor="let item of products">
+      <swiper-slide>
+        <div class="slider slide" >
+          <div class="">
+            <a
+
+              [routerLink]="['/', item.url != null ? item?.url : item?.id]"
+              class="p-card-parent"
+            >
+              <app-product-card-slider
+                [product]="item"
+              ></app-product-card-slider>
+            </a>
+          </div>
+        </div>
+      </swiper-slide>
+    </ng-container>
+  </swiper-container>
+
+</div>
+</div>

@@ -1,0 +1,13 @@
+<div class="top-categories">
+
+
+  <div class="category-box row">
+    <div *rxFor="let item of subcategories" class="single-category col">
+      <!--<div class="image-box">
+         <a  [routerLink]="'/categories/' + item?.url"><img loading="lazy" *ngIf="item?.image != null" [lazyLoad]="env.imagesPath + item?.image " alt="">
+        <img loading="lazy" *ngIf="item?.image == null" src="assets/images/no-image.webp" alt=""></a>
+      </div>-->
+      <a [routerLink]="'/categories/' + item?.url">{{item?.title | cuttext:100}}</a>
+    </div>
+  </div>
+</div>

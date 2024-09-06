@@ -1,0 +1,104 @@
+.login-box {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 30px 0 50px;
+}
+
+.login-box h1 {
+    text-transform: uppercase;
+    color: #494949;
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.login-box h2 {
+    color: #494949;
+    font-weight: 700;
+    font-size: 26px;
+}
+
+.login-box h2 span {
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    line-height: 18px;
+}
+
+.form-text {
+    font-size: 18px;
+    color: #494949;
+}
+
+.login-form {
+    padding: 30px;
+    background-color: #f3f3f3;
+}
+
+.login-form .form-group,
+.login-form .form-check {
+    margin-bottom: 15px;
+}
+
+.login-form .form-group label {
+    color: #6a6a6a;
+    margin-bottom: 5px;
+}
+
+.login-form .form-group input {
+    box-shadow: none;
+    background-color: white;
+    border-radius: 0;
+    border: 1px solid #cecece;
+}
+
+.login-form a {
+    color: var(--primary);
+}
+
+.login-form .btn {
+    min-width: 150px;
+    margin-top: 10px;
+    color: #fff;
+    border: none;
+}
+
+.login-right-box {
+    background: url(/assets/images/login-bg.png) no-repeat center;
+    background-size: cover;
+    padding: 30px;
+    color: white;
+    height: 100%;
+}
+
+.login-right-box * {
+    color: #fff !important;
+}
+
+.login-right-box ul {
+    padding-left: 20px;
+}
+
+.login-right-box li {
+    margin-bottom: 5px;
+}
+
+.login-right-box .btn {
+    background-color: transparent !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+}
+
+.login-right-box .btn:hover {
+    background-color: var(--secondary) !important;
+}
+
+@media (max-width: 1024px) {
+    .login-box {
+        width: 100%;
+        padding-top: 10px;
+    }
+    .login-form {
+        width: 100%;
+    }
+}

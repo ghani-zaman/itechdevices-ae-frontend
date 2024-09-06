@@ -1,0 +1,137 @@
+<!--Order List HTML Start -->
+<div class="row">
+  <div class="col-md-12 mb-3">
+    <h1>ORDER HISTORY</h1>
+    <p>
+      Check the status of your order, review your order history, leave a review
+      for your purchases and request a return.
+    </p>
+  </div>
+</div>
+<div class="box mb-4">
+  <div class="row justify-content-between align-items-center">
+    <div class="col-md-6">
+      <div class="quickorder">
+        <div class="input-group">
+          <input [(ngModel)]="keyword" type="text" class="form-control" placeholder="Search by product, type#"
+            aria-label="Recipient's username" aria-describedby="basic-addon2" />
+          <button (click)="getOrderList()" class="btn m-0 input-group-text" id="basic-addon2">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-6 d-flex align-items-center justify-content-end">
+      <div class="d-flex align-items-center justify-content-end me-3">
+        <label class="me-2"><strong>Find Orders Within:</strong></label>
+        <select class="form-select w-auto">
+          <option selected>Recent Order</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+      </div>
+      <div class="d-flex align-items-center justify-content-end">
+        <label class="me-2"><strong>View:</strong></label>
+        <select class="form-select w-auto">
+          <option selected>Orders</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+      </div>
+    </div> -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 mb-4">
+    <div class="ordertable">
+      <div class="table-responsive">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center"
+          *ngIf="orders?.data && orders?.data.length > 0" class="oder_his table-entry">
+          <thead>
+            <tr class="table-top-green">
+              <th>Order No</th>
+              <th>Order Date</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Ordered By</th>
+              <th>Shipped To</th>
+              <th>Download Invoice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *rxFor="
+                let order of orders?.data
+                  | paginate
+                    : {
+                        itemsPerPage: limit,
+                        currentPage: page,
+                        totalItems: orders?.total
+                      };
+                let i = index
+              ">
+              <td>
+                <a [routerLink]="['/user/orders', order.order_id]">{{ order.order_id }}</a>
+              </td>
+              <td>{{ order?.created_at | date : "d-M-yyyy" }}</td>
+              <td class="green-text">{{ order?.status }}</td>
+              <td>{{ order?.qty_ordered }}</td>
+              <td>
+                {{ order.customer.first_name }} {{ order.customer.last_name }}
+              </td>
+              <td>
+                {{ order.orderAddress[0].first_name }}
+                {{ order.orderAddress[0].last_name }},
+                {{ order.orderAddress[0].street_address1 }},
+                {{ order.orderAddress[0].city }},
+                {{ order.orderAddress[0].state }},
+                {{ order.orderAddress[0].country }} -
+                {{ order.orderAddress[0].zip }}
+              </td>
+              <td>
+                <a style="cursor:pointer" [routerLink]="['/user/invoice', order.order_id]">
+                  <img src="/assets/svg/download-black.svg" loading="lazy" alt="Dowload Invoice" width="16"
+                    height="16"></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<app-block-loader [hidden]="!ordersloading"></app-block-loader>
+
+<div class="row" [hidden]="ordersloading || orders?.data.length == 0">
+  <pagination-template style="width: 100%" #p="paginationApi" (pageChange)="changePage($event)">
+    <div class="col-lg-12 text-center">
+      <ul class="pagination">
+        <li *ngIf="p.isFirstPage()" [class.disabled]="p.isFirstPage()">
+          <button>
+            <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="back arrow" width="10" height="16">
+          </button>
+        </li>
+        <li *ngIf="!p.isFirstPage()" (click)="p.previous()">
+          <button *ngIf="!p.isFirstPage()">
+            <img src="/assets/svg/arrow-left.svg" loading="lazy" alt="back arrow" width="10" height="16">
+          </button>
+        </li>
+        <ng-container *rxFor="let page of p.pages">
+          <li *ngIf="p.getCurrent() === page.value" [class.active]="p.getCurrent() === page.value">
+            <button class="a-link">{{ page.label }}</button>
+          </li>
+          <li *ngIf="p.getCurrent() !== page.value" (click)="p.setCurrent(page.value)">
+            <button class="a-link">{{ page.label }}</button>
+          </li>
+        </ng-container>
+        <li [class.disabled]="p.isLastPage()">
+          <button *ngIf="!p.isLastPage()" (click)="p.next()"><img src="/assets/svg/arrow-right.svg" loading="lazy"
+              alt="Dowload Invoice" width="10" height="16"></button>
+          <button *ngIf="p.isLastPage()"><img src="/assets/svg/arrow-right.svg" loading="lazy" alt="back arrow" width="10"
+              height="16"></button>
+        </li>
+      </ul>
+    </div>
+  </pagination-template>
+</div>

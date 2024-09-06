@@ -1,0 +1,45 @@
+<!-- Order Page Start-->
+<!-- <div class="home-container">
+    <app-ng-dynamic-breadcrumb></app-ng-dynamic-breadcrumb>
+</div> -->
+<div class="account_info" *ngIf="!loading">
+    <div class="home-container">
+        <!-- <h1 class="csi">
+        <ng-container *ngIf="tab === 'orders' && id === null">Orders</ng-container>
+                <ng-container *ngIf="tab === 'orders' && id !== null">Order Details</ng-container>
+                <ng-container *ngIf="tab === 'wishlist'">Wishlist</ng-container>
+                <ng-container  *ngIf="tab === null">Account Overview</ng-container>
+                <ng-container  *ngIf="tab === 'account-information'">Account Information</ng-container>
+                <ng-container  *ngIf="tab === 'return-requests'">Return Requests</ng-container>
+                <ng-container  *ngIf="tab === 'address'">Addresses</ng-container>
+                <span class="bar"></span>
+      </h1> -->
+    </div>
+    <div class="home-container">
+        <div class="row">
+            <div class="col-auto" style="max-width: 250px;">
+                <p class="csi">Hi, <span>{{user?.first_name}} {{user?.last_name}}</span></p>
+                <app-account-sidebar [tab]="tab"></app-account-sidebar>
+            </div>
+            <div class="col">
+                <div class="offer-banner"></div>
+                <div class="account-right-box">
+                    <app-order-list *ngIf="tab === 'orders' && id === null"></app-order-list>
+                    <app-order-details [id]="id" *ngIf="tab === 'orders' && id !== null"></app-order-details>
+                    <app-wish *ngIf="tab === 'wishlist'" [userlist]="true"></app-wish>
+                    <app-overview *ngIf="tab === null"></app-overview>
+                    <app-account-information *ngIf="tab === 'account-information'"></app-account-information>
+                    <app-return-request *ngIf="tab === 'return-requests'"></app-return-request>
+                    <app-address *ngIf="tab === 'address'"></app-address>
+                    <div class="btnBack">
+                        <!--<a href="#" class="btn">Back</a>-->
+                    </div>
+                    <ng-container *ngIf="user !== null">
+                      <app-request-form [user]="user"></app-request-form>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ordr Page End-->

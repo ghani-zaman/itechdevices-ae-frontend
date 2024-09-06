@@ -1,0 +1,74 @@
+<!-- HTML Start -->
+<div class="row">
+  <div class="col-md-12 mb-3">
+    <h1>ADDRESS BOOK</h1>
+    <p>Manage your addresses.</p>
+  </div>
+</div>
+<div class="box mb-3">
+  <div class="row justify-content-between align-items-center">
+    <div class="col-md-12">
+      <div class="quickorder">
+        <div class="row align-items-center">
+          <label class="me-2 col-auto" for="">Search Within:</label>
+          <input type="text" class="form-control col me-2" aria-describedby="basic-addon2">
+          <select class="form-select col me-2">
+            <option selected>Address Name</option>
+            <option value="1">60 Days</option>
+            <option value="2">90 Days</option>
+            <option value="3">120 Days</option>
+          </select>
+          <button class="btn col-auto m-0 px-5" id="basic-addon2">Go</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <button type="button" class="btn mb-3 mt-0"><i class="fa fa-plus"></i>Add New Addrss</button> -->
+<button [routerLink]="['/user/address/add-address']" class="btn mb-3 mt-0"><i class="fa fa-plus"></i> Add New Address</button>
+<div class="row">
+  <div class="col-md-12 mb-4">
+    <div class="ordertable">
+      <div class="table-responsive">
+        <app-block-loader [hidden]="!addressloading"></app-block-loader>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Country</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="!addressloading">
+            <tr *rxFor="let address of addresses">
+              <td>
+                <span>{{address.address_type}}</span>
+              </td>
+              <td>
+                <span>{{address.country | getcountry}}</span>
+              </td>
+              <td>
+                <span>{{address.first_name}} {{address.last_name}}</span>
+              </td>
+              <td>
+                <span>{{address.street_address1}} {{address.city}} {{address.state}} {{address.country | getcountry}} - {{address.zip}}</span>
+              </td>
+              <td>
+                <span>{{address.phone}}</span>
+              </td>
+              <td>
+                <a class="mx-3" [routerLink]="['/user/address/edit-address/', address.id]"><img src="/assets/images/edit-icon.png" title="Edit" alt=""></a>
+                <a class="ms-3" [class.spinner]="removing === address.id" (click)="deleteAddress(address.id)"><img src="/assets/images/delete-icon.png" title="Delete" alt=""></a>
+              </td>
+            </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

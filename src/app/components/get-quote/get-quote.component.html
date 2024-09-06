@@ -1,0 +1,90 @@
+<ngx-smart-modal [refocus]="false" identifier="{{modelId}}">
+    <ng-container *ngIf="formCreated">
+
+        <form [formGroup]="quoteForm" (submit)="submitForm(quoteForm)" class="popup-form">
+            <div class="modal-header">
+                <h2 class="modal-title popup-title quote-title" id="exampleModalLabel">Request for Quote:</h2>
+                <div class="quote-pic-box">
+                  <img loading="lazy" alt="{{product?.title}}" *ngIf="product?.images && product?.images != null && product?.images.length > 0 &&  product?.images[0].image" [lazyLoad]="product?.images[0].image" alt="" srcset="" class="quote-pic">
+                    <span>{{product?.sku}}</span>
+
+                </div>
+
+                <p class="quote-p">Request a quote below or call +971-5-54255786 for further assistance.</p>
+                <h5 class="quote-blue">Get exclusive discounts on bulk orders.</h5>
+
+            </div>
+            <div class="modal-body">
+
+
+                <div class="form-group">
+                    <input formControlName="name" type="text" class="form-control" placeholder="Full Name*">
+                    <div class="error-block" *ngIf="quoteForm.controls.name.invalid && (quoteForm.controls.name.dirty || quoteForm.controls.name.touched)">
+                        <p class="error" *ngIf="quoteForm.controls.name.hasError('required') ">
+                            Please enter your first name
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                  <input formControlName="lastName" type="text" class="form-control" placeholder="Last Name*">
+                  <div class="error-block" *ngIf="quoteForm.controls.lastName.invalid && (quoteForm.controls.lastName.dirty || quoteForm.controls.lastName.touched)">
+                      <p class="error" *ngIf="quoteForm.controls.lastName.hasError('required') ">
+                          Please enter the your Last Name
+                      </p>
+
+                  </div>
+              </div>
+                <div class="form-group">
+                    <input formControlName="email" type="email" class="form-control" placeholder="Business Email*">
+                    <div class="error-block" *ngIf="quoteForm.controls.email.invalid && (quoteForm.controls.email.dirty || quoteForm.controls.email.touched)">
+                        <p class="error" *ngIf="quoteForm.controls.email.hasError('required') ">
+                            Please enter the your email address
+                        </p>
+                        <p class="error" *ngIf="quoteForm.controls.email.hasError('email') ">
+                            Please enter a valid business email address
+                        </p>
+                        <p class="error" *ngIf="quoteForm.controls.email.hasError('pattern') ">
+                          Please enter a valid business email address
+                      </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="phone" type="text" class="form-control" placeholder="Phone Number*">
+                    <div class="error-block" *ngIf="quoteForm.controls.phone.invalid && (quoteForm.controls.phone.dirty || quoteForm.controls.phone.touched)">
+                        <p class="error" *ngIf="quoteForm.controls.phone.hasError('required') ">
+                            Please enter the your phone number
+                        </p>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                  <input formControlName="company" type="text" class="form-control" placeholder="Company Name">
+
+                </div>
+                <div class="form-group">
+                  <input formControlName="specifications" type="text" class="form-control" placeholder="Product Specifications">
+
+                </div>
+
+                <div class="form-group">
+                    <input formControlName="quantity" type="text" class="form-control" placeholder="Quantity Required">
+
+                </div>
+                <div class="form-group">
+                  <input formControlName="price" type="text" class="form-control" placeholder="Pricing Details (price per unit)">
+
+              </div>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button style="width: 100%;" [class.spinner]="loading" [disabled]="quoteForm.invalid || loading" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+
+    </ng-container>
+</ngx-smart-modal>

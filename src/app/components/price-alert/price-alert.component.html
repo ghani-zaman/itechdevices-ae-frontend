@@ -1,0 +1,42 @@
+<ngx-smart-modal [refocus]="false" identifier="{{modelId}}">
+  <ng-container>
+
+
+
+    <!-- shiping popup starts-->
+    <div class="pricealert-popup shipping-popup">
+      <div class="row">
+        <div *ngIf="formCreated" class="col-md-12 ">
+          <h2 class="shipping-title">Price Alert</h2>
+          <p>Get instant price alerts on this product.</p>
+          <form [formGroup]="form" (submit)="onSubmit(form)" class="shipping-cost">
+
+            <input formControlName="customer_name"  type="text" placeholder='Name'>
+            <div class="error-block" *ngIf="form.controls.customer_name.invalid && (form.controls.customer_name.dirty || form.controls.customer_name.touched)">
+              <p class="error" *ngIf="form.controls.customer_name.hasError('required') ">
+                  Please enter your full name
+              </p>
+            </div>
+            <input type="email" formControlName="customer_email" placeholder='Email'>
+            <div class="error-block" *ngIf="form.controls.customer_email.invalid && (form.controls.customer_email.dirty || form.controls.customer_email.touched)">
+              <p class="error" *ngIf="form.controls.customer_email.hasError('required') ">
+                  Please enter the your email address
+              </p>
+              <p class="error" *ngIf="form.controls.customer_email.hasError('email') ">
+                  Please enter a valid email address
+              </p>
+          </div>
+            <span style="position:relative">
+              <button [class.spinner]="loading" [disabled]="form.invalid || loading" type="submit" class="submit-btn">Submit</button>
+            </span>
+          </form>
+
+        </div>
+      </div>
+
+
+    </div>
+    <!--Shipping Popup End-->
+
+  </ng-container>
+</ngx-smart-modal>

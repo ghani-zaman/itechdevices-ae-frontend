@@ -1,0 +1,34 @@
+.star.big{
+  font-size:30px;
+}
+.star.small{
+  font-size:24px;
+}
+.star.filled{
+  color:#EB7100;
+}
+.star{
+  color: #fff;
+  -webkit-text-stroke: #EB7100 1px;
+  line-height: 1;
+}
+
+.star.half-filled{
+  color: #fff;
+  position: relative;
+}
+.star.half-filled::before {
+  content: "\2605";
+    color: #EB7100;
+    position: absolute;
+    left: 0px;
+    width: 50%;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 575px) {
+  .star.big{
+    font-size: 18px;
+}
+}

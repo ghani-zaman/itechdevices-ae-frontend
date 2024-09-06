@@ -1,0 +1,19 @@
+
+  <div class="acc-lft-side">
+      <div class="media">
+          <img loading="lazy" alt="{{user?.first_name}} {{user?.last_name}}" class="mr-3" src="assets/images/imgHolder.png" alt="placeholder image">
+          <div class="media-body">
+              <a  class="btn" [class.spinner]="loggingOut" (click)="logout()">Logout</a>
+          </div>
+      </div>
+      <ul>
+          <li [class.active]="tab === null"><a [routerLink]="['/user']"><img src="/assets/images/overview-icon.png" alt="">Overview</a></li>
+          <li [class.active]="tab === 'account-information'"><a [routerLink]="['/user/account-information']"><img src="/assets/images/account-icon.png" alt="">Account Information</a></li>
+          <li [class.active]="tab === 'orders'"><a [routerLink]="['/user/orders']"><img src="/assets/images/order-icon.png" alt="">Orders History</a></li>
+          <!--<li><a href="#"><i class="fa fa-cart-arrow-down"></i>Saved Carts</a></li>-->
+          <li [class.active]="tab === 'wishlist'"><a [routerLink]="['/user/wishlist']"><img width="20" src="/assets/svg/wishlist.svg" alt="">Wish List</a></li>
+          <li [class.active]="tab === 'return-requests'"><a [routerLink]="['/user/return-requests']"><img src="/assets/images/return-icon.png" alt="">Return Request</a></li>
+          <li [class.active]="tab === 'address'"><a [routerLink]="['/user/address']"><img src="/assets/images/address-icon.png" alt="">Address</a></li>
+      </ul>
+  </div>
+

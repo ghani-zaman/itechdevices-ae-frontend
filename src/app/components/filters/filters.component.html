@@ -1,0 +1,579 @@
+<!--<div *ngIf="formCreated" [@slidein]="formCreated" class="urResult" style="max-height: 1200px !important; overflow-y: scroll">-->
+<div [hidden]="!showSelected" class="selected-filters">
+  <h2>Filters selected</h2>
+  @for(filter of selectedFiltersx; track filter.type) { @switch(filter.type) {
+  @case('category') { @if(filter.values.length > 0) { @for(item of
+  filter.values; track item) { @if(!isInteger(item.split('|||')[0])){ @if(type
+  === 'category' && item.split('|||')[1] != typeid){ @if(!showSelected){
+  {{ showSelectedFilters() }}
+  }
+  <span
+    (click)="
+      removeSelectedFilter('category', null, item.split('|||')[1], filter)
+    "
+    >{{ item.split("|||")[0] }}</span
+  >
+  } @if(type !== 'category' && filtersArray.categories.length > 1){
+  @if(!showSelected){
+  {{ showSelectedFilters() }}
+  }
+  <span
+    (click)="
+      removeSelectedFilter('category', null, item.split('|||')[1], filter)
+    "
+    >{{ item.split("|||")[0] }}</span
+  >
+  } } } } } @case('attribute') { @if(filter.values.length > 0) { @for(item of
+  filter.values; track item) { @if(checkExcluded(filter.id) === false){
+  @if(!showSelected){
+  {{ showSelectedFilters() }}
+  }
+  <span
+    (click)="removeSelectedFilter('attribute', filter.id, item, filter.atttype)"
+    >{{ item }}</span
+  >
+  } } } } @case('brand') { @if(filter.values.length > 0) { @for(item of
+  filter.values; track item) { @if(!isInteger(item.split('|||')[0])){ @if(type
+  === 'brand' && item.split('|||')[1] != typeid){ @if(!showSelected){
+  {{ showSelectedFilters() }}
+  }
+  <span
+    (click)="removeSelectedFilter('brand', null, item.split('|||')[1], null)"
+    >{{ item.split("|||")[0] }}</span
+  >
+  } @if(type !== 'brand' && filtersArray.brands.length > 1){ @if(!showSelected){
+  {{ showSelectedFilters() }}
+  }
+  <span
+    (click)="removeSelectedFilter('brand', null, item.split('|||')[1], null)"
+    >{{ item.split("|||")[0] }}</span
+  >
+  } } } } } } }
+</div>
+<div *ngIf="formCreated" class="urResult">
+  <form
+    [formGroup]="filtersForm"
+    (submit)="submitForm(filtersForm, -3)"
+    novalidate
+  >
+    <div ngbAccordion class="filter-accordion">
+      <div ngbAccordionItem [collapsed]="openform">
+        <h2 ngbAccordionHeader>
+          <button ngbAccordionButton>Price Range</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody title="Price Range">
+            <ng-template ngbPanelContent>
+              <!--<ngx-slider (userChangeEnd)="priceChange($event)"  [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>-->
+              <div class="pri-widgt row gx-2 align-items-end">
+                <div class="col-md">
+                  <label for="">Min</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    minlength="0"
+                    [(ngModel)]="minValue"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </div>
+                <div class="col-md">
+                  <label for="">Max</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    maxlength=""
+                    [(ngModel)]="maxValue"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                </div>
+                <div class="col-md-auto">
+                  <input
+                    class="btn"
+                    type="button"
+                    (click)="priceChange($event)"
+                    value="GO"
+                  />
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- manufacture category-->
+    <div
+      [hidden]="filtersArray?.categories?.length <= 1"
+      class="filter-category-container"
+    >
+      <div ngbAccordion class="filter-accordion">
+        <div ngbAccordionItem [collapsed]="openform">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Categories</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody title="">
+              <ng-template ngbPanelContent>
+                <!--<div class="form-check" *rxFor="let item of filtersArray.categories; let i = index" [class.hidden]="i > 4 && viewMore != -2">-->
+                <ng-container
+                  *rxFor="let item of filtersArray.categories; let i = index"
+                >
+                  <ng-container
+                    *ngIf="
+                      currentFilters.categories &&
+                      currentFilters.categories.indexOf(item?.id + '') > -1
+                    "
+                  >
+                    <div
+                      [hidden]="type === 'category' && typeid == item?.id"
+                      class="form-check"
+                    >
+                      <input
+                        class="form-check-input"
+                        checked
+                        type="checkbox"
+                        id="cat{{ item?.id }}"
+                        [value]="item?.id"
+                        (change)="onCategoryCheckboxChange($event)"
+                      />
+                      <label class="form-check-label">{{
+                        item?.name | cuttext : 1500
+                      }}</label>
+                    </div>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      !currentFilters.categories ||
+                      currentFilters.categories.indexOf(item?.id + '') < 0
+                    "
+                  >
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="cat{{ item?.id }}"
+                        [value]="item?.id"
+                        (change)="onCategoryCheckboxChange($event)"
+                      />
+                      <label class="form-check-label">{{
+                        item?.name | cuttext : 1500
+                      }}</label>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!--<a
+                class="view-more"
+                *ngIf="filtersArray.categories.length > 5 && viewMore == -2"
+                (click)="showMore(-2)"
+                >View Less...</a
+              >-->
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- manufacture Brand-->
+    <div
+      [hidden]="filtersArray?.brands?.length <= 1"
+      class="filter-category-container"
+    >
+      <div ngbAccordion class="filter-accordion">
+        <div ngbAccordionItem [collapsed]="openform">
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>Brands</button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody title="">
+              <ng-template ngbPanelContent>
+                <!--<div *rxFor="let item of filtersArray.brands; let i = index"
+          [class.hidden]="i > 4 && viewMore != -1" class="form-check">-->
+                <div
+                  *rxFor="let item of filtersArray.brands; let i = index"
+                  class="form-check"
+                >
+                  <ng-container
+                    *ngIf="
+                      currentFilters.brands &&
+                      currentFilters.brands.indexOf(item?.id + '') > -1
+                    "
+                  >
+                    <input
+                      class="form-check-input"
+                      checked
+                      type="checkbox"
+                      id="brand{{ item?.id }}"
+                      [value]="item?.id"
+                      (change)="onBrandsCheckboxChange($event)"
+                    />
+                    <label class="form-check-label">{{
+                      item?.name | cuttext : 1500
+                    }}</label>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      !currentFilters.brands ||
+                      currentFilters.brands.indexOf(item?.id + '') < 0
+                    "
+                  >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="brand{{ item?.id }}"
+                      [value]="item?.id"
+                      (change)="onBrandsCheckboxChange($event)"
+                    />
+                    <label class="form-check-label">{{
+                      item?.name | cuttext : 1500
+                    }}</label>
+                  </ng-container>
+                </div>
+
+                <!--<a
+          class="view-more"
+          *ngIf="filtersArray.brands.length > 5 && viewMore != -1"
+          (click)="showMore(-1)"
+          >View More...</a
+        >
+        <a
+          class="view-more"
+          *ngIf="filtersArray.categories.length > 5 && viewMore == -1"
+          (click)="showMore(-2)"
+          >View Less...</a
+        >-->
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div [hidden]="filtersArray.attributes.length === 0">
+      <ng-container
+        *rxFor="let item of filtersArray?.attributes; let i = index"
+      >
+        @if( checkExcluded(item?.attribute_id) === false){
+
+        <ng-container *ngIf="item.attribute_values.length > 0">
+          <!-- checkbox start-->
+          <ng-container
+            *ngIf="
+              !item.attribute_type ||
+              (item?.attribute_type != 'TextBox' &&
+                item.attribute_type != 'DropDown' &&
+                item.attribute_type != 'Multi-Select-DropDown' &&
+                item.attribute_type != 'RichTextBox')
+            "
+          >
+            <div ngbAccordion class="filter-accordion">
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>
+                    {{ item.attribute_title | cuttext : 1500 }}
+                  </button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody title="">
+                    <ng-template ngbPanelContent>
+                      <div
+                        class="form-check"
+                        *rxFor="let att of item.attribute_values; let j = index"
+                      >
+                        <input
+                          class="form-check-input"
+                          *ngIf="
+                            !currentFilters.attributes ||
+                            !currentFilters.attributes[item.attribute_id] ||
+                            currentFilters.attributes[
+                              item.attribute_id
+                            ].indexOf(att.id) == -1
+                          "
+                          type="checkbox"
+                          id="att{{ i }}sub{{ j }}"
+                          [value]="att.value"
+                          (change)="
+                            onAttributeCheckboxChange($event, item.attribute_id)
+                          "
+                        />
+                        <input
+                          class="form-check-input"
+                          *ngIf="
+                            currentFilters.attributes &&
+                            currentFilters.attributes[item.attribute_id] &&
+                            currentFilters.attributes[
+                              item.attribute_id
+                            ].indexOf(att.id) > -1
+                          "
+                          checked
+                          type="checkbox"
+                          id="att{{ i }}sub{{ j }}"
+                          [value]="att.value"
+                          (change)="
+                            onAttributeCheckboxChange($event, item.attribute_id)
+                          "
+                        />
+                        <label
+                          class="form-check-label"
+                          title="{{ att }}"
+                          for="att{{ i }}sub{{ j }}"
+                          >{{ att.value | cuttext : 1500 }}
+                          {{ item?.attribute_unit }}</label
+                        >
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <!-- checkbox end-->
+
+          <ng-container *ngIf="item.attribute_type">
+            <ng-container *ngIf="item.attribute_type == 'RichTextBox'">
+              <div ngbAccordion class="filter-accordion">
+                <div ngbAccordionItem>
+                  <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>
+                      {{ item.attribute_title | cuttext : 1500 }}
+                    </button>
+                  </h2>
+                  <div ngbAccordionCollapse>
+                    <div ngbAccordionBody title="">
+                      <ng-template ngbPanelContent>
+                        <div
+                          class="form-check"
+                          *rxFor="
+                            let att of item.attribute_values;
+                            let j = index
+                          "
+                        >
+                          <input
+                            class="form-check-input"
+                            *ngIf="
+                              !currentFilters.attributes ||
+                              !currentFilters.attributes[item.attribute_id] ||
+                              currentFilters.attributes[
+                                item.attribute_id
+                              ].indexOf(att.id) == -1
+                            "
+                            type="checkbox"
+                            id="att{{ i }}sub{{ j }}"
+                            [value]="att.value"
+                            (change)="
+                              onAttributeCheckboxChange(
+                                $event,
+                                item.attribute_id
+                              )
+                            "
+                          />
+                          <input
+                            class="form-check-input"
+                            *ngIf="
+                              currentFilters.attributes &&
+                              currentFilters.attributes[item.attribute_id] &&
+                              currentFilters.attributes[
+                                item.attribute_id
+                              ].indexOf(att.id) > -1
+                            "
+                            checked
+                            type="checkbox"
+                            id="att{{ i }}sub{{ j }}"
+                            [value]="att.value"
+                            (change)="
+                              onAttributeCheckboxChange(
+                                $event,
+                                item.attribute_id
+                              )
+                            "
+                          />
+                          <label
+                            class="form-check-label"
+                            title="{{ att }}"
+                            for="att{{ i }}sub{{ j }}"
+                            >{{ att.value | stripHtml | cuttext : 1500 }}
+                            {{ item?.attribute_unit }}</label
+                          >
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- checkbox end-->
+            <!-- drop down start -->
+            <ng-container
+              *ngIf="
+                item.attribute_type == 'DropDown' ||
+                item.attribute_type == 'TextBox'
+              "
+            >
+              <div ngbAccordion class="filter-accordion">
+                <div ngbAccordionItem>
+                  <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>
+                      {{ item.attribute_title | cuttext : 1500 }}
+                    </button>
+                  </h2>
+                  <div ngbAccordionCollapse>
+                    <div ngbAccordionBody title="">
+                      <ng-template ngbPanelContent>
+                        <select
+                          id="attid{{ item.attribute_id }}"
+                          (change)="
+                            onSelectDropDownChange($event, item.attribute_id)
+                          "
+                          class="custom-select form-select"
+                        >
+                          <option [value]="null">--Select--</option>
+                          <ng-container
+                            *rxFor="
+                              let att of item.attribute_values;
+                              let j = index
+                            "
+                          >
+                            <option
+                              *ngIf="
+                                !currentFilters.attributes ||
+                                !currentFilters.attributes[item.attribute_id] ||
+                                currentFilters.attributes[
+                                  item.attribute_id
+                                ].indexOf(att.id) == -1
+                              "
+                              [value]="att.id"
+                            >
+                              {{ att.value }}{{ att?.attribute_unit }}
+                            </option>
+                            <option
+                              *ngIf="
+                                currentFilters.attributes &&
+                                currentFilters.attributes[item.attribute_id] &&
+                                currentFilters.attributes[
+                                  item.attribute_id
+                                ].indexOf(att.id) > -1
+                              "
+                              selected
+                              [value]="att.id"
+                            >
+                              {{ att.value }}{{ att.unit }}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- drop down end-->
+
+            <!--text box start-->
+
+            <!--<ng-container *ngIf="item.attribute_type == 'TextBox'">
+              <div  class="filter-accordion">
+                <ngb-panel title="{{item.attribute_title | cuttext: 1500}}">
+                  <ng-template ngbPanelContent>
+
+                    <input class="filter-input text-input datalist-text" *ngIf="currentFilters.attributes" [attr.list]="'listatt' + i"
+                      [attr.value]="
+                    currentFilters.attributes[item.attribute_id]
+                  " type="text" id="attid{{ item.attribute_id }}" (change)="onTextBoxChage($event, item.attribute_id)" />
+                    <input class="filter-input  text-input" *ngIf="!currentFilters.attributes"
+                      [attr.list]="'listatt' + i" type="text" id="attid{{ item.attribute_id }}"
+                      (change)="onTextBoxChage($event, item.attribute_id)" />
+                    <datalist id="listatt{{ i }}">
+                      <option *rxFor="let att of item.attribute_values; let j = index">
+                        {{ att.value }} {{ att.unit }}
+                      </option>
+                    </datalist>
+                  </ng-template>
+                </ngb-panel>
+              </div>
+            </ng-container>-->
+            <!-- text box end-->
+
+            <!--multi select start-->
+            <ng-container
+              *ngIf="item.attribute_type == 'Multi-Select-DropDown'"
+            >
+              <div ngbAccordion class="filter-accordion">
+                <div ngbAccordionItem>
+                  <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>
+                      {{ item.attribute_title | cuttext : 1500 }}
+                    </button>
+                  </h2>
+                  <div ngbAccordionCollapse>
+                    <div ngbAccordionBody title="">
+                      <ng-template ngbPanelContent>
+                        <select
+                          id="att{{ i }}"
+                          (change)="
+                            onSelectMultiDropDownChange(
+                              $event,
+                              item.attribute_id
+                            )
+                          "
+                          class="custom-select form-select"
+                          multiple="multiple"
+                        >
+                          <ng-container
+                            *rxFor="
+                              let att of item.attribute_values;
+                              let j = index
+                            "
+                          >
+                            <option
+                              *ngIf="
+                                !currentFilters.attributes ||
+                                !currentFilters.attributes[item.attribute_id] ||
+                                currentFilters.attributes[
+                                  item.attribute_id
+                                ].indexOf(att.id) == -1
+                              "
+                              [hidden]="
+                                att.id == null ||
+                                att.id == '' ||
+                                att.id == 0 ||
+                                isObject(att.id)
+                              "
+                              [value]="att.id"
+                            >
+                              {{ att.value }}{{ att.unit }}
+                            </option>
+                            <option
+                              *ngIf="
+                                currentFilters.attributes &&
+                                currentFilters.attributes[item.attribute_id] &&
+                                currentFilters.attributes[
+                                  item.attribute_id
+                                ].indexOf(att.id) > -1
+                              "
+                              selected
+                              [hidden]="
+                                att.id == null ||
+                                att.id == '' ||
+                                att.id == 0 ||
+                                isObject(att.id)
+                              "
+                              [value]="att.id"
+                            >
+                              {{ att.value }}{{ att.unit }}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- multi select end-->
+          </ng-container>
+        </ng-container>
+        }
+      </ng-container>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,715 @@
+@if(notFound === false){
+<div class="detail-style" style="min-height: 90vh">
+    <div class="hide-on-print">
+        @defer{
+        <ng-template #popContent>
+            <!--share box start-->
+            <div class="share-icons">
+                <div class="share-row">
+                    <a class="share-btn">
+                        <span><img loading="lazy" src="/assets/icons/email.svg" alt="Email icon" class="share-icon" /> </span>Email
+                    </a>
+                    <a class="share-btn">
+                        <span><img loading="lazy" src="/assets/icons/fb.svg" alt="Facebook icon" class="share-icon" />
+            </span>Facebook
+                    </a>
+                </div>
+                <div class="share-row">
+                    <a class="share-btn">
+                        <span><img loading="lazy" src="/assets/icons/tw.svg" alt="Twitter icon" class="share-icon" /> </span>Twitter
+                    </a>
+                    <a class="share-btn"> Pinterest </a>
+                </div>
+            </div>
+            <!-- share box end-->
+        </ng-template>
+        <ng-template #popTitle><b>Share</b></ng-template>
+        }@placeholder {
+        <div style="min-height: 0px"></div>
+        }
+        <div class="home-container" style="min-height: 900px">
+            <div class="product-container" style="min-height: 900px">
+                <app-ng-dynamic-breadcrumb style="min-height: 45px"></app-ng-dynamic-breadcrumb>
+                <div class="custom-product-details">
+                    <div class="custom-product-card" style="min-height: 400px">
+                        <div class="product-top-area d-block d-md-none">
+                            @if(product?.title !== null){
+                            <p class="p-title section-title">
+                                {{ product?.title }}
+                            </p>
+                            }
+                        </div>
+
+                        <div class="product-card" style="min-height: 400px">
+                            <div class="p-details">
+                                <div class="p-gallery" style="min-height: 400px">
+                                    <!-- Slider Commit -->
+
+                                    <!--
+                    @if(product?.images.length > 0){
+                      <ngx-slick-carousel id="sliderNav" data-aos-duration="1000" data-aos-easing="ease-in-out"
+                      data-aos="slide-right" data-aos-once="true"
+                      [config]="slideConfigNav" class="my-gallery product-thumbs-left slider-nav"
+                      style="min-height: 363px;">
+                      <figure *rxFor="let item of product?.images; let i = index" ngxSlickItem
+                        itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                        <img loading="lazy" alt="{{ product?.sku }}" [lazyLoad]="item?.image" itemprop="thumbnail"
+                          alt="Image description" width="56px" height="68px" />
+                      </figure>
+                    </ngx-slick-carousel>
+                    <ngx-slick-carousel  class="my-gallery slider-main" id="slider"
+                      #slickModal="slick-carousel" [config]="slideConfig"
+                      style="margin: 0 !important; display: block !important;min-height: 363px;">
+                      <figure *rxFor="let item of product?.images; let i = index" ngxSlickItem
+                        itemprop="associatedMedia" itemscope itemtype="">
+                        <a (click)="openLightBox(i)">
+                          <img *ngIf="i === 0" alt="{{ product?.sku }}" class="slickImage" [ngSrc]="item.image"
+                            alt="Image description" width="353" height="262" priority />
+                          <img *ngIf="i > 0" loading="lazy" alt="{{ product?.sku }}" class="slickImage"
+                            [lazyLoad]="item.image" width="" height="" alt="Image description" />
+                        </a>
+                        <figcaption itemprop="caption description"></figcaption>
+                      </figure>
+                    </ngx-slick-carousel>
+                    } @else{
+                      <div class="no-img" >
+                        <img alt="{{ product?.title }}" data-aos-duration="1000" data-aos-easing="ease-in-out"
+                          data-aos-once="true" id="img_1" [src]="
+                            product.category_name
+                              ? env.catImagesPath +
+                                (product.category_name | trimCatImage) +
+                                '.webp'
+                              : 'assets/images/no-image.webp'
+                          " alt="{{ product?.sku }}" width="353" height="262" />
+                      </div>
+                    }
+                    <p class="text-center not-exact">
+                      * NOTE: Image may not exactly match the product
+                    </p>
+                  -->
+                                    <!-- Slider Commit -->
+
+                                    <!-- sinle image code start -->
+
+                                    @if(product?.images.length > 0) {
+                                    <figure itemprop="associatedMedia" itemscope itemtype="" style="
+                      border: 1px solid rgba(0, 0, 0, 0.125);
+                      height: 420px;
+                      text-align: center;
+                      margin-bottom: 0;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                    ">
+                                        <img (click)="openLightBox(0)" alt="{{ product?.sku }}" class="slickImage" [ngSrc]="product?.images[0].image" width="390" height="390" priority style="
+                        cursor: pointer;
+                        width: 95%;
+                        height: 95%;
+                        object-fit: contain;
+                      " disableOptimizedSrcset />
+
+                                        <p class="text-center not-exact">
+                                            * NOTE: Image may not exactly match the product
+                                        </p>
+                                    </figure>
+                                    } @else { @if(!productLoading){
+                                    <figure itemprop="associatedMedia" itemscope itemtype="" style="border: 1px solid rgba(0, 0, 0, 0.125)">
+                                        <a (click)="openLightBox(0)">
+                                            <img alt="{{ product?.sku }}" class="slickImage" [src]="
+                          product?.category_name
+                            ? env.catImagesPath +
+                              (product?.category_name | trimCatImage) +
+                              '.webp'
+                            : 'assets/images/no-image.webp'
+                        " width="353" height="262" priority style="width: 100%; height: 100%; object-fit: cover" />
+                                        </a>
+                                    </figure>
+                                    } }
+                                    <!-- single image code end-->
+                                </div>
+
+                                <div class="p-meta" style="min-height: 100px">
+                                    @if(product?.title !== null){
+                                    <h1 class="p-title d-none d-md-block">
+                                        {{ product?.title }}
+                                    </h1>
+                                    }
+                                    <!-- Meta Detail Start -->
+                                    <div class="meta-wrapper d-flex flex-wrap align-items-start justify-content-between">
+                                        <div class="meta-fields-inner flex-grow-1">
+                                            @if(product!==null){
+                                            <div class="p-meta-field">
+                                                <span class="tablecolumn">Brand:</span>
+                                                <p class="tablecolumn">
+                                                    {{ product?.brand_name }}
+                                                    <!--<a
+                        [routerLink]="
+                          product?.brand_url != null
+                            ? '/brand/' + product?.brand_url
+                            : '/'
+                        "
+                        [queryParams]="{ category: product?.category_id }"
+                        >See more
+                        {{ product?.brand_name }}
+                        {{ product?.category_name }}
+                        </a>-->
+                                                </p>
+                                            </div>
+                                            <div class="p-meta-field">
+                                                <span class="tablecolumn">Part Number:</span>
+                                                <p class="tablecolumn">{{ product?.sku }}</p>
+                                            </div>
+                                            <!-- @if(!productLoading){
+                  @if(pcondition != null){
+                  <div class="p-meta-field">
+                    <div class="tablecolumn">Condition:</div>
+                    <span class="tablecolumn">{{(pcondition)? pcondition: ''}}</span>
+                  </div>
+                  }
+                  }@else {
+                  <div class="p-meta-field">
+                    <div class="tablecolumn">Condition:</div>
+                    <span class="tablecolumn">Loading...</span>
+                  </div>
+                  } -->
+                                            <div class="p-meta-field">
+                                                <div class="tablecolumn">Availability:</div>
+
+                                                @if(product?.is_in_stock == false) {
+                                                <span class="in-stock tablecolumn">Out of Stock</span> }@else {
+                                                <span class="in-stock tablecolumn">In Stock</span> }
+                                            </div>
+                                            } @if(pcondition != null){
+                                            <div class="p-meta-field">
+                                                <span class="tablecolumn">Warranty: </span>
+                                                <span class="tablecolumn">{{
+                          pcondition === "refurbished" ||
+                          pcondition === "Refurbished"
+                          ? "90-day"
+                          : "1 Year (Return/Replacement)"
+                          }}
+                        </span>
+                                            </div>
+                                            }
+                                        </div>
+                                        <!-- @if(product?.brand_id === 42) {
+                                        <div class="brand-logo">
+                                            <img loading="lazy" class="img-fluid" src="/assets/images/cisco-partner.webp" width="100" height="78" alt="Cisco Logo">
+                                            <p class="sup" style="font-size: 12px;margin-top: 10px;color: #0b456c;margin-bottom: 0;">iTech Devices is an authorized Cisco partner</p>
+                                        </div>
+                                        } -->
+                                    </div>
+                                    <!-- Meta Detail End -->
+                                    <div class="cart-area">
+                                        @if(product!==null){
+                                        <div class="add-to-cart">
+                                            @if(product?.[condition] == null || product?.[condition] == 0){
+                                            <div>
+                                                <div class="atc-pricing cfp border-top pt-2">
+                                                    <div class="call-for-price">
+                                                        <!-- @if(product?.brand_id === 42) { -->
+                                                        <button type="button" (click)="openRFQPage(product, condition)" class="btn">Get a
+                              Quote</button>
+                                                        <!-- } @else{
+                            <span>Call For Price:
+                              <span>
+                                <a href="tel:+971554255786">866-705-5346</a>
+                              </span>
+                            </span> -->
+                                                        <!-- } -->
+                                                    </div>
+                                                    <!-- @if(product?.brand_id === 42){ -->
+                                                    <div class="content-area mt-2 mb-0 p-3">
+                                                        <p><strong>Contact us and save even more!</strong></p>
+                                                        <ul>
+                                                            <li>Call us at <a href="tel:+971554255786">+971-5-54255786</a><br> Monday to Friday, 10:00 - 17:00 (UAE Standard Time)</li>
+                                                            <li>Email: <a href="mailto:support@itechdevices.ae">support&#64;itechdevices.ae</a>
+                                                            </li>
+                                                            <li><button class="simple-button" type="button" (click)="openchat()">Live Chat</button> with Technical Sales
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- } -->
+                                                </div>
+                                            </div>
+                                            }@else {
+
+
+                                            <div class="atc-pricing">
+                                                @if(product?.discount === null || product?.discount === 0){
+
+                                                <div class="pricing">
+                                                  <p class="atc-price">
+                                                    {{ product?.[condition] |currency }} <span class="excludingTax">Excl. Vat</span>
+                                                  </p>
+                                                  <p class="atc-price incTax">{{ (product[condition] + (product[condition] *
+                                                    env.taxPercent)) |
+                                                    currency }} <span class="includingTax">Incl. Vat</span></p>
+                                                </div>
+
+                                                }@else{
+
+                                                <div class="pricing">
+                                                  <p class="atc-price">
+                                                    {{ product?.[condition] |currency }} <span class="excludingTax">Excl. Vat</span>
+                                                  </p>
+                                                  <p class="atc-price incTax">{{ (product[condition] + (product[condition] *
+                                                    env.taxPercent)) |
+                                                    currency }} <span class="includingTax">Incl. Vat</span></p>
+                                                </div>
+                                                @if(product?.discount !== null && product?.discount !== 0){
+                                                <!-- <p class="save">GET {{ product?.discount | number:'1.0-0' }}% OFF & Save {{ (product | priceConversion : condition) - product?.[condition] | currency: 'AED ' }}
+                                                </p> -->
+                                                <!-- <p class="save ind"><span style="background-color: #363b63;">Independence Day Discount</span><span style="background-color: #B22234;">Up to {{ product?.discount | number:'1.0-0' }}% OFF</span></p> -->
+                                                }
+                                                <!--
+                        @if(false && product?.discount !== null && product?.discount
+                        !== 0){
+                        <div class="saved-amount">
+                          <span style="
+                            font-style: normal;
+                            margin-top: 5px;
+                            font-weight: 400;
+                            font-size: 12px;
+                            color: #777777;
+                          ">You Save:
+                          </span>
+                          <span>
+                            {{
+                            (product | priceConversion : condition) -
+                            product?.[condition] | currency: 'AED '
+                            }}
+                          </span>
+                          <span style="
+                            background: #e1ffc3;
+                            border-radius: 20px;
+                            font-size: 10px;
+                            padding: 5px 10px 5px 10px;
+                          ">16% Off</span>
+                        </div>
+                      } -->
+                                                }
+                                            </div>
+                                            <div class="atc-buttons">
+                                                <div class="cart-qty">
+                                                    <label for="quantity">Quantity</label>
+                                                    <span class="qtyBox">
+                            <button type="button" class="decreaseVal" (click)="updateQuantity(-1)">
+                              -
+                            </button>
+                            <input id="quantity" class="val" type="number" [(ngModel)]="quantity" min="1"
+                              aria-label="quantity" />
+                            <button type="button" class="increaseVal" (click)="updateQuantity(1)">
+                              +
+                            </button>
+                          </span>
+                                                </div>
+                                                <div class="atc-btn">
+
+                                                    <button [class.spinner]="cartLoading" [disabled]="cartLoading" (click)="addToCart(product, quantity, condition)" class="btn">
+                            Add to Cart
+                          </button>
+
+                                                </div>
+                                                <div class="rfq-btn">
+
+                                                    <button type="button" (click)="openRFQPage(product, condition)" class="btn">Get a
+                            Quote</button>
+
+                                                </div>
+                                            </div>
+                                            <p class="hidden" style="font-size: 14px;margin: 10px 0 0 0;">Get an extra 2% off on checkout</p>
+
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                    @if(warrantyImage !== null){
+                                    <img loading="lazy" class="p-warranty" [src]="warrantyImage" alt="" /> }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if(!productLoading){
+
+                    <div class="custom-product-rfq">
+                        <div class="content-area">
+                            <h6>
+                                <img loading="lazy" style="margin-right: 5px;" width="20" height="20" src="assets/svg/truck.svg" alt="Shipping" />Shipping Options:
+                            </h6>
+                            <ul>
+                                <li>Same-Day Shipping for orders placed before 2:00 PM GST.</li>
+                                <li>Free Ground Shipping available within the UAE (delivery time is 3 to 5 days, may vary by location).</li>
+                                <li>Priority Shipping offers expedited options, including timed and Saturday delivery, for an additional fee.</li>
+                            </ul>
+                            <h6><img loading="lazy" width="16" height="16" src="assets/svg/secure.svg" alt="International">International Delivery:</h6>
+                            <p>All international shipments are tracked, insured, and sent via DHL or FedEx. Local import charges may apply.</p>
+                            <h6><img loading="lazy" width="15" height="12" src="assets/svg/card.svg" alt="Accept">Payment Options:</h6>
+                            <p>We securely accept Visa, Mastercard, American Express, Discover, and wire transfers.</p>
+                            <h6><img loading="lazy" width="15" height="15" src="assets/svg/calendar.svg" alt="Process" />Process POs for federal & gov. agencies, commercial enterprises, schools and public sector.</h6>
+                            <h6><img loading="lazy" width="15" height="15" src="assets/svg/flexible.svg" alt="Options" />Flexible options with tailored solutions to meet urgent requirements.</h6>
+
+
+                        </div>
+
+
+
+                        <!-- && product?.brand_id === 42 ) ||
+              (product?.brand_id === 42 && product?.[condition] === 0)){ -->
+
+                        <!-- }@else{ @defer (on viewport) {
+                        <div id="getAQuote" class="request-quote d-md-block d-none">
+                            <ng-container *ngIf="formCreated">
+                                <form [formGroup]="quoteForm" (submit)="submitQuoteForm(quoteForm)" class="popup-form">
+                                    <div class="quote-form">
+                                        <h6>Looking for a Bulk Quantity of {{product?.sku}}?</h6>
+                                        <p>Request a Quote below and one of our sales representative will get in touch with you very soon
+                                        </p>
+                                        <div class="row g-2">
+                                            <div class="col-md-6" hidden>
+                                                <label for="name" class="visually-hidden">Name</label>
+                                                <input id="name" formControlName="name" type="text" class="custom-input" placeholder="Name" />
+                                                <div class="error-block" *ngIf="
+                              quoteForm.controls.name.invalid &&
+                              (quoteForm.controls.name.dirty ||
+                                quoteForm.controls.name.touched)
+                            ">
+                                                    <p class="error" *ngIf="quoteForm.controls.name.hasError('required')">
+                                                        Please enter name
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="lastName" class="visually-hidden">Full Name</label>
+                                                <input id="lastName" formControlName="lastName" type="text" class="custom-input" placeholder="Full Name" />
+                                                <div class="error-block" *ngIf="
+                              quoteForm.controls.lastName.invalid &&
+                              (quoteForm.controls.lastName.dirty ||
+                                quoteForm.controls.lastName.touched)
+                            ">
+                                                    <p class="error" *ngIf="
+                                quoteForm.controls.lastName.hasError('required')
+                              ">
+                                                        Please enter Full Name
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="business-email" class="visually-hidden">Email Address</label>
+                                                <input id="business-email" formControlName="email" type="email" class="custom-input" placeholder="Email Address" />
+                                                <div class="error-block" *ngIf="
+                              quoteForm.controls.email.invalid &&
+                              (quoteForm.controls.email.dirty ||
+                                quoteForm.controls.email.touched)
+                            ">
+                                                    <p class="error" *ngIf="
+                                quoteForm.controls.email.hasError('required')
+                              ">
+                                                        Please enter email
+                                                    </p>
+                                                    <p class="error" *ngIf="quoteForm.controls.email.hasError('email')">
+                                                        Please enter a valid email
+                                                    </p>
+                                                    <p class="error" *ngIf="quoteForm.controls.email.hasError('pattern')">
+                                                        Please enter a valid email
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="phone-number" class="visually-hidden">Phone Number</label>
+                                                <input id="phone-number" class="custom-input" formControlName="phone" type="text" placeholder="Phone Number" />
+                                                <div class="error-block" *ngIf="
+                              quoteForm.controls.phone.invalid &&
+                              (quoteForm.controls.phone.dirty ||
+                                quoteForm.controls.phone.touched)
+                            ">
+                                                    <p class="error" *ngIf="
+                                quoteForm.controls.phone.hasError('required')
+                              ">
+                                                        Please enter phone number
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <label style="
+                                background-color: #fff !important;
+                                padding: 8px;
+                                border: 1px solid #e9e9e9;
+                                border-right: 0;
+                                color: #898989;
+                              " for="qty" class="">Qty:</label>
+                                                    <input style="margin-bottom: 0; border-left: 0" id="qty" class="custom-input" formControlName="quantity" type="text" />
+                                                </div>
+                                                <div class="error-block" *ngIf="
+                              quoteForm.controls.quantity.invalid &&
+                              (quoteForm.controls.quantity.dirty ||
+                                quoteForm.controls.quantity.touched)
+                            ">
+                                                    <p class="error" *ngIf="
+                                quoteForm.controls.quantity.hasError('required')
+                              ">
+                                                        Please enter qty
+                                                    </p>
+                                                    <p class="error" *ngIf="
+                                quoteForm.controls.quantity.hasError('pattern')
+                              ">
+                                                        Please enter valid qty
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8" hidden>
+                                                <label for="availability" class="visually-hidden">How soon do you need it?</label>
+                                                <select name="availability" id="delivery-time" class="custom-input" aria-label="How soon do you need it">
+                            <option value="0" selected>
+                              How soon do you need it?
+                            </option>
+                            <option value="1">Today</option>
+                            <option value="2">This week</option>
+                            <option value="3">30Days+</option>
+                          </select>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group captcha">
+                                                    <re-captcha size="invisible" #captchaRef="reCaptcha" formControlName="recaptchaReactive" siteKey="{{ siteKey }}" (resolved)="submitNow(quoteForm)"></re-captcha>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-7 mx-auto">
+                                                <button [disabled]="quoteloading" type="submit" class="send-quote-btn btn w-100 mt-0">
+                          <ng-container *ngIf="!quoteloading">
+                            Send Quote
+                          </ng-container>
+                          <ng-container *ngIf="quoteloading">
+                            Sending...
+                          </ng-container>
+                        </button>
+                                            </div>
+                                            <p class="aftersubmit">Quotes processed weekdays 10:00 - 17:00 (UAE Standard Time), with 5-10 minute response time. Holiday submissions addressed next working day.</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </ng-container>
+                        </div>
+                        }@placeholder {
+                        <div></div>
+                        } -->
+
+                        <div class="content-area">
+                            <h6 class="mb-2">Benefits You Get:</h6>
+                            <ul>
+                                <li><strong>Net 30 Terms:</strong> Qualified customers can opt for Net 30 payment terms on all online orders.</li>
+                                <li><strong>Custom Invoicing:</strong> Receive invoices tailored to your needs, including part numbers, reference codes, and any specific instructions.</li>
+                                <li><strong>Purchase Reporting:</strong> Access detailed reports on your past purchases, including pricing and transaction history for any selected period.</li>
+                                <li><strong>Dedicated Support:</strong> Enjoy the services of a dedicated account manager who provides personalized and cost-effective solutions.</li>
+                                <li><strong>Quick Quotations:</strong> Get prompt and precise responses to your bid requests and quotation inquiries, ideal for urgent and large-scale projects.</li>
+                            </ul>
+                        </div>
+
+                        @if(product?.[condition] === null || product?.[condition] == 0){ } @else {
+
+                        <div class="content-area">
+                            <p><strong>Need Assistance? </strong>We are here to help!</p>
+                            <ul>
+                                <li>Call us at <a href="tel:+971554255786">+971-5-54255786</a><br> Monday to Friday, 10:00 - 17:00 (UAE Standard Time)</li>
+                                <li>Email: <a href="mailto:support@itechdevices.ae">support&#64;itechdevices.ae</a>
+                                </li>
+                                <li><button class="simple-button" type="button" (click)="openchat()">Live Chat</button> with Technical Sales
+                                </li>
+                            </ul>
+                        </div>
+
+                        }
+
+
+
+
+                    </div>
+                    }
+
+                    <div style="min-height: 400px" class="custom-product-desc" *ngIf="!productLoading">
+                        <div class="product-meta">
+                            <div class="product-detail-tabs">
+                                <div class="accordion" id="p-accordion">
+                                    <!-- <p style="min-height: 60px" class="accordion-button">
+                    Product Details
+                  </p> -->
+                                    <div class="accordion-body p-0">
+                                        <p *ngIf="attribLoading">Loading....</p>
+
+                                        <p class="mdheading mb-2">Product Description</p>
+                                        <div class="mb-2 hide-inner-br">
+                                            <div style="color: black" [innerHTML]="product?.description | htmlSanitizer" *ngIf="product?.description != null"></div>
+                                            <div style="color: black" [innerHTML]="product?.overview | htmlSanitizer" *ngIf="product?.overview != null"></div>
+                                            <div style="color: black" [innerHTML]="product?.feature_bullets | htmlSanitizer" *ngIf="product?.feature_bullets != null"></div>
+
+                                            <div class="mt-2 mb-4" *ngIf="product?.product_condition">
+                                                <span class="">Product Condition:</span>
+                                                <span class="ps-2">{{ product?.product_condition }}</span>
+                                            </div>
+
+
+
+                                        </div>
+                                        @if(groupHeaders != null && groupHeaders?.length > 0){
+                                        <div class="tab_body">
+                                            <ng-container *rxFor="let header of groupHeaders; index as indx">
+                                                <div class="tablecustom" *ngIf="
+                            (product?.attributes &&
+                              product?.attributes.length > 0 &&
+                              checkHeader(
+                                product?.attributes,
+                                header?.attributes
+                              )) ||
+                            (product?.jattributes &&
+                              product?.jattributes.length > 0 &&
+                              checkHeaderJoint(
+                                product?.jattributes,
+                                header?.joint_attributes
+                              ))
+                          ">
+                                                    <div *ngIf="!attribLoading">
+                                                        <p class="headtable">{{ header.title }}</p>
+
+                                                        <ng-container *rxFor="
+                                let i of product?.attributes;
+                                index as indx
+                              ">
+                                                            @if(i.attribute_exclude === false){
+                                                            <div class="tablerow" *ngIf="
+                                  checkArray(
+                                    i.attribute_id,
+                                    header.attributes
+                                  ) != -1 &&
+                                  i.attribute_value != 'N/A' &&
+                                  i.attribute_value != ''
+                                ">
+                                                                <div class="tablecolumn">
+                                                                    <span class="attribute-title">{{
+                                    i.attribute_title
+                                    }}</span>
+                                                                </div>
+                                                                <div class="tablecolumn">
+                                                                    <div class="attribute-value">
+                                                                        <span *ngIf="!i.attribute_value">N/A</span>
+                                                                        <span class="multiattribute" *ngIf="i.attribute_value" innerHTML="{{
+                                        i.attribute_value + ' ' + (i.unit || '')
+                                      }}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            }
+                                                        </ng-container>
+                                                        <ng-container *rxFor="
+                                let i of product?.jattributes;
+                                index as indx
+                              ">
+                                                            <div class="tablerow" *ngIf="
+                                  checkArray(i.id, header.joint_attributes) !=
+                                    -1 && i.attributes.length !== 0
+                                ">
+                                                                <div class="tablecolumn">
+                                                                    <span class="attribute-title">{{
+                                    i.name
+                                    }}</span>
+                                                                </div>
+                                                                <div class="tablecolumn">
+                                                                    <div class="attribute-value">
+                                                                        <ng-container *ngIf="i.attributes.length === 0">N/A</ng-container>
+                                                                        <ul class="m0 pl20 multiattribute" *ngIf="i.attributes.length > 0">
+                                                                            <ng-container>
+                                                                                <li *rxFor="let atb of i.attributes">
+                                                                                    <span *rxFor="let item of atb">
+                                            {{ item.SELECTED_VALUE || "" }}
+                                            {{
+                                            item.SELECTED_UNIT_DETAIL
+                                            ? item.SELECTED_UNIT_DETAIL
+                                            .title
+                                            : ""
+                                            }}</span>
+                                                                                </li>
+                                                                            </ng-container>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        } @else{
+                                        <div class="tab_body"></div>
+                                        }
+                                        <!-- Compatibility -->
+                                        @if(product?.compatibility != null && product?.compatibility != ''){
+                                        <div class="comp">
+                                            <p class="headtable">Product Compatibility</p>
+                                            <div class="comp-body" [innerHTML]="product?.compatibility | htmlSanitizer" *ngIf="product?.compatibility != null">
+                                            </div>
+                                        </div>
+                                        }
+                                        <!-- Compatibility -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @defer(on viewport){
+
+            <div class="custom-product-related">
+                @if(!productLoading){
+                <div [ngClass]="{
+              'active show':
+                !rloading && product?.related && product?.related.length > 0
+            }">
+                    <!--<app-product-tabs [data]="product?.related_products"></app-product-tabs>-->
+                    <app-product-carousel *ngIf="
+                !rloading && product?.related && product?.related.length > 0
+              " [products]="product?.related"></app-product-carousel>
+                </div>
+
+                <div [ngClass]="{ 'active show': product?.alsobought !== null }">
+                    <!--<app-product-tabs [data]="product?.related_products"></app-product-tabs>-->
+                    <app-product-carousel title="YOU CAN ALSO BUY" *ngIf="
+                !uloading &&
+                product?.also_bought &&
+                product?.also_bought.length > 0
+              " [products]="product?.also_bought"></app-product-carousel>
+                </div>
+                }
+            </div>
+            }@placeholder {
+            <div></div>
+            }
+            <!--@defer(on viewport){
+             <div class="custom-product-rev">
+                @if(!productLoading){
+                <app-product-industries></app-product-industries>
+                <app-reviews-slider></app-reviews-slider>
+                <app-brands-slider></app-brands-slider>
+                }
+            </div>
+            }
+            @placeholder {
+            <div></div>
+            }-->
+
+            <!--<app-shipping-calculator [product]="product" [modelId]="'myShipModal'"></app-shipping-calculator>
+      <app-price-alert [product]="product" [modelId]="'myPriceAlert'"></app-price-alert>-->
+        </div>
+    </div>
+</div>
+
+@if(!productLoading && product?.attributes){
+<!--<div class="structured-data" [innerHTML]="webjson"></div>-->
+<app-jsonld [data]="webjson"></app-jsonld>
+<!--<div class="structured-data" [innerHTML]="webjson1"></div>-->
+} } @if(notFound === true) {
+<app-not-found></app-not-found>
+}
